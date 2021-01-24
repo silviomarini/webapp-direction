@@ -103,8 +103,144 @@ if(isset($_GET["filter"])){
         
 
         <div id="regia_domande">
-                
-        </div>
+		<div class="row" >
+			
+			<div class="col-md-12 bg">
+				<div class="row">
+					
+				
+				<div class="offset-md-1 col-md-10 paddingMobile pt-5"> 
+					<div class="card mb-3">
+						<div class="card-body ALL " style="padding:5px;">
+							<div class="cont_risposta">
+								 
+								<a href="export.csv"> <div class="pools-button" style=""> Export </div> </a>
+							</div>
+							<div class="cont_risposta" style="float:left;">
+								<div class="active-status" style=""> LIVE QUESTIONS </div>
+								 
+									<a href="regia.php?filter=done"> <div class="pools-button small done" style=""> PROCESSED <BR/> QUESTIONS </div> </a>
+																			 
+									<a href="regia.php?filter=deleted"> <div class="pools-button small alert" style=""> DELETED <BR/> QUESTIONS </div> </a>
+																			 
+									<a href="regia.php?filter=selected"> <div class="pools-button small selected" style=""> SELECTED <BR/> QUESTIONS </div> </a>
+								</div>
+							</div>
+						</div>
+
+						<div class="" id="alert-domande-attivate">
+						
+						</div>
+					</div>
+				
+					<div class="offset-md-1 col-md-10 paddingMobile pt-5" id="contDomande">
+						<div class="card mb-3 " id="domanda_2">
+							<div class="card-header">
+								<div class="row">
+									<div class="header-info sx"><strong>2)</strong> h <strong>18:05</strong></div>
+										<div class="header-info center">
+											<div class="float-right">
+												<!-- GO LIVE -->
+												
+												<!-- YES -->
+													 
+														<span class="statoDomanda statoVerde" valore="y" id="2" onClick="change_status(this)">
+															<i class="fa fa-check"></i></span> 
+																												<!-- NO -->	
+													 
+														<span class="statoDomanda statoRosso" valore="n" id="2" onClick="change_status(this)">
+														<i class="fa fa-times"></i></span> 
+																												
+												<!-- RESET -->	
+														<span class="statoDomanda statoAzzera" style="visibility:hidden;"> <i class="fa fa-refresh"></i></span>  </span>
+											</div>
+											<div class="float-right" style="grid-template-columns: 100%;">
+											</div>
+										</div>
+
+										<div class="header-info dx">
+
+											<div style="display: inline-grid;">
+											<!-- DONE -->
+																												</div>
+
+											<span> Status: </span>
+											<span class="barraStato" id="barra_stato_2" style="background-color: transparent;"></span>
+
+										</div>
+									</div>
+								</div>
+								<div class="card-body">
+									<p class="card-text">two</p>
+								</div>
+							</div>    
+																
+							<div class="card mb-3">
+								<div class="card-body ALL " style="padding:5px; display:none;">
+									<div class="cont_risposta">
+											
+											<a href="export.csv"> <div class="pools-button" style=""> Export </div> </a>
+									</div>
+									<div class="cont_risposta" style="float:left;">
+										<div class="active-status" style=""> LIVE QUESTIONS </div>
+											
+											<a href="regia.php?filter=done"> <div class="pools-button small done" style=""> PROCESSED <BR/> QUESTIONS </div> </a>
+																						
+											<a href="regia.php?filter=deleted"> <div class="pools-button small alert" style=""> DELETED <BR/> QUESTIONS </div> </a>
+																						
+											<a href="regia.php?filter=selected"> <div class="pools-button small selected" style=""> SELECTED <BR/> QUESTIONS </div> </a>
+										</div>
+									</div>
+							
+								</div>
+
+								<div class="card-body SELECTED " style="padding:5px; display:none;">
+										<div class="cont_risposta">
+										</div>
+										<div class="cont_risposta" style="float:left;">
+											<div class="active-status" style=""> SELECTED QUESTIONS </div>
+											 
+												<a href="regia.php?filter=done"> <div class="pools-button small done" style=""> PROCESSED <BR/> QUESTIONS </div> </a>
+																						 
+												<a href="regia.php?filter=deleted"> <div class="pools-button small alert" style=""> DELETED <BR/> QUESTIONS </div> </a>
+																																	 
+												<a href="regia.php?filter=all"> <div class="pools-button small all" style=""> LIVE <BR/> QUESTIONS </div> </a>
+											</div>
+										</div>
+								</div>
+
+								<div class="card-body DELETED " style="padding:5px; display:none;">
+										<div class="cont_risposta">
+																					</div>
+										<div class="cont_risposta" style="float:left;">
+											<div class="active-status" style=""> DELETED QUESTIONS </div>
+											 
+												<a href="regia.php?filter=done"> <div class="pools-button small done" style=""> PROCESSED <BR/> QUESTIONS </div> </a>
+																																	 
+												<a href="regia.php?filter=selected"> <div class="pools-button small selected" style=""> SELECTED <BR/> QUESTIONS </div> </a>
+																						 
+												<a href="regia.php?filter=all"> <div class="pools-button small all" style=""> LIVE <BR/> QUESTIONS </div> </a>
+																						</div>
+								</div>
+
+								<div class="card-body DONE " style="padding:5px; display:none;">
+										<div class="cont_risposta">
+																					</div>
+										<div class="cont_risposta" style="float:left;">
+											<div class="active-status" style=""> PROCESSED QUESTIONS </div>
+																						 
+												<a href="regia.php?filter=deleted"> <div class="pools-button small alert" style=""> DELETED <BR/> QUESTIONS </div> </a>
+																						 
+												<a href="regia.php?filter=selected"> <div class="pools-button small selected" style=""> SELECTED <BR/> QUESTIONS </div> </a>
+																						 
+												<a href="regia.php?filter=all"> <div class="pools-button small all" style=""> LIVE <BR/> QUESTIONS </div> </a>
+																						</div>
+									</div>
+
+
+						</div> 
+					</div> 
+        		</div>
 
         <div id="regia_sondaggi">
 
