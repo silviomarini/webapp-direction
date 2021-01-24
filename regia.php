@@ -194,49 +194,6 @@ if(isset($_GET["filter"])){
 							
 								</div>
 
-								<div class="card-body SELECTED " style="padding:5px; display:none;">
-										<div class="cont_risposta">
-										</div>
-										<div class="cont_risposta" style="float:left;">
-											<div class="active-status" style=""> SELECTED QUESTIONS </div>
-											 
-												<a href="regia.php?filter=done"> <div class="pools-button small done" style=""> PROCESSED <BR/> QUESTIONS </div> </a>
-																						 
-												<a href="regia.php?filter=deleted"> <div class="pools-button small alert" style=""> DELETED <BR/> QUESTIONS </div> </a>
-																																	 
-												<a href="regia.php?filter=all"> <div class="pools-button small all" style=""> LIVE <BR/> QUESTIONS </div> </a>
-											</div>
-										</div>
-								</div>
-
-								<div class="card-body DELETED " style="padding:5px; display:none;">
-										<div class="cont_risposta">
-																					</div>
-										<div class="cont_risposta" style="float:left;">
-											<div class="active-status" style=""> DELETED QUESTIONS </div>
-											 
-												<a href="regia.php?filter=done"> <div class="pools-button small done" style=""> PROCESSED <BR/> QUESTIONS </div> </a>
-																																	 
-												<a href="regia.php?filter=selected"> <div class="pools-button small selected" style=""> SELECTED <BR/> QUESTIONS </div> </a>
-																						 
-												<a href="regia.php?filter=all"> <div class="pools-button small all" style=""> LIVE <BR/> QUESTIONS </div> </a>
-																						</div>
-								</div>
-
-								<div class="card-body DONE " style="padding:5px; display:none;">
-										<div class="cont_risposta">
-																					</div>
-										<div class="cont_risposta" style="float:left;">
-											<div class="active-status" style=""> PROCESSED QUESTIONS </div>
-																						 
-												<a href="regia.php?filter=deleted"> <div class="pools-button small alert" style=""> DELETED <BR/> QUESTIONS </div> </a>
-																						 
-												<a href="regia.php?filter=selected"> <div class="pools-button small selected" style=""> SELECTED <BR/> QUESTIONS </div> </a>
-																						 
-												<a href="regia.php?filter=all"> <div class="pools-button small all" style=""> LIVE <BR/> QUESTIONS </div> </a>
-																						</div>
-									</div>
-
 
 						</div> 
 					</div> 
