@@ -4,7 +4,7 @@
 	$db_psw = "XO38CFkRUWFN";
     $db_name = "weincos_webapp2";
     
-    $connessione = mysqli_connect($host, $db_user, $db_psw, $db_name);
+    $con = mysqli_connect($host, $db_user, $db_psw, $db_name);
     
 ?>
 
