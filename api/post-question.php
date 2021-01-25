@@ -2,12 +2,16 @@
 <?php
     include "../server/db.php";
     //recupero i valori e faccio real escape
-    $question = mysqli_real_escape_string($connessione, $_POST["question"]);
-    $data=date();
+    $question="";
+    $data = json_decode(file_get_contents('php://input'), true);
+        foreach($data as $key => $value){
+            $question = $value;
+        }
+    $getdata=date("Y-m-d h:i:s");
     //init query
-    $query = "INSERT INTO domande (d_ID_partecipante, d_domanda, d_evento, d_data_domanda) VALUES (1, '$question', 1, $data)";
+    $query = "INSERT INTO domande (d_ID_partecipante, d_domanda, d_evento, d_data_domanda) VALUES (1, '$question', 1, '$getdata')";
     
-    $ris = mysqli_query($connessione, $query);
+    $ris = mysqli_query($con,$query);
     
     //mando la risposta
     if($ris){
@@ -19,6 +23,6 @@
         // set response code - 400 bad request
         http_response_code(400);
         // tell the user
-        echo json_encode(array("message" => "Error message"));
+        echo json_encode(array("message" => "Errore"));
     } 
 ?>
