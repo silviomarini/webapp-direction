@@ -69,7 +69,7 @@
         </div>
 
 		<div id="polls" style="display:none;">
-			<div id="currentPoll">
+			<div id="currentPoll" style="text-align:center;">
 				
 			</div>
 			<div class="submit-response success" style="display:none;" id="alertDomanda">
