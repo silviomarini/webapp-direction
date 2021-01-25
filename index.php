@@ -69,7 +69,13 @@
         </div>
 
 		<div id="polls" style="display:none;">
-			
+			<div id="currentPoll">
+				
+			</div>
+			<div class="submit-response success" style="display:none;" id="alertDomanda">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
+				<strong>Answer sent!</strong>
+			</div>
 		</div>
 
 		<div id="questions" style="display:block;">
