@@ -1,11 +1,11 @@
 
 <?php
-    
+    include "server/db.php";
     //recupero i valori e faccio real escape
     $question = mysqli_real_escape_string($connessione, $_POST["question"]);
     $data=date();
     //init query
-    $query = "INSERT INTO domande (d_ID_partecipante, d_domanda, d_evento, d_data_domanda) VALUES (1, '$question', 1, $date);
+    $query = "INSERT INTO domande (d_ID_partecipante, d_domanda, d_evento, d_data_domanda) VALUES (1, '$question', 1, $date)";
     
     $ris = mysqli_query($connessione, $query);
     
