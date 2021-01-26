@@ -47,16 +47,15 @@
 		</div>
 		</div>
 
-		<?php if($cover != "") { ?>
-			<style>
-				.header .bg {
-					width: 100%;
-					height: 100%;
-					background-image: url("<?php echo "asset/event-covers/".$cover; ?>") !important;
-					background-size: cover;
-				}
-			</style>
-		<?php } ?>
+		<?php if($cover == "") { $cover = "cover1608542135.jpeg"; } ?>
+		<style>
+			.header .bg {
+				width: 100%;
+				height: 100%;
+				background-image: url("<?php echo "asset/event-covers/".$cover; ?>") !important;
+				background-size: cover;
+			}
+		</style>
 				
         <div class="about">
             <div class="title">
