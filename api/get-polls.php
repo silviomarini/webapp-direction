@@ -22,7 +22,7 @@
                 
                 if($sondaggio_attivo['tipo']=="risp_aperta"){
                     $ris.='
-                            <div class="form-group text-center">
+                        <div class="form-group text-center">
                             <textarea placeholder="Inserisci la tua risposta qui!" 
                                 name="risposta_aperta" id="risposta_aperta" 
                                 style="width:70%; border: 3px solid rgb(148 49 50);padding:5px;font-family: Tahoma, sans-serif; height:200px;"
@@ -31,7 +31,7 @@
                             
                         </div>
                         <div>
-                            <input type="submit" class="home-button" name="invia_risposta_aperta" id="invia_risposta_aperta" value="Invia la risposta" /> 
+                            <div class="home-button" name="answer" id="answer" onclick="postOpenPoll()"> Send answer </div>
                         </div>';
                 } 
                 if($sondaggio_attivo['tipo']=="risp_multipla"){
@@ -44,71 +44,12 @@
             
             $ris.='</div>';
             $ris.='<input type="hidden" name="id_sondaggio" id="id_sondaggio" value="'.$sondaggio_attivo["ID"].'">';
-            
-            $ris.='
-                <script type="text/javascript"> 
-                 
-                    // AJAX SALVATAGGIO DOMANDA A RISPOSTA APERTA
-                    $("#invia_risposta_aperta").click(function() {
-                        var risposta_aperta = $(\'#risposta_aperta\').val();
-                        risposta_aperta = encodeURIComponent(risposta_aperta);
-                
-                        var rif_evento = $(\'#rif_evento\').val();
-                        var ultimo_ID = $("#ultimo_ID").val();
-                        var id_sondaggio = $(\'#id_sondaggio\').val();
-                
-                        if(risposta_aperta!=""){
-                            $.ajax({
-                                url: "ajax_invia_risposta_aperta.php",
-                                type: "get",
-                                crossDomain: true,
-                                data: \'azione=risp_aperta&risposta_aperta=\' + risposta_aperta + \'&ultimo_ID=\'+ultimo_ID+ \'&rif_evento=\'+rif_evento+ \'&id_sondaggio=\'+id_sondaggio,
-                                success: function(data){
-                                    //console.log(data);
-                                    $("#alertDomanda").show();
-                                    $("#contDomande").hide();
-                                    $("#risposta_aperta").val(\'\');
-                                },
-                                error: function () {
-                                    //alert(\'Errore AJAX\');
-                                }
-                            });	
-                        }else{
-                            alert("Please enter an answer");	
-                        }
-                
-                    });	
-            
-                    // AJAX SALVATAGGIO DOMANDA A RISPOSTA MULTIPLA
-                    $("input[name=\'risposte_s\']").click(function(){
-                        var radioValue = $("input[name=\'risposte_s\']:checked").val();
-                        var id_sondaggio= $("#id_sondaggio").val();
-                            var ultimo_ID = $("#ultimo_ID").val();
-                        var rif_evento = $(\'#rif_evento\').val();
-        
-                            $.ajax({
-                                url: "ajax_invia_risposta_aperta.php",
-                                type: "get",
-                                crossDomain: true,
-                                data: \'azione=risp_multipla&risposta=\' + radioValue + \'&ultimo_ID=\'+ultimo_ID+ \'&rif_evento=\'+rif_evento+ \'&id_sondaggio=\'+id_sondaggio,
-                                success: function(data){
-                                    console.log(data);
-                                    $("#alertDomanda").show();
-                                    $("#contDomande").hide();
-                                    //$("#risposta_aperta").val(\'\');
-                                },
-                                error: function () {
-                                    //alert(\'Errore AJAX\');
-                                }
-                            });		
-                    });
-                                                
-                </script>	
-            ';
         }	
+    } else {
+        $ris = "<div class='text-center fontWeight700 pb-1 pt-1'> Wait the next poll... </div>";
     }
     
-    $ris.="|||".$ultimo_id_inserito;
+    //$ris.="|||".$ultimo_id_inserito;
     
     echo $ris;
     ?>

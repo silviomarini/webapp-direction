@@ -142,7 +142,7 @@ a {
     width: 40%;
 }
 
-.item:hover, .item:active {
+.item:hover, .item.active {
     background-color: rgb(148 49 50);
     color: white;
     border: 1px solid white;

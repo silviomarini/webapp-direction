@@ -8,7 +8,6 @@
 	<meta name="author" content="creativetown.it" />
 	
 	<script src="asset/js/jquery.js"></script>
-    <script src="asset/js/customers.js"></script>
 
 	<link rel="stylesheet" href="asset/css/style.css" type="text/css" />
 	
@@ -59,11 +58,11 @@
 				
         <div class="about">
             <div class="title">
-                <h2 class="text">Welcome to Privilege Web App!</h2>
+                
             </div>
             <div class="body" style="min-height:165px">   
-                <a class="item" href="#" onclick="switchTab('polls')"><span>Polls</span></a>
-				<a class="item" href="#" onclick="switchTab('questions')"><span>Questions</span></a>
+				<a class="item active" id="questionsMenu" href="#" onclick="switchTab('questions')"><span>Questions</span></a>
+				<a class="item" id="pollsMenu" href="#" onclick="switchTab('polls')"><span>Polls</span></a>
             </div>
         </div>
 
@@ -114,6 +113,7 @@
 	
 
 	<div id="gotoTop" class="icon-angle-up"></div>
+	<script src="asset/js/customers.js"></script>
 	
 </body>
 </html>

@@ -24,11 +24,15 @@ function submitQuestion(){
 function switchTab(tab){
     if(tab == 'polls'){
         document.getElementById('polls').style.display="block";
+        document.getElementById('pollsMenu').classList.add("active");
         document.getElementById('questions').style.display="none";
+        document.getElementById('questionsMenu').classList.remove("active");
         getPolls();
     } else {
         document.getElementById('polls').style.display="none";
+        document.getElementById('pollsMenu').classList.remove("active");
         document.getElementById('questions').style.display="block";
+        document.getElementById('questionsMenu').classList.add("active");
     }
 }
 
@@ -44,5 +48,62 @@ function getPolls(){
     }).catch(function (err) {
         // There was an error
         console.warn('Something went wrong.', err);
+        document.getElementById('currentPoll').innerHTML = "<div class='text-center fontWeight700 pb-1 pt-1'> Wait the next poll... </div>";
     });
 }
+
+ 
+    // AJAX SALVATAGGIO DOMANDA A RISPOSTA APERTA
+    function postOpenPoll(){
+        var risposta_aperta = $('#risposta_aperta').val();
+        risposta_aperta = encodeURIComponent(risposta_aperta);
+
+        var rif_evento = $('#rif_evento').val();
+        var ultimo_ID = $("#ultimo_ID").val();
+        var id_sondaggio = $('#id_sondaggio').val();
+
+        if(risposta_aperta!=""){
+            $.ajax({
+                url: "api/post-answer.php",
+                type: "get",
+                crossDomain: true,
+                data: 'azione=risp_aperta&risposta_aperta=' + risposta_aperta + '&ultimo_ID='+ultimo_ID+ '&rif_evento='+rif_evento+ '&id_sondaggio='+id_sondaggio,
+                success: function(data){
+                    //console.log(data);
+                    $("#alertDomanda").show();
+                    $("#contDomande").hide();
+                    $("#risposta_aperta").val('');
+                },
+                error: function () {
+                    alert('Impossible to send the answer, please retry later.');
+                }
+            });	
+        }else{
+            alert("Please enter an answer");	
+        }
+
+    }
+
+    // AJAX SALVATAGGIO DOMANDA A RISPOSTA MULTIPLA
+    function postClosedPoll(){
+        var radioValue = $("input[name='risposte_s']:checked").val();
+        var id_sondaggio= $("#id_sondaggio").val();
+            var ultimo_ID = $("#ultimo_ID").val();
+        var rif_evento = $('#rif_evento').val();
+
+            $.ajax({
+                url: "ajax_answer.php",
+                type: "get",
+                crossDomain: true,
+                data: 'azione=risp_multipla&risposta=' + radioValue + '&ultimo_ID='+ultimo_ID+ '&rif_evento='+rif_evento+ '&id_sondaggio='+id_sondaggio,
+                success: function(data){
+                    console.log(data);
+                    $("#alertDomanda").show();
+                    $("#contDomande").hide();
+                    //$("#risposta_aperta").val('');
+                },
+                error: function () {
+                    //alert('Errore AJAX');
+                }
+            });		
+    }
