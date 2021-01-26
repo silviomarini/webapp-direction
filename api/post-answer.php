@@ -1,12 +1,10 @@
 <?php
 session_start();
-$_SESSION['lang']='it';
-require_once("admin/config.php");
+include('../server/db.php');
 
 $azione= $_GET['azione'];
-$rif_evento= $_GET['rif_evento'];
+$evento=  1;
 $id_sondaggio= $_GET['id_sondaggio'];
-$evento= $rif_evento;
 
 if($azione=="risp_aperta"){
 	$risposta_dom =$_GET['risposta_aperta'];

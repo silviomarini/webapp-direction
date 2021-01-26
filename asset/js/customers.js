@@ -73,6 +73,7 @@ function getPolls(){
                     $("#alertDomanda").show();
                     $("#contDomande").hide();
                     $("#risposta_aperta").val('');
+                    getPolls();
                 },
                 error: function () {
                     alert('Impossible to send the answer, please retry later.');
@@ -92,7 +93,7 @@ function getPolls(){
         var rif_evento = $('#rif_evento').val();
 
             $.ajax({
-                url: "ajax_answer.php",
+                url: "api/post-answer.php",
                 type: "get",
                 crossDomain: true,
                 data: 'azione=risp_multipla&risposta=' + radioValue + '&ultimo_ID='+ultimo_ID+ '&rif_evento='+rif_evento+ '&id_sondaggio='+id_sondaggio,
@@ -101,6 +102,7 @@ function getPolls(){
                     $("#alertDomanda").show();
                     $("#contDomande").hide();
                     //$("#risposta_aperta").val('');
+                    getPolls();
                 },
                 error: function () {
                     //alert('Errore AJAX');

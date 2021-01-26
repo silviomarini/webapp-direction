@@ -1,5 +1,5 @@
-<?php
-    include "server/db.php";
+<?php session_start();if(!isset($_COOKIE['utente_evento'])){setcookie("utente_evento",time(),time()+31556926 ,'/');	}
+	include "server/db.php";
 ?>
 <!DOCTYPE html>
 <head>
