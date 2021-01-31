@@ -17,7 +17,97 @@
 
 
 <body>
+    <style>
 
+        @media screen and (min-width: 800px) {
+            #top1 {
+                width: 850px;
+            }
+            #top2 {
+                width: 850px;
+            }
+
+            .body {
+                min-height: 165px;
+                max-width: 1050px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .modifica-text {
+                float: left;
+                width: 40%;
+            }
+        }
+
+        @media screen and (max-width: 800px) {
+            .modifica-input {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .btn-primary {
+                float: left !important;
+                margin-left: 12px !important;
+                margin-top: 20px !important;
+            }
+
+            #top2 {
+                height: 100px;
+            }
+
+            #reset_btn {
+                margin-left: 0px !important;
+                margin-top:30px;
+            }
+        }
+
+        #top1 {
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #943132;
+            text-align: left;
+            padding: 50px;
+            margin-bottom:20px;
+        }
+
+        #top2 {
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid #943132;
+            text-align: left;
+            padding: 50px;
+            margin-bottom:40px;
+            padding-top: 38px;
+        }
+
+        .form-row {
+            padding:10px;
+        }
+
+        .btn-primary {
+            border: 1px solid #943132;
+            text-align: center;
+            padding: 15px;
+            color: #943132;
+            width:182px;
+        }
+
+        #reset_btn {
+            right: 0;
+            float: right;
+            background-color:#943132;
+            color:white; 
+            margin-top:-20px; 
+            display:block !important;
+            width:142px;
+        }
+
+        .modifica-input {
+            padding: 10px;
+        }
+
+    </style>
 <?php
 
 $success_update = 0;
@@ -224,7 +314,7 @@ if($query = mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "))
 
         
 		<div id="polls" <?php if ($active_tab=="event") { echo "style='display:none;'";}?>>
-		
+		<div id="top1">
         <?php
             if($result == "OLD_PASS_NOT_MATCH"){
 
@@ -306,18 +396,19 @@ if($query = mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "))
 
 
 
-                <div class="col-sm-4 text-right" style="width:100%">
+                <div class="col-sm-4 text-right" style="width:100%; min-height: 50px;">
 
-                    <input type="submit" name="save_password" value="Save" class="btn btn-primary hidden-xs" style="right: 0;margin-right: 0;float: right;width:150px;display:block !important;" />
+                    <input type="submit" name="save_password" value="Save" class="btn btn-primary hidden-xs" style="right: 0;margin-right: 0;float: right;display:block !important;" />
 
                 </div>
 
             </form>
 
-
+            </div>
                     </div>
 
                     <div id="questions" <?php if ($active_tab=="user") { echo "style='display:none;'";}?>>
+                    <div id="top1">
                     <form name="event_update" method="POST" enctype='multipart/form-data'>
 
             <?php echo '<input type="hidden" name="db_id" value="'.$bd_id.'" />'; ?>	
@@ -345,7 +436,7 @@ if($query = mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "))
                     <?php if (isset($_GET['modifica_evento']) && $success_update == 0){ 
 
                         echo '<input type="text" class="modifica-input" name="event_id" value="'.$event_id.'" />';
-
+                        echo '<style>@media screen and (max-width: 800px) {#top1 {height: 800px;}}</style>';
                     } else { 
 
                         echo "<span> ".$event_id." </span>";
@@ -446,17 +537,17 @@ if($query = mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "))
 
 
 
-                <div class="col-sm-4 text-right" style="width:100%">
+                <div class="col-sm-4 text-right" style="width:100%; min-height: 50px; margin-top:30px;">
 
                     <?php if (isset($_GET['modifica_evento']) && $success_update == 0){ 
 
-                        echo '<input type="submit" name="save_event" value="Save" class="btn btn-primary hidden-xs" style="right: 0;margin-right: 0;float: right;width:150px;display:block !important;" />';
+                        echo '<input type="submit" name="save_event" value="Save" class="btn btn-primary hidden-xs" style="right: 0;margin-right: 0;float: right;display:block !important;" />';
 
-                        echo '<a href="index.php"> <div class="btn btn-primary hidden-xs" style="right: 0;margin-right: 10px;float: right;width:150px;border:1px solid red;background-color:red;display:block !important;">Cancel</div> </a>';
+                        echo '<a href="index.php"> <div class="btn btn-primary hidden-xs" style="right: 0; margin-right: 10px; float: right; width: 150px; border: 1px solid #943132; background-color: #943132; display: block !important; color: white; padding: 13px;">Cancel</div> </a>';
 
                     } else { 
 
-                        echo '<a href="index.php?modifica_evento=1"> <div class="btn btn-primary hidden-xs" style="right: 0;margin-right: 0;float: right;width:150px;display:block !important;">Edit</div> </a>';
+                        echo '<a href="index.php?modifica_evento=1"> <div class="btn btn-primary hidden-xs" style="right: 0;margin-right: 5px;float: right;width:150px;display:block !important;">Edit</div> </a>';
 
                     } ?>
 
@@ -465,8 +556,8 @@ if($query = mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "))
                 </div>
 
             </form>
-
-            
+            </div>
+            <div id="top2">
             <div class="form-row">
 
                 <div class="modifica-text"> <strong>Reset all questions for this event:</strong></div>
@@ -481,13 +572,13 @@ if($query = mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "))
 
                         mysqli_query($con,$sql_sondaggi);
 
-                        echo '<div class="btn btn-primary hidden-xs" style="color: green; right: 0;float: right;width:150px;border:1px solid green;background-color:white;display:block !important;"> All questions deleted </div>';
+                        echo '<div class="btn btn-primary hidden-xs" style="color: green; right: 0;float: right;width:182px;border:1px solid green;background-color:white;display:block !important;"> All questions deleted </div>';
 
                     } else {
 
                 ?>
 
-                    <a href="index.php?reset=questions"> <div class="btn btn-primary hidden-xs" style="right: 0;float: right;width:150px;border:1px solid red;background-color:red;display:block !important;">Reset</div> </a>
+                    <a href="index.php?reset=questions"> <div id="reset_btn" class="btn btn-primary hidden-xs">Reset</div> </a>
 
                 <?php		
 
@@ -499,6 +590,7 @@ if($query = mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "))
 
                 
 
+        </div>
         </div>
 		</div> 
 
