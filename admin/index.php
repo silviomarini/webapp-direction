@@ -1,5 +1,16 @@
-<?php session_start();if(!isset($_COOKIE['utente_evento'])){setcookie("utente_evento",time(),time()+31556926 ,'/');	}
-	include "../server/db.php";
+<?php session_start();
+    include "../server/db.php";
+
+    $sessionId = $_COOKIE["session_id"];
+
+    $autorizzazione = $_SESSION['autorizzato'];
+    $id_utente= $_SESSION['cod'];
+    $livello = $_SESSION['livello'];
+
+    if ($autorizzazione != "autorizzato") {
+        echo '<script language=javascript>document.location.href="login.php?unauthorized"</script>'; 
+    }
+
 ?>
 <!DOCTYPE html>
 <head>
@@ -289,6 +300,11 @@ if($query = mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "))
 		<h1 class="title" style="margin-left: 20px;">
 			ADMIN PANEL
 		</h1>
+        <div class="log">
+            <a href="logout.php">
+                <p class="text">Logout</p>   
+            </a>
+        </div>
 		
 		</div>
 
