@@ -46,7 +46,16 @@
 		</div>
 		</div>
 
-		<?php if($cover == "") { $cover = "cover1608542135.jpeg"; } ?>
+		<?php 
+			if($cover == "") { $cover = "cover1608542135.jpeg"; } 
+			else {
+				//check if the cover value is a valid image
+				if (!file_exists("asset/event-covers/".$cover)) {
+					$cover = "cover1608542135.jpeg";
+				}
+
+			}
+		?>
 		<style>
 			.header .bg {
 				width: 100%;

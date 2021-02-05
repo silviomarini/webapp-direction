@@ -1,13 +1,21 @@
 <?php 
 session_start();
-
+require_once("../server/db.php");
 require_once("../server/helper.php");
 
 $tabella_utenti="utenti";
 
-if(isset($_GET['logout'])){
-	unset($_SESSION['event_login']);
-	header("location:/login.php");
+$sessionId = $_COOKIE["session_id"];
+
+$autorizzazione = $_SESSION['autorizzato_regia'];
+
+$autorizzato = false;
+if ($autorizzazione != "autorizzato_regia") {
+	echo '<script language=javascript>document.location.href="login.php?unauthorized"</script>'; 
+} else {
+	$autorizzato = true;
+	$ID_EVENTO=$_SESSION['id_evento'];
+	//$page_type = "regia";
 }
 //---------NOME TABELLA-----------//
 $tabella='sondaggi';
@@ -117,14 +125,22 @@ $time_attuale= time();
         </h1>
         <div class="log">
             <?php if($page_type == "regia"){ ?>
-                <a href="index.php?logout">
+                <a href="logout.php">
                     <p class="text">Logout</p>   
                 </a>
             <?php } ?>
         </div>
     </div>
 
-    <?php if($cover == "") { $cover = "cover1608542135.jpeg"; } ?>
+    <?php if($cover == "") { $cover = "cover1608542135.jpeg"; }
+        else {
+            //check if the cover value is a valid image
+            if (!file_exists("asset/event-covers/".$cover)) {
+                $cover = "cover1608542135.jpeg";
+            }
+
+        }
+     ?>
     <style>
         .header .bg {
             width: 100%;
@@ -141,7 +157,7 @@ $time_attuale= time();
             </div>
             <div class="body" style="min-height:165px">  
             <?php 
-            if(isset($_SESSION['login_evento'])){ 
+            if($autorizzato){ 
             //sopra: controllo per mostrare la pagina o la modale di login se l'utente non è già loggato
             //sotto l'aggiornamento del Db in caso si torni dal pannello di aggiunta o modifica domanda.
                 
@@ -718,50 +734,7 @@ $time_attuale= time();
                         </div>
 
 
-            <?php } }else{?>
-                <div class="row">
-			
-                <div class="col-md-12 bg">
-                    <div class="row-login">
-                        <div class="login-top">
-                            Login
-                            </div>
-                        <div class="login-bottom">
-                            
-                            <?php 
-                            if(isset($_GET['msg'])){
-                                if($_GET['msg']=="errpsw"){ ?>
-                                    <div class="submit-response failure">
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                        <i class="icon-remove-sign"></i><strong>Wrong password</strong>
-                                    </div>
-                                <?php 
-                                } 
-                                if($_GET['msg']=="nopsw"){ ?>
-                                    <div class="submit-response failure">
-                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                        <i class="icon-remove-sign"></i><strong>Enter your password</strong>
-                                    </div>
-                                <?php } ?>											
-                            <?php } ?>
-                            
-                            <form name="loginEvento" id="loginEvento" action="#" method="post">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label class="txtNormal intestazioneTextarea">Please enter the password:</label>
-                                        <input type="password" name="psw_evento" id="psw_evento" class="form-control required" value="">
-                                    </div>
-                                </div>    
-                                <div class="col-12 text-center">
-                                    <input type="hidden" name="entraRegia" value="1">
-                                    <input type="submit" name="entraLogin" id="entraLogin" value="Enter" class="home-button">
-                                </div>                                                                                      	
-                            </form>
-                        </div>                                    
-                    </div>
-                </div>
-            </div>                           
-            <?php }?>                       
+            <?php } } ?>                      
             </div>
                 
             </div> 
