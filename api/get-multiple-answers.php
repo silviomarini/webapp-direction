@@ -18,8 +18,6 @@ for($y=0;$y<count($sond_risp_multipla);$y++){
 	
 	for($j=0;$j<count($risp_sondaggio);$j++){
 		
-		//echo "sondaggio:".$sondaggio[0];
-		//echo " risposta:".$risp_sondaggio[$j]."\n****\n";
 		$tot_risp_multiple=mysqli_num_rows(mysqli_query($con,"select ID from polls_answers where polls_id='$sondaggio[0]'"));
 		$cont_risp=mysqli_num_rows(mysqli_query($con,"Select ID from polls_answers where polls_id='$sondaggio[0]' and poll_answer='risposta_$risp_sondaggio[$j]'"));
 		

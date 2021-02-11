@@ -22,11 +22,8 @@ $ultimi_id_domande_aperte= $_GET['ultimi_id_domande_aperte'];
 $rif_evento= $_GET['rif_evento'];
 $tab_utenti= $_GET['tab_utenti'];
 
-//echo $ultimi_id_domande_aperte;
 
 $array_ultime_risposte=explode("|",$ultimi_id_domande_aperte);
-//print_r($array_ultime_risposte);
-//echo "<br>";
 
 $ultimi_id_domande_aperte_new="";
 $ultime_risposte="";
@@ -43,11 +40,9 @@ for($i=0;$i<count($array_ultime_risposte);$i++){
 	$ultimi_id_domande_aperte_new.= $dati_sondaggio[0]."***".$ultimo_id_inserito."***";
 	
   	$sql_risposte="Select poll_answer,answer_datetime from polls_answers where polls_id='$dati_sondaggio[0]' and ID>'$dati_sondaggio[1]' order by answer_datetime desc";
-	//$sql_risposte="Select * from polls_answers where polls_id='$dati_sondaggio[0]' and ID<'$dati_sondaggio[1]' order by answer_datetime desc";
 	$r_risposte= mysqli_query($con,$sql_risposte);
 	
 	while($risposte= mysqli_fetch_array($r_risposte)){
-		//$ultimi_id_domande_aperte_new.="***";
 		
 		$ultimi_id_domande_aperte_new.="
 			<div class='cont_risposta'>
