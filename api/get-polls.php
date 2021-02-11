@@ -53,7 +53,6 @@
         $ris = "<div class='text-center fontWeight700 pb-1 pt-1'> Wait the next poll... </div>";
     }
     
-    //$ris.="|||".$ultimo_id_inserito;
     
     echo $ris;
     ?>

@@ -15,7 +15,6 @@ if ($autorizzazione != "autorizzato_regia") {
 } else {
 	$autorizzato = true;
 	$ID_EVENTO=$_SESSION['id_evento'];
-	//$page_type = "regia";
 }
 
 $time_attuale= time();
@@ -102,7 +101,6 @@ $time_attuale= time();
 
 		<?php if($cover == "") { $cover = "cover1608542135.jpeg"; } 
 			else {
-				//check if the cover value is a valid image
 				if (!file_exists("asset/event-covers/".$cover)) {
 					$cover = "cover1608542135.jpeg";
 				}
@@ -440,7 +438,7 @@ $time_attuale= time();
 												}
 											}
 
-											//prepare answer for pie chart
+										
 											$stack = array();
 											$id_sondaggio = $sondaggi["ID"];
 											$query = mysqli_query($con,"
@@ -455,7 +453,7 @@ $time_attuale= time();
 													array_push($stack, $poll_temp["risposta_".$i] );
 												}
 											}
-											//print_r($stack);
+											
 											$colors = array("red", "orange","yellow", "green","blue", "purple","grey", "darkslategray","yellowgreen", "lightblue");
 											
 										
@@ -577,28 +575,24 @@ $time_attuale= time();
 		<input type="hidden" name="rif_evento" id="rif_evento" value="<?php echo $ID_EVENTO;?>">
 		<input type="hidden" name="ultimi_id_domande_aperte" id="ultimi_id_domande_aperte" value="<?php echo $ultimi_id_domande_aperte;?>">                                                    
 		<input type="hidden" name="risposte_multiple" id="risposte_multiple" value="<?php echo $risposte_multiple;?>">                                                    
-        <!-- #content end -->
+     
 
-	</div><!-- #wrapper end -->
+	</div>
 
-	<!-- Go To Top
-	============================================= -->
+
 	<div id="gotoTop" class="icon-angle-up"></div>
 
-	<!-- External JavaScripts
-	============================================= -->
+
 	<script src="<?php echo $path;?>/js/jquery.js"></script>
 	<script src="<?php echo $path;?>/js/plugins.min.js"></script>
 	<script src="<?php echo $path;?>/js/functions.js"></script>
 
-	<!-- Footer Scripts
-	============================================= -->
     <script type="text/javascript">
 	window.setInterval(function(){
 		var rif_evento = $('#rif_evento').val();
 		var tab_utenti = $('#tab_utenti').val();
 
-		// AGGIORNAMENTO REALTIME DOMANDE A RISPOSTA LIBERA
+	
 		var ultimi_id_domande_aperte = $('#ultimi_id_domande_aperte').val();
 		$.ajax({
 			url: "../api/get-open-answers.php",
@@ -606,21 +600,20 @@ $time_attuale= time();
 			crossDomain: true,
 			data: 'ultimi_id_domande_aperte='+ultimi_id_domande_aperte + "&rif_evento=" + rif_evento + "&tab_utenti=" + tab_utenti,
 			success: function(data){
-				//console.log(data);
 				
 				var ultimo_ID_new="";
 				
 				var sondaggi= data.split('|');
 				
 				for (var i = 0; i < sondaggi.length; i++) {
-					//console.log(sondaggi[i]+"_____________");	
+			
 					var risposte_sondaggio= sondaggi[i].split('***');
 					var id_sondaggio= risposte_sondaggio[0];
 					var ultima_risposta_sondaggio= risposte_sondaggio[1];
 					
 					ultimo_ID_new+=id_sondaggio+","+ultima_risposta_sondaggio+"|";
 					
-					//console.log(id_sondaggio+"::"+risposte_sondaggio[2]+"---");
+					
 					
 					if(typeof risposte_sondaggio[2]!=="undefined")	{			
 						var risposte= risposte_sondaggio[2].split('$$$');
@@ -639,7 +632,7 @@ $time_attuale= time();
 			}
 		});	
 		
-		// AGGIORNAMENTO REALTIME DOMANDE A RISPOSTA MULTIPLA
+	
 		var risposte_multiple= $('#risposte_multiple').val();
 		$.ajax({
 			url: "../api/get-multiple-answers.php",
@@ -647,7 +640,7 @@ $time_attuale= time();
 			crossDomain: true,
 			data: 'risposte_multiple='+risposte_multiple + "&rif_evento=" + rif_evento + "&tab_utenti=" + tab_utenti,
 			success: function(data){
-				//console.log(data);
+			
 				var sondaggi= data.split('|');
 
 				for(var a=0;a<sondaggi.length;a++){
@@ -655,11 +648,10 @@ $time_attuale= time();
 					sondaggio= array_sondaggio[0];
 					risposte= array_sondaggio[1].split(',');
 					
-					//console.log(sondaggio+":\n");
+				
 					
 					for(var b=0;b<risposte.length;b++){
 						var risp= risposte[b].split('-');
-						//console.log("cont_risposta_"+risp[0]+"_"+sondaggio+"="+risp[1]+"\n");	
 						
 						$("#cont_risposta_"+risp[0]+"_"+sondaggio).html(risp[1]);
 					}
@@ -669,18 +661,15 @@ $time_attuale= time();
 			}
 		});			
 				
-		//AGGIORNO IN REALTIME GLI STATI DELLE DOMANDE
 		$.ajax({
 			url: "../api/get-all-questions-status.php",
 			type: "get",
 			crossDomain: true,
 			data: "&rif_evento=" + rif_evento + "&tab_utenti=" + tab_utenti,
 			success: function(data){
-				//console.log(data);
 				var stati_sondaggi= data.split('|');
 				for (var k= 0; k < stati_sondaggi.length; k++) {
 					var stato_s= stati_sondaggi[k].split(',');
-					//console.log(stato_s[0]+":"+stato_s[1]);
 					$("#stato_domanda_"+stato_s[0]).html(stato_s[1]);
 				}
 			},
@@ -690,7 +679,6 @@ $time_attuale= time();
 	  
 	}, 5000);
 	
-	// 20000 -> 20 sec
     </script>    
     
 </body>

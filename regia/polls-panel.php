@@ -15,15 +15,13 @@ if ($autorizzazione != "autorizzato_regia") {
 } else {
 	$autorizzato = true;
 	$ID_EVENTO=$_SESSION['id_evento'];
-	//$page_type = "regia";
 }
-//---------NOME TABELLA-----------//
+
 $tabella='sondaggi';
 
 $file_script='polls-panel.php';
-//--------------- visualizzazoni ----------
-$ArticoliPagina = 1000;//Numero articoli per pagina
-//campi obbligatori
+$ArticoliPagina = 1000;
+
 $campi_req = array("domanda","durata","tipo");
 
 if(@$_REQUEST['azione']!="aggiorna" && !isset($_GET['aggiungi_nuovo']) && !isset($_GET['aggiornanuovo'])){$page = $_SERVER['PHP_SELF'];$sec = "5";header("Refresh: $sec; url=$page");}
@@ -134,7 +132,6 @@ $time_attuale= time();
 
     <?php if($cover == "") { $cover = "cover1608542135.jpeg"; }
         else {
-            //check if the cover value is a valid image
             if (!file_exists("asset/event-covers/".$cover)) {
                 $cover = "cover1608542135.jpeg";
             }
@@ -158,29 +155,28 @@ $time_attuale= time();
             <div class="body" style="min-height:165px">  
             <?php 
             if($autorizzato){ 
-            //sopra: controllo per mostrare la pagina o la modale di login se l'utente non è già loggato
-            //sotto l'aggiornamento del Db in caso si torni dal pannello di aggiunta o modifica domanda.
+
                 
                 if (!isset($_REQUEST['cke'])){$_REQUEST['cke']=null;}
                     switch ($_REQUEST['cke'])
                     {
                     case "":
                         if(isset($_GET['azione']) && $_GET['azione']=='del'){
-                            //cancello il record nel db
+  
                             $sql="DELETE FROM $tabella WHERE ID = '$_REQUEST[ID]'";
-                            //echo $sql.'<br>';
+  
                             mysqli_query ($con,$sql); 
                             
-                            //CANCELLO RISPOSTE
+             
                             $sql_del_risp="DELETE FROM sondaggi_risposte WHERE s_ID_sondaggio = '$_REQUEST[ID]'";
                             mysqli_query ($con,$sql_del_risp); 			
                             
-                            //exit;
+                     
                             $esito_cancellazione=1;
                         }
 
                         if(isset($_GET['azione']) && $_GET['azione']=='delRisposte'){
-                            //CANCELLO RISPOSTE
+               
                             $sql_del_risp="DELETE FROM sondaggi_risposte WHERE s_ID_sondaggio = '$_REQUEST[ID]'";
                             mysqli_query ($con,$sql_del_risp); 	 
                             
@@ -191,50 +187,41 @@ $time_attuale= time();
                         if(isset($_GET['azione']) && $_GET['azione']=='ordina'){
                             $sqlG=NULL;
 
-                            //sposto su
+                         
                             if($_GET['ordine']>$_GET['nuovo']){
                                 
-                                //Sposto  ordine
+                           
                                 $sql1="UPDATE $tabella SET ordine = '$_GET[nuovo]' WHERE ID = '$_GET[ID_documento]'";
                                 mysqli_query($con,$sql1);
-                                //echo '<br><br>'.$sql1.'<br>'; 
-                                
-                                //Dopo avere spostato l'articolo risetto tutti gli ordini di visualizzazione
+                              
                                 $sql="SELECT * FROM $tabella  WHERE ID != '$_GET[ID_documento]' and ordine >= '$_GET[nuovo]' order by ordine ASC";
-                                //echo $sql.'<br />';
+                       
                                 $ordine=$_GET['nuovo']+1;
                                 $r_result=mysqli_query($con,$sql);
                                 while($N=mysqli_fetch_array($r_result)){
-                                    //$x=$ordine;
+                       
                                     $sql1="UPDATE $tabella SET `ordine` = '$ordine' WHERE ID = '$N[ID]' LIMIT 1 ";
-                                    //echo '<br />'.$sql1;
+                             
                                     mysqli_query($con,$sql1);
                                     $ordine++;
                                 }
                             }
                             
-                            //sposto giù
                             if($_GET['ordine']<$_GET['nuovo']){
-                                //Sposto  ordine
                                 $sql1="UPDATE $tabella SET ordine = '$_GET[nuovo]' WHERE ID = '$_GET[ID_documento]'";
-                                //echo '<br><br>'.$sql1.'<br>';
                                 mysqli_query($con,$sql1);
                                 
-                                //Dopo avere spostato l'articolo risetto tutti gli ordini di visualizzazione
                                 $sql="SELECT * FROM $tabella  WHERE ID != '$_GET[ID_documento]' and ordine <= '$_GET[nuovo]' order by ordine DESC";
-                                //echo $sql.'<br />';
                                 
                                 $ordine=$_GET['nuovo']-1;
                                 $r_result=mysqli_query($con,$sql);
                                 while($N=mysqli_fetch_array($r_result)){
-                                    //$x=$ordine;
                                     $sql1="UPDATE $tabella SET `ordine` = '$ordine' WHERE ID = '$N[ID]' LIMIT 1 ";
-                                    //echo '<br />'.$sql1;
                                     mysqli_query($con,$sql1);
                                     $ordine--;
                                 }
                             }
-                            //exit;
+                            
                         }		 
                     break;
                     case "1":
@@ -247,12 +234,12 @@ $time_attuale= time();
                         if(isset($_REQUEST['azione']) && $_REQUEST['azione']=='agg'){
                             $control_campi=0;
 
-                            //exit;
+                          
                             
                                 foreach($_POST as $key => $valore){
                                         $valore=str_replace("'","´",$valore);
                                         $valore = stripslashes(trim($valore));
-                                        //echo $key.' - '.$valore.'<br />';
+                                     
                                         $_POST[$key]=$valore;
                                         
                                         
@@ -276,11 +263,11 @@ $time_attuale= time();
                                             @$msg_errore[$key2] = "" .$valore." ";
                                             @$class_errore[$key2] = ' class="erroreform"';
                                             @$control_campi++;
-                                        }	//fine if
-                                    } //fine if
+                                        }	
+                                    } 
                                 } 
                         }
-                        //echo $erro_msg;
+                     
                                 
                         if(isset($control_campi) && $control_campi==0 && isset($_POST['azione'])){
                                 $query="UPDATE $tabella SET
@@ -299,10 +286,10 @@ $time_attuale= time();
                                         risposta_10 = '".@$_POST['risposta_10']."'
                                         WHERE ID = '$_POST[ID]'";
                             
-                            //echo $query;exit;
+                 
                             mysqli_query($con,$query) or die (mysqli_error($con));
                             
-                            //exit;
+                        
                             header("location: $_SERVER[PHP_SELF]"); exit;
                         }
                         
@@ -318,9 +305,7 @@ $time_attuale= time();
                     <div class="row">
 						
 						<?php
-                            global $con, $page,$file_script, $azione, $azione2, $dati_modulo, $tabella, $tabella_CAT, $tabella_MCAT, $ID, $msg_errore, $erro_msg,$dir_immagini, $file_script ;
-                            global  $AI, $SP, $DE, $FR; //lingue
-                            global $vedi_codice_articolo, $vedi_prezzo, $vedi_breve_descrizioni_scheda, $vedi_descrizioni_scheda, $vedi_box_ins_immagini, $control_campi;
+                            
                             if(!isset($_REQUEST['azione'])) $_REQUEST['azione']=null;
                             if(isset($_REQUEST['azione']) && $_REQUEST['azione']=='nuovo'){
                                 
@@ -328,7 +313,7 @@ $time_attuale= time();
                                 $data=time();
                                 
 
-                                //ultimo ordine
+                             
                                 $ultimo_ordine= mysqli_fetch_array(mysqli_query($con,"Select * from $tabella order by ordine DESC LIMIT 1 "));
                                 $ordine_nuovo= $ultimo_ordine['ordine']+1;
 
@@ -342,7 +327,7 @@ $time_attuale= time();
                                 if(!isset($_REQUEST['ID'])){$ID=null;}else{$ID=$_REQUEST['ID'];$_SESSION['id_prodotto']=$_REQUEST['ID'];}
                                 $row=mysqli_fetch_array(mysqli_query ($con,"SELECT * FROM $tabella WHERE ID = '$ID'"));
                                 
-                                //foreach($row as $K => $V){echo $K.'<br>';}
+                        
                                     $_POST['ID']  =$row['ID'];
                                     $_POST['domanda']  	=$row['domanda'];
                                     $_POST['tipo']  	=$row['tipo'];
@@ -363,7 +348,7 @@ $time_attuale= time();
                             if(isset($_GET["aggiornanuovo"]) || $_REQUEST['azione']=='aggiorna'){
                             ?>
                                         
-                                <!-- start: page -->
+                          
                                 <div id="scheda_descrizione"> 
                                     <div id="contenitoreContenutiCentro" style="padding:20px">
                                         <div class="row">
@@ -504,42 +489,6 @@ $time_attuale= time();
 
                                                     </table>
                                                 </div>
-                                                <!--div class="col-md-6">
-                                                    <section class="areeProdottoBig">
-                                                            <header class="panel-heading">
-                                                                <h2 class="panel-title"><strong>REGIA</strong></h2>
-                                                            </header>
-                                                            <div class="panel-body" style="padding-bottom:0px"> 
-                                                            <table width="100%"  border="0" cellspacing="4" cellpadding="0">
-                                                                <tr>
-                                                                    <td>
-                                                                        <strong>Password regia</strong><br>
-                                                                        <?php  
-                                                                        /*
-                                                                        if(!isset($control_campi)){
-                                                                            //decripta
-                                                                            $ps=$_POST['codice_accesso'];
-                                                                            $N_ps=strlen($ps);
-                                                                            $N_fraz=$N_ps/5;
-                                                                            $s=0;
-                                                                            for($p=0; $p<$N_ps; $p++){
-                                                                                if($s==5){@$codice_accesso .=$ps[$p];$s=0;}
-                                                                                else{$s++;}
-                                                                            }
-                                                                        }else{
-                                                                            @$codice_accesso= $_POST['codice_accesso'];
-                                                                        }																
-                                                                        */
-                                                                        ?>
-                                                                        <input name="password" type="text" class="campoInput" id="password" value="<?php echo  @$_POST['password']; ?>" size="20"><br>
-                                                                        <small>Minimo 5 caratteri tra lettere e numeri</small>
-                                                                        <br /><br />
-                                                                </td>
-                                                                </tr>
-                                                            </table>
-                                                        </div>
-                                                    </section>
-                                                </div-->
                                                     
                                                 <input type="hidden" name="cke" value="1">
                                                 <input type="hidden" name="azione" value="agg">
@@ -561,7 +510,7 @@ $time_attuale= time();
                                         </div>
                                     </div>
                                 </div>
-                                <!-- end: page -->
+                          
 
                             <?php } else { ?>
                         
@@ -600,7 +549,7 @@ $time_attuale= time();
                                                 </div>
                                         <?php } ?>  
                                         
-                                        <?php //if (isset($_SESSION['sessione_mastercontol'])) { ?>
+                                    
                                         <div id="boxInserisciNuovo" style="padding:3px; text-align: center; color: white; border: 2px solid white;border-radius:8px;background-color:brown;">
                                                 <?php if(isset($_GET['aggiungi_nuovo'])){ ?>
                                                 <form action="<?php echo $_SERVER['PHP_SELF'] ?>?aggiornanuovo" method="post" name="form" enctype="multipart/form-data">
@@ -614,33 +563,30 @@ $time_attuale= time();
                                                     <a href="<?php echo $_SERVER['PHP_SELF'] ?>?aggiungi_nuovo" style="color:white; font-weight: bold;">New Poll</a>
                                                 <?php } ?>
                                             </div>
-                                        <?php //} ?>
+                                        
                                                     
                                     <div id="contenitoreContenutiCentro">
-                                            <?php //----------------------Paginazine
+                                            <?php 
                                                 $sql =  "SELECT * FROM sondaggi order by ordine";	
                                                 $result = mysqli_query($con,$sql);
-                                            // Impostazione dei parametri per le pagine multiple!
                                                 $page = @ceil(@mysqli_num_rows($result)/$ArticoliPagina);
                                                 if (!isset($_GET['sheet'])){$_GET['sheet']=null;}
                                                 if (!$_GET['sheet']) { $_GET['sheet'] = 1; }
                                                 $limit_down = ($_GET['sheet'] - 1)*$ArticoliPagina;
                                                 @mysqli_free_result($result);
                                                     $sql .= " LIMIT $limit_down, $ArticoliPagina";
-                                            // Rifacciamo la query!
+                                           
                                                 $result = mysqli_query($con,$sql );
-                                            //------------Creazione del browser-
+                                        
                                             
                                             ?>
                                             <div id="col-md-12" style="text-align:left; margin-top:30px;"> <strong>Pages</strong> 
                                                 <?php	
-                                                //**************Creazione link Avanti Indietro*****************************************
                                                 if(!isset($_GET['cerca'])){$_GET['cerca']=null;}
                                                 if($_GET['sheet'] > 1) {
                                                     echo ('<a href="'.$_SERVER['PHP_SELF'].'?sheet='.($_GET['sheet'] - 1).'&cerca='.$_GET['cerca'].'" > <<< indietro </a>&nbsp;&nbsp;');
                                                 }
                                                 for( $loop = 0; $loop < $page; $loop++ ) {
-                                                    // L'IF fa in modo che la pagina selezionata sia con il quadratino nero
                                                     if( $loop == ($_GET['sheet'] - 1) ) {
                                                         echo ('<strong> ['.($loop + 1).'] </strong>');
                                                     } else {
@@ -669,8 +615,7 @@ $time_attuale= time();
                                                             <?php 
                                                             $sql="SELECT * FROM $tabella";
                                                             @$N=mysqli_num_rows(mysqli_query($con,$sql));
-                                                            //echo $sql.'<br />';
-                                                            //echo $N;
+                                                     
                                                             $a='0';
                                                             while(@$row=mysqli_fetch_array($result))  
                                                             {$a++; ?>
@@ -747,12 +692,11 @@ $time_attuale= time();
 
         </section>		
                                                            
-        <!-- #content end -->
+ 
 
-	</div><!-- #wrapper end -->
+	</div>
 
-	<!-- Go To Top
-	============================================= -->
+
 	<div id="gotoTop" class="icon-angle-up"></div>
 
     
@@ -800,8 +744,8 @@ $time_attuale= time();
         </script>
 
 <script type="text/javascript">
-    //per gestire l'ordine delle domande
-    function MM_jumpMenu(targ,selObj,restore){ //v3.0
+
+    function MM_jumpMenu(targ,selObj,restore){ 
     eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
     if (restore) selObj.selectedIndex=0;
     }
