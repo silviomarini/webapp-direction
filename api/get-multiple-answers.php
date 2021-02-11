@@ -17,9 +17,9 @@ for($y=0;$y<count($sond_risp_multipla);$y++){
 	$risp_sondaggio= explode(",",$sondaggio[1]);
 	
 	for($j=0;$j<count($risp_sondaggio);$j++){
-
-		$tot_risp_multiple=mysqli_num_rows(mysqli_query($con,"select ID from sondaggi_risposte where s_ID_sondaggio='$sondaggio[0]'"));
-		$cont_risp=mysqli_num_rows(mysqli_query($con,"Select ID from sondaggi_risposte where s_ID_sondaggio='$sondaggio[0]' and s_risposta='risposta_$risp_sondaggio[$j]'"));
+		
+		$tot_risp_multiple=mysqli_num_rows(mysqli_query($con,"select ID from polls_answers where polls_id='$sondaggio[0]'"));
+		$cont_risp=mysqli_num_rows(mysqli_query($con,"Select ID from polls_answers where polls_id='$sondaggio[0]' and poll_answer='risposta_$risp_sondaggio[$j]'"));
 		
 		if($cont_risp>0){		
 			$perc_risp=(100*$cont_risp)/$tot_risp_multiple;	

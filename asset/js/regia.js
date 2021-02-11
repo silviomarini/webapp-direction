@@ -4,3 +4,6 @@ function getDomande(last_id) {
 }
 
 
+$(".close").on('click', function(event){
+    $( ".submit-response" ).hide();
+});

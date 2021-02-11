@@ -11,7 +11,7 @@
 
 	<link rel="stylesheet" href="../asset/css/style.css" type="text/css" />
 	
-	<title>Admin - Privilege Web App</title>
+	<title>Privilege Web App</title>
 </head>
 
 
@@ -129,7 +129,7 @@
         </div>
         
         <h1 class="title" style="margin-left: 20px;">
-            ADMIN PANEL
+            DIRECTION
         </h1>
         
         </div>
@@ -151,45 +151,34 @@
         <?php
         if (isset($_POST['username'])) {
 
-            //variabili POST con anti sql Injection
-            $username=mysqli_real_escape_string($con, $_POST['username']); //faccio l'escape dei caratteri dannosi
             $password=mysqli_real_escape_string($con, $_POST['password']);
             $errorMessage = "";
 
-            $query = "SELECT * FROM admin WHERE username = '$username' AND password = '".md5($password)."' ";
+            $query = "SELECT * FROM streamings WHERE password = '".$password."' ";
             $ris = mysqli_query($con, $query);
             $riga= mysqli_fetch_array($ris);   
             
-            //echo $query;
 
+<<<<<<< HEAD
             /*Prelevo l'identifier dell'utente */
-            $cod=$riga['username'];
-            $enabled=$riga['attivo'];
+            $cod=$riga['identifier'];
+=======
+            $cod=$riga['identificativo'];
+>>>>>>> 7b70e42e8eebe034c553bf7fd73fe5c0c8b71bc7
+            $id_evento = $riga["ID"];
 
-            $livello=$riga['permessi'];
 
-            /* Effettuo il controllo */
             if ($cod == NULL) $trovato = 0 ;
             else $trovato = 1;  
 
-            /* Username e password corrette */
-            if(($trovato == 1) AND ($enabled == 1)){
+            if($trovato == 1){
 
-                $_SESSION['autorizzato'] = 'autorizzato' ;
+                $_SESSION['autorizzato_regia'] = 'autorizzato_regia' ;
 
-                /*Registro il codice dell'utente*/
                 $_SESSION['cod'] = $cod;
+                $_SESSION['id_evento'] = $id_evento;
 
                 $session_id = rand(100000,999999);
-                
-                $cookie_name = "USERNAME";
-                $cookie_value = $cod;
-                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
-                
-                $cookie_name = "SESSION_ID";
-                $cookie_value = $session_id;
-                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
-
                 echo '<script language=javascript>document.location.href="index.php"</script>'; 
 
             } else {
@@ -213,12 +202,7 @@
 
         <div id="login">
             <form method="post">
-
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Insert username" required>
-                </div>
-
+                <input type="hidden" class="form-control" id="username" name="username" value="username" placeholder="Insert username" required>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Insert password" required>
@@ -226,7 +210,7 @@
 
                 <div>
                     <div class="col-sm-6 text-right">
-                        <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Accedi</button>
+                        <button class="btn btn-primary w-md waves-effect waves-light" type="submit">LOGIN</button>
                     </div>
                 </div>
             </form>

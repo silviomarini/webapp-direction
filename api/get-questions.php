@@ -17,19 +17,19 @@
     $active_type = "";
     switch ($_GET["filter"]) {
         case 'selected':
-            $supp_condition = " AND d_stato='y' ";
+            $supp_condition = " AND question_status='y' ";
             $active_type = "SELECTED";
             break;
         case 'deleted':
-            $supp_condition = " AND d_stato='n' ";
+            $supp_condition = " AND question_status='n' ";
             $active_type = "DELETED";
             break;
         case 'done':
-            $supp_condition = " AND d_stato='d' ";
+            $supp_condition = " AND question_status='d' ";
             $active_type = "DONE";
             break;
         case 'all':
-            $supp_condition = " AND d_stato='' ";
+            $supp_condition = " AND question_status='' ";
             $active_type = "ALL";
             break;
             
@@ -39,44 +39,44 @@
     }
     
     
-    $sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select ID from domande where d_evento='".$rif_evento."' order by d_data_domanda desc LIMIT 1"));
+    $sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select ID from questions where event_id='".$rif_evento."' order by question_timestamp desc LIMIT 1"));
     $ultimo_id_inserito= $sql_ultimo_id_inserito['ID'];
     if(!isset($ultimo_id_inserito)){
         $ultimo_id_inserito=0;	
     }
     
-    $sql_domande="Select ID,d_domanda,d_data_domanda from domande where d_evento='".$rif_evento."' and ID>'$ultimo_ID' and d_non_visibile='0' ".$supp_condition." order by d_data_domanda desc";
+    $sql_domande="Select ID,question,question_timestamp from questions where event_id='".$rif_evento."' and ID>'$ultimo_ID' and hidden_question='0' ".$supp_condition." order by question_timestamp desc";
     $r_domande= mysqli_query($con,$sql_domande);
     $ris="";
-    while($domande= mysqli_fetch_array($r_domande)){
+    while($questions= mysqli_fetch_array($r_domande)){
         $ris.='
         
-        <div class="card mb-3" id="domanda_'.$domande['ID'].'">
+        <div class="card mb-3" id="domanda_'.$questions['ID'].'">
           <div class="card-header">
               <div class="row">
-                  <div class="header-info sx"><strong>'.$domande['ID'].')</strong> h <strong>'.ora_X_DB($domande['d_data_domanda']).'</strong></div>
+                  <div class="header-info sx"><strong>'.$questions['ID'].')</strong> h <strong>'.ora_X_DB($questions['question_timestamp']).'</strong></div>
                 <div class="header-info center">
                     <div class="float-right">';
     
                     // <!-- GO LIVE -->
                     if( $active_type == "SELECTED"){ 
-                        $ris.=' <span class="statoDomanda statoVerde" onClick="go_live(this)" title="GO Live" id="'.$domande["ID"].'">
+                        $ris.=' <span class="statoDomanda statoVerde" onClick="go_live(this)" title="GO Live" id="'.$questions["ID"].'">
                         <i class="fa fa-upload"></i></span> ';
                     }
                     // <!-- YES -->
                     if($active_type == "" || $active_type == "ALL"){
-                        $ris.='<span class="statoDomanda statoVerde" valore="y" id="'.$domande["ID"].'" onClick="change_status(this)">
+                        $ris.='<span class="statoDomanda statoVerde" valore="y" id="'.$questions["ID"].'" onClick="change_status(this)">
                                 <i class="fa fa-check"></i></span>';
                     }
                     // <!-- NO -->	
                     if($active_type == "" || $active_type == "ALL"){
-                        $ris.='	<span class="statoDomanda statoRosso" valore="n" id="'.$domande["ID"].'" onClick="change_status(this)">
+                        $ris.='	<span class="statoDomanda statoRosso" valore="n" id="'.$questions["ID"].'" onClick="change_status(this)">
                             <i class="fa fa-times"></i></span> ';
                     }
                     
                     // <!-- RESET -->	
                     if($active_type == "" || $active_type == "SELECTED" || $active_type == "DELETED"){
-                        $ris.='	<span class="statoDomanda statoAzzera" valore="azzera" id="'.$domande["ID"].'" onClick="change_status(this)" title="Reset">
+                        $ris.='	<span class="statoDomanda statoAzzera" valore="azzera" id="'.$questions["ID"].'" onClick="change_status(this)" title="Reset">
                             <i class="fa fa-refresh"></i></span> ';
                     }
                     
@@ -91,23 +91,23 @@
                     if( $active_type == "" || $active_type == "SELECTED"){
                         $ris.='	<div style="display: inline-grid;"> <span class="statoDomanda statoGiallo" valore="d"';
                         if(!$active_options){ $ris.= 'style="width: fit-content;"'; }
-                        $ris.=' id="'.$domande["ID"].'" onClick="change_status(this)"><i class="fa fa-thumbs-up"></i></span> </div>';
+                        $ris.=' id="'.$questions["ID"].'" onClick="change_status(this)"><i class="fa fa-thumbs-up"></i></span> </div>';
                     }
     
     
         $ris.=' <span> Status: </span>
-                    <span class="barraStato" id="barra_stato_'.$domande['ID'].'"></span>
+                    <span class="barraStato" id="barra_stato_'.$questions['ID'].'"></span>
                 </div>		
               </div>
           </div>
             <div class="card-body">
-                <p class="card-text">'.nl2br($domande['d_domanda']).'</p>
+                <p class="card-text">'.nl2br($questions['question']).'</p>
             </div>
         </div>
         
         <script type="text/javascript"> 
         // CAMBIO LO STATO DELLA DOMANDA AL CLICK
-        $(".statoDomanda_'.$domande['ID'].'").click(function() {
+        $(".statoDomanda_'.$questions['ID'].'").click(function() {
             var rif_evento = $(\'#rif_evento\').val();
             var id_domanda= $(this).attr("id");
             var stato_domanda= $(this).attr("valore");

@@ -109,3 +109,7 @@ function getPolls(){
                 }
             });		
     }
+
+    $(".close").on('click', function(event){
+        $( ".submit-response" ).hide();
+    });

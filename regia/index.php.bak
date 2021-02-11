@@ -325,7 +325,13 @@ if(isset($_GET["filter"])){
 		});	
 
 	}, 5000);
+<<<<<<< HEAD
+	// 20000 -> 20 sec
+	
+	// AGGIORNO REALTIME GLI STATI DELLE questions
+=======
 
+>>>>>>> 7b70e42e8eebe034c553bf7fd73fe5c0c8b71bc7
 	window.setInterval(function(){
 		var rif_evento = $('#rif_evento').val();
 		$.ajax({
@@ -344,6 +350,11 @@ if(isset($_GET["filter"])){
 					if(dati_domande[1]=="y"){	
 						$("#barra_stato_"+dati_domande[0]).css("background-color","#2aa900");
 							
+<<<<<<< HEAD
+						//aggiungo alert domanda attivata -> funzione rimossa con revisone 2
+						//$("#alert-questions-attivate").append('<div class="submit-response success" id="alertDomanda2"><strong>Question <strong>'+dati_domande[0]+'</strong> is active!</strong></div> ');
+=======
+>>>>>>> 7b70e42e8eebe034c553bf7fd73fe5c0c8b71bc7
 					}
 					if(dati_domande[1]=="n"){	
 						$("#barra_stato_"+dati_domande[0]).css("background-color","#e81f1f");

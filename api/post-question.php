@@ -7,7 +7,7 @@
             $question = $value;
         }
     $getdata=date("Y-m-d h:i:s");
-    $query = "INSERT INTO domande (d_ID_partecipante, d_domanda, d_evento, d_data_domanda) VALUES (1, '$question', 1, '$getdata')";
+    $query = "INSERT INTO questions (customer_id, question, event_id, question_timestamp) VALUES (1, '$question', 1, '$getdata')";
     
     $ris = mysqli_query($con,$query);
     

@@ -25,7 +25,7 @@
 		</div>
 		
 		<?php
-			$evento = mysqli_fetch_array(mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "));
+			$evento = mysqli_fetch_array(mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1 "));
 			$titolo = "Privilege Web App";
 			if($evento != null){
 				$titolo = $evento['nome'];
@@ -103,6 +103,7 @@
 								</div>
 							</div>
 							<div class="submit-response success" style="display:none;" id="alertQuestion">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
 								<strong>Question sent!</strong>
 							</div> 
 							

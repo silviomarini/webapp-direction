@@ -154,7 +154,7 @@
             $password=mysqli_real_escape_string($con, $_POST['password']);
             $errorMessage = "";
 
-            $query = "SELECT * FROM eventi WHERE password = '".$password."' ";
+            $query = "SELECT * FROM streamings WHERE password = '".$password."' ";
             $ris = mysqli_query($con, $query);
             $riga= mysqli_fetch_array($ris);   
             

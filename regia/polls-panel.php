@@ -17,7 +17,7 @@ if ($autorizzazione != "autorizzato_regia") {
 	$ID_EVENTO=$_SESSION['id_evento'];
 }
 
-$tabella='sondaggi';
+$tabella='polls_master';
 
 $file_script='polls-panel.php';
 $ArticoliPagina = 1000;
@@ -109,7 +109,7 @@ $time_attuale= time();
         </div>
         
         <?php
-            $evento = mysqli_fetch_array(mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "));
+            $evento = mysqli_fetch_array(mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1 "));
             $titolo = "Privilege Web App";
             if($evento != null){
                 $titolo = $evento['nome'];
@@ -167,8 +167,7 @@ $time_attuale= time();
   
                             mysqli_query ($con,$sql); 
                             
-             
-                            $sql_del_risp="DELETE FROM sondaggi_risposte WHERE s_ID_sondaggio = '$_REQUEST[ID]'";
+                            $sql_del_risp="DELETE FROM polls_answers WHERE polls_id = '$_REQUEST[ID]'";
                             mysqli_query ($con,$sql_del_risp); 			
                             
                      
@@ -176,8 +175,7 @@ $time_attuale= time();
                         }
 
                         if(isset($_GET['azione']) && $_GET['azione']=='delRisposte'){
-               
-                            $sql_del_risp="DELETE FROM sondaggi_risposte WHERE s_ID_sondaggio = '$_REQUEST[ID]'";
+                            $sql_del_risp="DELETE FROM polls_answers WHERE polls_id = '$_REQUEST[ID]'";
                             mysqli_query ($con,$sql_del_risp); 	 
                             
                             $esito_cancellazione=2;
@@ -274,16 +272,16 @@ $time_attuale= time();
                                         domanda = '".@$_POST['domanda']."',
                                         tipo ='".@$_POST['tipo']."',
                                         durata = '".@$_POST['durata']."',
-                                        risposta_1 = '".@$_POST['risposta_1']."',
-                                        risposta_2 = '".@$_POST['risposta_2']."',
-                                        risposta_3 = '".@$_POST['risposta_3']."',
-                                        risposta_4 = '".@$_POST['risposta_4']."',
-                                        risposta_5 = '".@$_POST['risposta_5']."',
-                                        risposta_6 = '".@$_POST['risposta_6']."',
-                                        risposta_7 = '".@$_POST['risposta_7']."',
-                                        risposta_8 = '".@$_POST['risposta_8']."',
-                                        risposta_9 = '".@$_POST['risposta_9']."',
-                                        risposta_10 = '".@$_POST['risposta_10']."'
+                                        answer_1 = '".@$_POST['answer_1']."',
+                                        answer_2 = '".@$_POST['answer_2']."',
+                                        answer_3 = '".@$_POST['answer_3']."',
+                                        answer_4 = '".@$_POST['answer_4']."',
+                                        answer_5 = '".@$_POST['answer_5']."',
+                                        answer_6 = '".@$_POST['answer_6']."',
+                                        answer_7 = '".@$_POST['answer_7']."',
+                                        answer_8 = '".@$_POST['answer_8']."',
+                                        answer_9 = '".@$_POST['answer_9']."',
+                                        answer_10 = '".@$_POST['answer_10']."'
                                         WHERE ID = '$_POST[ID]'";
                             
                  
@@ -332,16 +330,16 @@ $time_attuale= time();
                                     $_POST['domanda']  	=$row['domanda'];
                                     $_POST['tipo']  	=$row['tipo'];
                                     $_POST['durata']  	=$row['durata'];
-                                    $_POST['risposta_1']  	=$row['risposta_1'];
-                                    $_POST['risposta_2']  	=$row['risposta_2'];
-                                    $_POST['risposta_3']  	=$row['risposta_3'];
-                                    $_POST['risposta_4']  	=$row['risposta_4'];
-                                    $_POST['risposta_5']  	=$row['risposta_5'];
-                                    $_POST['risposta_6']  	=$row['risposta_6'];
-                                    $_POST['risposta_7']  	=$row['risposta_7'];
-                                    $_POST['risposta_8']  	=$row['risposta_8'];
-                                    $_POST['risposta_9']  	=$row['risposta_9'];
-                                    $_POST['risposta_10']  	=$row['risposta_10'];
+                                    $_POST['answer_1']  	=$row['answer_1'];
+                                    $_POST['answer_2']  	=$row['answer_2'];
+                                    $_POST['answer_3']  	=$row['answer_3'];
+                                    $_POST['answer_4']  	=$row['answer_4'];
+                                    $_POST['answer_5']  	=$row['answer_5'];
+                                    $_POST['answer_6']  	=$row['answer_6'];
+                                    $_POST['answer_7']  	=$row['answer_7'];
+                                    $_POST['answer_8']  	=$row['answer_8'];
+                                    $_POST['answer_9']  	=$row['answer_9'];
+                                    $_POST['answer_10']  	=$row['answer_10'];
 
                             }
 
@@ -406,63 +404,63 @@ $time_attuale= time();
                                                         <tr>
                                                         <td colspan="2" style="padding-bottom:5px;">
                                                             <?php $mostra_url_evento= ($_POST['tipo']!="" && $_POST['tipo']!="risp_aperta") ? "" : "style='display:none;'"; ?>
-                                                            <input type="hidden" name="risposta_1" id="risposta_1" value="">
-                                                            <input type="hidden" name="risposta_2" id="risposta_2" value="">
-                                                            <input type="hidden" name="risposta_3" id="risposta_3" value="">
-                                                            <input type="hidden" name="risposta_4" id="risposta_4" value="">
-                                                            <input type="hidden" name="risposta_5" id="risposta_5" value="">
-                                                            <input type="hidden" name="risposta_6" id="risposta_6" value="">
-                                                            <input type="hidden" name="risposta_7" id="risposta_7" value="">
-                                                            <input type="hidden" name="risposta_8" id="risposta_8" value="">
-                                                            <input type="hidden" name="risposta_9" id="risposta_9" value="">
-                                                            <input type="hidden" name="risposta_10" id="risposta_10" value="">
+                                                            <input type="hidden" name="answer_1" id="answer_1" value="">
+                                                            <input type="hidden" name="answer_2" id="answer_2" value="">
+                                                            <input type="hidden" name="answer_3" id="answer_3" value="">
+                                                            <input type="hidden" name="answer_4" id="answer_4" value="">
+                                                            <input type="hidden" name="answer_5" id="answer_5" value="">
+                                                            <input type="hidden" name="answer_6" id="answer_6" value="">
+                                                            <input type="hidden" name="answer_7" id="answer_7" value="">
+                                                            <input type="hidden" name="answer_8" id="answer_8" value="">
+                                                            <input type="hidden" name="answer_9" id="answer_9" value="">
+                                                            <input type="hidden" name="answer_10" id="answer_10" value="">
                                                             
                                                             <div id="didaTipoDomanda" <?php echo $mostra_url_evento;?>>
                                                                 <span style="font-weight:bold;">Answer 1</span>
-                                                                <input  name="risposta_1" id="risposta_1" class="form-control reduce" value="<?php echo @$_POST['risposta_1'] ?>">
+                                                                <input  name="answer_1" id="answer_1" class="form-control reduce" value="<?php echo @$_POST['answer_1'] ?>">
                                                                 <br>
 
                                                                 <span style="font-weight:bold;">Answer 2</span>
-                                                                <input  name="risposta_2" id="risposta_2" class="form-control reduce" value="<?php echo @$_POST['risposta_2'] ?>">
+                                                                <input  name="answer_2" id="answer_2" class="form-control reduce" value="<?php echo @$_POST['answer_2'] ?>">
                                                                 <br>
 
                                                                 <span style="font-weight:bold;">Answer 3</span>
-                                                                <input  name="risposta_3" id="risposta_3" class="form-control reduce" value="<?php echo @$_POST['risposta_3'] ?>">
+                                                                <input  name="answer_3" id="answer_3" class="form-control reduce" value="<?php echo @$_POST['answer_3'] ?>">
                                                                 <br>
 
                                                                 <span style="font-weight:bold;">Answer 4</span>
-                                                                <input  name="risposta_4" id="risposta_4" class="form-control reduce" value="<?php echo @$_POST['risposta_4'] ?>">
+                                                                <input  name="answer_4" id="answer_4" class="form-control reduce" value="<?php echo @$_POST['answer_4'] ?>">
                                                                 
                                                                 
                                                                 
-                                                                <div id="ris5" class="ris_cont" <?php if(isset($_POST['risposta_5']) && $_POST['risposta_5'] != ""){ echo "style='display:block;'"; } else { echo "style='display:none;'"; } ?> >
+                                                                <div id="ris5" class="ris_cont" <?php if(isset($_POST['answer_5']) && $_POST['answer_5'] != ""){ echo "style='display:block;'"; } else { echo "style='display:none;'"; } ?> >
                                                                     <span style="font-weight:bold;">Answer 5</span>
-                                                                    <input  name="risposta_5" id="risposta_5" class="form-control reduce" value="<?php echo @$_POST['risposta_5'] ?>">
+                                                                    <input  name="answer_5" id="answer_5" class="form-control reduce" value="<?php echo @$_POST['answer_5'] ?>">
                                                                 </div>
 
-                                                                <div id="ris6" class="ris_cont" <?php if(isset($_POST['risposta_6']) && $_POST['risposta_6'] != ""){ echo "style='display:block;'"; } else { echo "style='display:none;'"; } ?> >
+                                                                <div id="ris6" class="ris_cont" <?php if(isset($_POST['answer_6']) && $_POST['answer_6'] != ""){ echo "style='display:block;'"; } else { echo "style='display:none;'"; } ?> >
                                                                     <span style="font-weight:bold;">Answer 6</span>
-                                                                    <input  name="risposta_6" id="risposta_6" class="form-control reduce" value="<?php echo @$_POST['risposta_6'] ?>">
+                                                                    <input  name="answer_6" id="answer_6" class="form-control reduce" value="<?php echo @$_POST['answer_6'] ?>">
                                                                 </div>
 
-                                                                <div id="ris7" class="ris_cont" <?php if(isset($_POST['risposta_7']) && $_POST['risposta_7'] != ""){ echo "style='display:block;'"; } else { echo "style='display:none;'"; } ?> >
+                                                                <div id="ris7" class="ris_cont" <?php if(isset($_POST['answer_7']) && $_POST['answer_7'] != ""){ echo "style='display:block;'"; } else { echo "style='display:none;'"; } ?> >
                                                                     <span style="font-weight:bold;">Answer 7</span>
-                                                                    <input  name="risposta_7" id="risposta_7" class="form-control reduce" value="<?php echo @$_POST['risposta_7'] ?>">
+                                                                    <input  name="answer_7" id="answer_7" class="form-control reduce" value="<?php echo @$_POST['answer_7'] ?>">
                                                                 </div>
 
-                                                                <div id="ris8" class="ris_cont" <?php if(isset($_POST['risposta_8']) && $_POST['risposta_8'] != ""){ echo "style='display:block;'"; } else { echo "style='display:none;'"; } ?> >
+                                                                <div id="ris8" class="ris_cont" <?php if(isset($_POST['answer_8']) && $_POST['answer_8'] != ""){ echo "style='display:block;'"; } else { echo "style='display:none;'"; } ?> >
                                                                     <span style="font-weight:bold;">Answer 8</span>
-                                                                    <input  name="risposta_8" id="risposta_8" class="form-control reduce" value="<?php echo @$_POST['risposta_8'] ?>">
+                                                                    <input  name="answer_8" id="answer_8" class="form-control reduce" value="<?php echo @$_POST['answer_8'] ?>">
                                                                 </div>
 
-                                                                <div id="ris9" class="ris_cont" <?php if(isset($_POST['risposta_9']) && $_POST['risposta_9'] != ""){ echo "style='display:block;'"; } else { echo "style='display:none;'"; } ?> >
+                                                                <div id="ris9" class="ris_cont" <?php if(isset($_POST['answer_9']) && $_POST['answer_9'] != ""){ echo "style='display:block;'"; } else { echo "style='display:none;'"; } ?> >
                                                                     <span style="font-weight:bold;">Answer 9</span>
-                                                                    <input  name="risposta_9" id="risposta_9" class="form-control reduce" value="<?php echo @$_POST['risposta_9'] ?>">
+                                                                    <input  name="answer_9" id="answer_9" class="form-control reduce" value="<?php echo @$_POST['answer_9'] ?>">
                                                                 </div>
 
-                                                                <div id="ris10" class="ris_cont" <?php if(isset($_POST['risposta_10']) && $_POST['risposta_10'] != ""){ echo "style='display:block;'"; } else { echo "style='display:none;'"; } ?> >
+                                                                <div id="ris10" class="ris_cont" <?php if(isset($_POST['answer_10']) && $_POST['answer_10'] != ""){ echo "style='display:block;'"; } else { echo "style='display:none;'"; } ?> >
                                                                     <span style="font-weight:bold;">Answer 10</span>
-                                                                    <input  name="risposta_10" id="risposta_10" class="form-control reduce" value="<?php echo @$_POST['risposta_10'] ?>">
+                                                                    <input  name="answer_10" id="answer_10" class="form-control reduce" value="<?php echo @$_POST['answer_10'] ?>">
                                                                 </div>
 
                                                                 <div onClick="addNewAnswer()" class="ris_button_plus"> <i class="fa fa-plus-circle"></i> Add new answer</div>
@@ -566,8 +564,7 @@ $time_attuale= time();
                                         
                                                     
                                     <div id="contenitoreContenutiCentro">
-                                            <?php 
-                                                $sql =  "SELECT * FROM sondaggi order by ordine";	
+                                                $sql =  "SELECT * FROM polls_master order by ordine";	
                                                 $result = mysqli_query($con,$sql);
                                                 $page = @ceil(@mysqli_num_rows($result)/$ArticoliPagina);
                                                 if (!isset($_GET['sheet'])){$_GET['sheet']=null;}
@@ -624,13 +621,13 @@ $time_attuale= time();
                                                                     <td>
                                                                         <?php 
                                                                         $time_ora= time();
-                                                                        $checked_domanda= ($row['attiva']==1 && $time_ora<$row['data_disattivazione']) ? "checked" : ""; ?>
+                                                                        $checked_domanda= ($row['attiva']==1 && $time_ora<$row['disactivation_date']) ? "checked" : ""; ?>
                                                                         <input <?php echo $checked_domanda;?> type="checkbox" name="attiva_domanda" id="attiva_domanda" value="<?php echo $row['ID'];?>">
                                                                     </td>
                                                                     <td> 
                                                                         <?php if($N>1){?>
                                                                             <form name="form" id="form">
-                                                                            <select name="jumpMenu" id="jumpMenu" onChange="MM_jumpMenu('parent',this,0)" class="selectForm testo11" style="padding:0px;">
+                                                                            <select name="jumpMenu" id="jumpMenu" onChange="menu_update('parent',this,0)" class="selectForm testo11" style="padding:0px;">
                                                                                 <?php for($i=1; $i<=$N; $i++ ){
                                                                                         if($i==$row['ordine']){$sel='selected'; }else{$sel=NULL;}?>
                                                                                 <option value="<?php echo $_SERVER['PHP_SELF'].'?ID_documento='.$row['ID'].'&ordine='.$row['ordine'].'&nuovo='.$i.'&cke=&azione=ordina&sheet='.@$_GET['sheet']; ?>" <?php echo $sel; ?>><?php echo $i ?></option>
@@ -745,7 +742,7 @@ $time_attuale= time();
 
 <script type="text/javascript">
 
-    function MM_jumpMenu(targ,selObj,restore){ 
+    function menu_update(targ,selObj,restore){ 
     eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
     if (restore) selObj.selectedIndex=0;
     }

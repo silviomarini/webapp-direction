@@ -78,7 +78,7 @@ $time_attuale= time();
             </div>
             
             <?php
-                $evento = mysqli_fetch_array(mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "));
+                $evento = mysqli_fetch_array(mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1 "));
                 $titolo = "Privilege Web App";
                 if($evento != null){
                     $titolo = $evento['nome'];
@@ -133,11 +133,11 @@ $time_attuale= time();
 							
 							$fp = fopen('export.csv', 'w');
 
-							$sql_sondaggi="Select * from sondaggi";
+							$sql_sondaggi="Select * from polls_master";
 							$r_sondaggi= mysqli_query($con,$sql_sondaggi);
 							
-							while($sondaggi= mysqli_fetch_array($r_sondaggi)){ 
-								fputcsv($fp, $sondaggi);
+							while($polls_master= mysqli_fetch_array($r_sondaggi)){ 
+								fputcsv($fp, $polls_master);
 							}
 							
 							fclose($fp);
@@ -147,7 +147,7 @@ $time_attuale= time();
 							}
 
 							if(isset($_GET["reset"])){
-								$sql_sondaggi="TRUNCATE TABLE sondaggi";
+								$sql_sondaggi="TRUNCATE TABLE polls_master";
 								mysqli_query($con,$sql_sondaggi);
 							}
 						?>
@@ -167,54 +167,54 @@ $time_attuale= time();
 
 
                             <?php
-                            $sql_sondaggi="Select * from sondaggi order by ID desc";
+                            $sql_sondaggi="Select * from polls_master order by ID desc";
                             $r_sondaggi= mysqli_query($con,$sql_sondaggi);
                             $ultimi_id_domande_aperte="";
                             $risposte_multiple="";
-                            while($sondaggi= mysqli_fetch_array($r_sondaggi)){ ?>
+                            while($polls_master= mysqli_fetch_array($r_sondaggi)){ ?>
                                 <div class="card mb-3">
                                     <div class="card-header" >
-                                        <strong><?php echo $sondaggi['domanda'];?></strong>
-                                        <div class="float-right" id="stato_domanda_<?php echo $sondaggi['ID'];?>">
-                                                    <?php if($sondaggi['attiva']==1 && $sondaggi['data_disattivazione']>=$time_attuale && $sondaggi['data_attivazione']<$time_attuale){ ?>
-                                                <img src="<?php echo $path;?>../asset/images/active.png" width="25px" class="vertTop"> until <?php echo date("H:i", $sondaggi['data_disattivazione']);?>
+                                        <strong><?php echo $polls_master['domanda'];?></strong>
+                                        <div class="float-right" id="stato_domanda_<?php echo $polls_master['ID'];?>">
+                                                    <?php if($polls_master['attiva']==1 && $polls_master['disactivation_date']>=$time_attuale && $polls_master['activation_date']<$time_attuale){ ?>
+                                                <img src="<?php echo $path;?>../asset/images/active.png" width="25px" class="vertTop"> until <?php echo date("H:i", $polls_master['disactivation_date']);?>
                                             <?php }else{ ?>
                                                 <img src="<?php echo $path;?>../asset/images/inactive.png" width="25px" class="vertTop">
                                             <?php } ?>
                                         </div>
                                     </div>
-                                    <div class="card-body" id="contDomande_<?php echo $sondaggi['ID'];?>">
-                                        <?php if($sondaggi['tipo']=="risp_aperta"){ 
-                                            $sql_risp_aperte=mysqli_query($con,"Select * from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]' order by s_data_risposta DESC");
+                                    <div class="card-body" id="contDomande_<?php echo $polls_master['ID'];?>">
+                                        <?php if($polls_master['tipo']=="risp_aperta"){ 
+                                            $sql_risp_aperte=mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' order by answer_datetime DESC");
                                             while($risp_aperte=mysqli_fetch_array($sql_risp_aperte)){ ?>
                                                 <div class="cont_risposta">
-                                                    <div class="fontWeight700"><strong><?php echo formatDateAndTime($risp_aperte['s_data_risposta']);?></strong></div>
-                                                    <?php echo nl2br($risp_aperte['s_risposta']);?>
+                                                    <div class="fontWeight700"><strong><?php echo formatDateAndTime($risp_aperte['answer_datetime']);?></strong></div>
+                                                    <?php echo nl2br($risp_aperte['poll_answer']);?>
                                                 </div>
                                             <?php } 
                                         
-                                            $sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select * from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]' order by s_data_risposta desc LIMIT 1"));
+                                            $sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' order by answer_datetime desc LIMIT 1"));
                                             $ultimo_id_inserito= $sql_ultimo_id_inserito['ID'];
                     
                                             if(!isset($ultimo_id_inserito)){
                                                 $ultimo_id_inserito=0;	
                                             } 
-                                            $ultimi_id_domande_aperte.= $sondaggi['ID'].",".$ultimo_id_inserito."|";
+                                            $ultimi_id_domande_aperte.= $polls_master['ID'].",".$ultimo_id_inserito."|";
                                             ?>
                                             <div class="cont_risposta" style="border-bottom:none;"></div>
 
                                         
                                         <?php } //fine risposta aperta ?>
                                             
-                                        <?php if($sondaggi['tipo']=="risp_multipla"){
+                                        <?php if($polls_master['tipo']=="risp_multipla"){
 											echo '<div class="meta-risposte">';
 
-                                            $risposte_multiple.= $sondaggi['ID']."-";
-                                            $tot_risp_multiple=mysqli_num_rows(mysqli_query($con,"select ID from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]'"));
+                                            $risposte_multiple.= $polls_master['ID']."-";
+                                            $tot_risp_multiple=mysqli_num_rows(mysqli_query($con,"select ID from polls_answers where polls_id='$polls_master[ID]'"));
                                             ?>
                                             
-                                            <?php if($sondaggi['risposta_1']!=""){ 
-                                                $cont_risp_1=mysqli_num_rows(mysqli_query($con,"Select * from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]' and s_risposta='risposta_1'"));
+                                            <?php if($polls_master['answer_1']!=""){ 
+                                                $cont_risp_1=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_1'"));
                                                 $risposte_multiple.="1,"; 
                                                 if($cont_risp_1>0){
                                                     $perc_risp_1=(100*$cont_risp_1)/$tot_risp_multiple; 
@@ -225,13 +225,13 @@ $time_attuale= time();
                                                 ?>
                                                 <div class="cont_risposta_multipla" >
                                                     <div>
-                                                        <?php echo $sondaggi['risposta_1'];?>:
-                                                        <span id="cont_risposta_1_<?php echo $sondaggi['ID'];?>" class="fontWeight700"><?php echo $cont_risp_1;?> (<?php echo $perc_risp_1;?>%)</span>
+                                                        <?php echo $polls_master['answer_1'];?>:
+                                                        <span id="cont_risposta_1_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_1;?> (<?php echo $perc_risp_1;?>%)</span>
                                                     </div>
                                                 </div>                                                
                                             <?php } ?>
-                                            <?php if($sondaggi['risposta_2']!=""){ 
-                                                    $cont_risp_2=mysqli_num_rows(mysqli_query($con,"Select * from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]' and s_risposta='risposta_2'"));
+                                            <?php if($polls_master['answer_2']!=""){ 
+                                                    $cont_risp_2=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_2'"));
                                                     $risposte_multiple.="2,"; 
                                                     if($cont_risp_2>0){
                                                         $perc_risp_2=(100*$cont_risp_2)/$tot_risp_multiple; 
@@ -242,13 +242,13 @@ $time_attuale= time();
                                                     ?>
                                                     <div class="cont_risposta_multipla">
                                                         <div>
-                                                            <?php echo $sondaggi['risposta_2'];?>:
-                                                            <span id="cont_risposta_2_<?php echo $sondaggi['ID'];?>" class="fontWeight700"><?php echo $cont_risp_2;?> (<?php echo $perc_risp_2;?>%)</span>
+                                                            <?php echo $polls_master['answer_2'];?>:
+                                                            <span id="cont_risposta_2_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_2;?> (<?php echo $perc_risp_2;?>%)</span>
                                                         </div>
                                                     </div>                                                
                                             <?php } ?>
-                                            <?php if($sondaggi['risposta_3']!=""){ 
-                                                $cont_risp_3=mysqli_num_rows(mysqli_query($con,"Select * from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]' and s_risposta='risposta_3'"));
+                                            <?php if($polls_master['answer_3']!=""){ 
+                                                $cont_risp_3=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_3'"));
                                                 $risposte_multiple.="3,";
                                                 if($cont_risp_3>0){
                                                     $perc_risp_3=(100*$cont_risp_3)/$tot_risp_multiple; 
@@ -259,13 +259,13 @@ $time_attuale= time();
                                                 ?>
                                                 <div class="cont_risposta_multipla">
                                                     <div>
-                                                        <?php echo $sondaggi['risposta_3'];?>:
-                                                        <span id="cont_risposta_3_<?php echo $sondaggi['ID'];?>" class="fontWeight700"><?php echo $cont_risp_3;?> (<?php echo $perc_risp_3;?>%)</span>
+                                                        <?php echo $polls_master['answer_3'];?>:
+                                                        <span id="cont_risposta_3_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_3;?> (<?php echo $perc_risp_3;?>%)</span>
                                                     </div>
                                                 </div>                                                
                                             <?php } ?>
-                                            <?php if($sondaggi['risposta_4']!=""){
-                                                $cont_risp_4=mysqli_num_rows(mysqli_query($con,"Select * from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]' and s_risposta='risposta_4'"));
+                                            <?php if($polls_master['answer_4']!=""){
+                                                $cont_risp_4=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_4'"));
                                                 $risposte_multiple.="4,";
                                                 if($cont_risp_4>0){
                                                     $perc_risp_4=(100*$cont_risp_4)/$tot_risp_multiple; 
@@ -276,14 +276,14 @@ $time_attuale= time();
                                                 ?>
                                                 <div class="cont_risposta_multipla">
                                                     <div>
-                                                        <?php echo $sondaggi['risposta_4'];?>:
-                                                        <span id="cont_risposta_4_<?php echo $sondaggi['ID'];?>" class="fontWeight700"><?php echo $cont_risp_4;?> (<?php echo $perc_risp_4;?>%)</span>
+                                                        <?php echo $polls_master['answer_4'];?>:
+                                                        <span id="cont_risposta_4_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_4;?> (<?php echo $perc_risp_4;?>%)</span>
                                                     </div>
                                                 </div>                                                
 											<?php } ?> 
 											
-											<?php if($sondaggi['risposta_5']!=""){
-												$cont_risp_5=mysqli_num_rows(mysqli_query($con,"Select * from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]' and s_risposta='risposta_5'"));
+											<?php if($polls_master['answer_5']!=""){
+												$cont_risp_5=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_5'"));
 												$risposte_multiple.="5,";
 												if($cont_risp_5>0){
 													$perc_risp_5=(100*$cont_risp_5)/$tot_risp_multiple; 
@@ -294,14 +294,14 @@ $time_attuale= time();
 												?>
 												<div class="cont_risposta_multipla">
 													<div>
-														<?php echo $sondaggi['risposta_5'];?>:
-														<span id="cont_risposta_5_<?php echo $sondaggi['ID'];?>" class="fontWeight700"><?php echo $cont_risp_5;?> (<?php echo $perc_risp_5;?>%)</span>
+														<?php echo $polls_master['answer_5'];?>:
+														<span id="cont_risposta_5_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_5;?> (<?php echo $perc_risp_5;?>%)</span>
 													</div>
 												</div>                                                
 											<?php } ?>
 
-											<?php if($sondaggi['risposta_6']!=""){
-												$cont_risp_6=mysqli_num_rows(mysqli_query($con,"Select * from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]' and s_risposta='risposta_6'"));
+											<?php if($polls_master['answer_6']!=""){
+												$cont_risp_6=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_6'"));
 												$risposte_multiple.="6,";
 												if($cont_risp_6>0){
 													$perc_risp_6=(100*$cont_risp_6)/$tot_risp_multiple; 
@@ -312,14 +312,14 @@ $time_attuale= time();
 												?>
 												<div class="cont_risposta_multipla">
 													<div>
-														<?php echo $sondaggi['risposta_6'];?>:
-														<span id="cont_risposta_6_<?php echo $sondaggi['ID'];?>" class="fontWeight700"><?php echo $cont_risp_6;?> (<?php echo $perc_risp_6;?>%)</span>
+														<?php echo $polls_master['answer_6'];?>:
+														<span id="cont_risposta_6_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_6;?> (<?php echo $perc_risp_6;?>%)</span>
 													</div>
 												</div>                                                
 											<?php } ?>
 
-											<?php if($sondaggi['risposta_7']!=""){
-												$cont_risp_7=mysqli_num_rows(mysqli_query($con,"Select * from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]' and s_risposta='risposta_7'"));
+											<?php if($polls_master['answer_7']!=""){
+												$cont_risp_7=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_7'"));
 												$risposte_multiple.="7,";
 												if($cont_risp_7>0){
 													$perc_risp_7=(100*$cont_risp_7)/$tot_risp_multiple; 
@@ -330,14 +330,14 @@ $time_attuale= time();
 												?>
 												<div class="cont_risposta_multipla">
 													<div>
-														<?php echo $sondaggi['risposta_7'];?>:
-														<span id="cont_risposta_7_<?php echo $sondaggi['ID'];?>" class="fontWeight700"><?php echo $cont_risp_7;?> (<?php echo $perc_risp_7;?>%)</span>
+														<?php echo $polls_master['answer_7'];?>:
+														<span id="cont_risposta_7_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_7;?> (<?php echo $perc_risp_7;?>%)</span>
 													</div>
 												</div>                                                
 											<?php } ?>
 
-											<?php if($sondaggi['risposta_8']!=""){
-												$cont_risp_8=mysqli_num_rows(mysqli_query($con,"Select * from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]' and s_risposta='risposta_8'"));
+											<?php if($polls_master['answer_8']!=""){
+												$cont_risp_8=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_8'"));
 												$risposte_multiple.="8,";
 												if($cont_risp_8>0){
 													$perc_risp_8=(100*$cont_risp_8)/$tot_risp_multiple; 
@@ -348,14 +348,14 @@ $time_attuale= time();
 												?>
 												<div class="cont_risposta_multipla">
 													<div>
-														<?php echo $sondaggi['risposta_8'];?>:
-														<span id="cont_risposta_8_<?php echo $sondaggi['ID'];?>" class="fontWeight800"><?php echo $cont_risp_8;?> (<?php echo $perc_risp_8;?>%)</span>
+														<?php echo $polls_master['answer_8'];?>:
+														<span id="cont_risposta_8_<?php echo $polls_master['ID'];?>" class="fontWeight800"><?php echo $cont_risp_8;?> (<?php echo $perc_risp_8;?>%)</span>
 													</div>
 												</div>                                                
 											<?php } ?>
 
-											<?php if($sondaggi['risposta_9']!=""){
-												$cont_risp_9=mysqli_num_rows(mysqli_query($con,"Select * from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]' and s_risposta='risposta_9'"));
+											<?php if($polls_master['answer_9']!=""){
+												$cont_risp_9=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_9'"));
 												$risposte_multiple.="9,";
 												if($cont_risp_9>0){
 													$perc_risp_9=(100*$cont_risp_9)/$tot_risp_multiple; 
@@ -366,14 +366,14 @@ $time_attuale= time();
 												?>
 												<div class="cont_risposta_multipla">
 													<div>
-														<?php echo $sondaggi['risposta_9'];?>:
-														<span id="cont_risposta_9_<?php echo $sondaggi['ID'];?>" class="fontWeight900"><?php echo $cont_risp_9;?> (<?php echo $perc_risp_9;?>%)</span>
+														<?php echo $polls_master['answer_9'];?>:
+														<span id="cont_risposta_9_<?php echo $polls_master['ID'];?>" class="fontWeight900"><?php echo $cont_risp_9;?> (<?php echo $perc_risp_9;?>%)</span>
 													</div>
 												</div>                                                
 											<?php } ?>
 
-											<?php if($sondaggi['risposta_10']!=""){
-												$cont_risp_10=mysqli_num_rows(mysqli_query($con,"Select * from sondaggi_risposte where s_ID_sondaggio='$sondaggi[ID]' and s_risposta='risposta_10'"));
+											<?php if($polls_master['answer_10']!=""){
+												$cont_risp_10=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_10'"));
 												$risposte_multiple.="10,";
 												if($cont_risp_10>0){
 													$perc_risp_10=(100*$cont_risp_10)/$tot_risp_multiple; 
@@ -384,8 +384,8 @@ $time_attuale= time();
 												?>
 												<div class="cont_risposta_multipla">
 													<div>
-														<?php echo $sondaggi['risposta_10'];?>:
-														<span id="cont_risposta_10_<?php echo $sondaggi['ID'];?>" class="fontWeight1000"><?php echo $cont_risp_10;?> (<?php echo $perc_risp_10;?>%)</span>
+														<?php echo $polls_master['answer_10'];?>:
+														<span id="cont_risposta_10_<?php echo $polls_master['ID'];?>" class="fontWeight1000"><?php echo $cont_risp_10;?> (<?php echo $perc_risp_10;?>%)</span>
 													</div>
 												</div>                                                
 											<?php } ?>
@@ -395,44 +395,44 @@ $time_attuale= time();
 											$risposte_multiple.="|";
 											
 											//retrieve data for the pie chart
-											$id_sondaggio = $sondaggi["ID"];
+											$id_sondaggio = $polls_master["ID"];
 											$an1 = $an2 = $an3 = $an4 = $an5 = $an6 = $an7 = $an8 = $an9 = $an10 = 0;
 											$query = mysqli_query($con,"
-												SELECT s_risposta,COUNT(*) AS conta
-												FROM `sondaggi_risposte` 
-												WHERE s_ID_sondaggio= ".$id_sondaggio."
-												GROUP BY s_risposta
+												SELECT poll_answer,COUNT(*) AS conta
+												FROM `polls_answers` 
+												WHERE polls_id= ".$id_sondaggio."
+												GROUP BY poll_answer
 											");
 											while($poll_answers= mysqli_fetch_array($query)){
-												switch ($poll_answers["s_risposta"]){
-													case "risposta_1" :
+												switch ($poll_answers["poll_answer"]){
+													case "answer_1" :
 														$an1 = $poll_answers["conta"];
 														break;
-													case "risposta_2" :
+													case "answer_2" :
 														$an2 = $poll_answers["conta"];
 														break;
-													case "risposta_3" :
+													case "answer_3" :
 														$an3 = $poll_answers["conta"];
 														break;
-													case "risposta_4" :
+													case "answer_4" :
 														$an4 = $poll_answers["conta"];
 														break;
-													case "risposta_5" :
+													case "answer_5" :
 														$an5 = $poll_answers["conta"];
 														break;
-													case "risposta_6" :
+													case "answer_6" :
 														$an6 = $poll_answers["conta"];
 														break;
-													case "risposta_7" :
+													case "answer_7" :
 														$an7 = $poll_answers["conta"];
 														break;
-													case "risposta_8" :
+													case "answer_8" :
 														$an8 = $poll_answers["conta"];
 														break;
-													case "risposta_9" :
+													case "answer_9" :
 														$an9 = $poll_answers["conta"];
 														break;
-													case "risposta_10" :
+													case "answer_10" :
 														$an10 = $poll_answers["conta"];
 														break;
 												}
@@ -440,10 +440,10 @@ $time_attuale= time();
 
 										
 											$stack = array();
-											$id_sondaggio = $sondaggi["ID"];
+											$id_sondaggio = $polls_master["ID"];
 											$query = mysqli_query($con,"
 												SELECT * 
-												FROM `sondaggi` 
+												FROM `polls_master` 
 												WHERE ID = ".$id_sondaggio."
 												LIMIT 1
 											");
@@ -460,8 +460,8 @@ $time_attuale= time();
 											echo '</div>';
 											echo '<div class="meta-risposte">';
 										?>		
-											<div id="canvas-holder_<?php echo $sondaggi['ID'];?>" class="meta-graph" >
-												<canvas id="chart-area_<?php echo $sondaggi['ID'];?>"></canvas>
+											<div id="canvas-holder_<?php echo $polls_master['ID'];?>" class="meta-graph" >
+												<canvas id="chart-area_<?php echo $polls_master['ID'];?>"></canvas>
 											</div>
 
 											<script>
@@ -469,7 +469,7 @@ $time_attuale= time();
 													return Math.round(Math.random() * 100);
 												};
 
-												var config_<?php echo $sondaggi['ID'];?> = {
+												var config_<?php echo $polls_master['ID'];?> = {
 													type: 'pie',
 													data: {
 														datasets: [{
@@ -537,8 +537,8 @@ $time_attuale= time();
 												};
 
 												
-												var ctx = document.getElementById('chart-area_<?php echo $sondaggi['ID'];?>').getContext('2d');
-												window.myPie = new Chart(ctx, config_<?php echo $sondaggi['ID'];?>);
+												var ctx = document.getElementById('chart-area_<?php echo $polls_master['ID'];?>').getContext('2d');
+												window.myPie = new Chart(ctx, config_<?php echo $polls_master['ID'];?>);
 											
 
 												var colorNames = Object.keys(window.chartColors);
@@ -603,11 +603,10 @@ $time_attuale= time();
 				
 				var ultimo_ID_new="";
 				
-				var sondaggi= data.split('|');
+				var polls_master= data.split('|');
 				
-				for (var i = 0; i < sondaggi.length; i++) {
-			
-					var risposte_sondaggio= sondaggi[i].split('***');
+				for (var i = 0; i < polls_master.length; i++) {
+					var risposte_sondaggio= polls_master[i].split('***');
 					var id_sondaggio= risposte_sondaggio[0];
 					var ultima_risposta_sondaggio= risposte_sondaggio[1];
 					
@@ -640,11 +639,10 @@ $time_attuale= time();
 			crossDomain: true,
 			data: 'risposte_multiple='+risposte_multiple + "&rif_evento=" + rif_evento + "&tab_utenti=" + tab_utenti,
 			success: function(data){
-			
-				var sondaggi= data.split('|');
+				var polls_master= data.split('|');
 
-				for(var a=0;a<sondaggi.length;a++){
-					var array_sondaggio= sondaggi[a].split('_');
+				for(var a=0;a<polls_master.length;a++){
+					var array_sondaggio= polls_master[a].split('_');
 					sondaggio= array_sondaggio[0];
 					risposte= array_sondaggio[1].split(',');
 					
