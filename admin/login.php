@@ -162,7 +162,7 @@
             
             //echo $query;
 
-            /*Prelevo l'identificativo dell'utente */
+            /*Prelevo l'identifier dell'utente */
             $cod=$riga['username'];
             $enabled=$riga['attivo'];
 

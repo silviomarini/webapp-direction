@@ -35,15 +35,15 @@ for($i=0;$i<count($array_ultime_risposte);$i++){
 	
 	$dati_sondaggio=explode(",",$array_ultime_risposte[$i]);
 
-	$sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select ID from sondaggi_risposte where s_ID_sondaggio='$dati_sondaggio[0]' order by s_data_risposta desc LIMIT 1"));
+	$sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select ID from polls_answers where polls_id='$dati_sondaggio[0]' order by answer_datetime desc LIMIT 1"));
 	$ultimo_id_inserito= $sql_ultimo_id_inserito['ID'];
 	if(!isset($ultimo_id_inserito)){
 		$ultimo_id_inserito=0;	
 	}
 	$ultimi_id_domande_aperte_new.= $dati_sondaggio[0]."***".$ultimo_id_inserito."***";
 	
-  	$sql_risposte="Select s_risposta,s_data_risposta from sondaggi_risposte where s_ID_sondaggio='$dati_sondaggio[0]' and ID>'$dati_sondaggio[1]' order by s_data_risposta desc";
-	//$sql_risposte="Select * from sondaggi_risposte where s_ID_sondaggio='$dati_sondaggio[0]' and ID<'$dati_sondaggio[1]' order by s_data_risposta desc";
+  	$sql_risposte="Select poll_answer,answer_datetime from polls_answers where polls_id='$dati_sondaggio[0]' and ID>'$dati_sondaggio[1]' order by answer_datetime desc";
+	//$sql_risposte="Select * from polls_answers where polls_id='$dati_sondaggio[0]' and ID<'$dati_sondaggio[1]' order by answer_datetime desc";
 	$r_risposte= mysqli_query($con,$sql_risposte);
 	
 	while($risposte= mysqli_fetch_array($r_risposte)){
@@ -51,8 +51,8 @@ for($i=0;$i<count($array_ultime_risposte);$i++){
 		
 		$ultimi_id_domande_aperte_new.="
 			<div class='cont_risposta'>
-				<div class='fontWeight700'><strong>".data_ora_X_DB($risposte['s_data_risposta'])."</strong></div>
-				". nl2br($risposte['s_risposta'])."
+				<div class='fontWeight700'><strong>".data_ora_X_DB($risposte['answer_datetime'])."</strong></div>
+				". nl2br($risposte['poll_answer'])."
 			</div>		
 		";
 		

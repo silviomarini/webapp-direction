@@ -4,16 +4,16 @@
     $ultimo_ID= $_GET['ultimo_ID'];
     
     $time_attuale=time();
-    $contr_sondaggio_attivo=mysqli_num_rows(mysqli_query($con,"Select ID from sondaggi where attiva=1 and data_disattivazione>=$time_attuale and data_attivazione<$time_attuale"));
+    $contr_sondaggio_attivo=mysqli_num_rows(mysqli_query($con,"Select ID from polls_master where attiva=1 and disactivation_date>=$time_attuale and activation_date<$time_attuale"));
     
     $ultimo_id_inserito=$ultimo_ID;
     
     $ris="";
     
     if($contr_sondaggio_attivo>0){
-        $sondaggio_attivo=mysqli_fetch_array(mysqli_query($con,"Select ID,domanda,tipo,risposta_1,risposta_2,risposta_3,risposta_4,risposta_5,risposta_6,risposta_7,risposta_8,risposta_9,risposta_10 from sondaggi where attiva=1 and data_disattivazione>=$time_attuale and data_attivazione<$time_attuale"));
+        $sondaggio_attivo=mysqli_fetch_array(mysqli_query($con,"Select ID,domanda,tipo,answer_1,answer_2,answer_3,answer_4,answer_5,answer_6,answer_7,answer_8,answer_9,answer_10 from polls_master where attiva=1 and disactivation_date>=$time_attuale and activation_date<$time_attuale"));
         $ultimo_id_inserito=$sondaggio_attivo['ID'];
-        $contr_sondaggio_norisp=mysqli_num_rows(mysqli_query($con,"Select ID from sondaggi_risposte where s_ID_partecipante='$_COOKIE[utente_evento]' and s_ID_sondaggio='$sondaggio_attivo[ID]'"));
+        $contr_sondaggio_norisp=mysqli_num_rows(mysqli_query($con,"Select ID from polls_answers where customer_id='$_COOKIE[utente_evento]' and polls_id='$sondaggio_attivo[ID]'"));
     
         if($contr_sondaggio_norisp==0){
             $ris.='

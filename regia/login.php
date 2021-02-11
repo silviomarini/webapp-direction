@@ -156,14 +156,14 @@
             $password=mysqli_real_escape_string($con, $_POST['password']);
             $errorMessage = "";
 
-            $query = "SELECT * FROM eventi WHERE password = '".$password."' ";
+            $query = "SELECT * FROM streamings WHERE password = '".$password."' ";
             $ris = mysqli_query($con, $query);
             $riga= mysqli_fetch_array($ris);   
             
             //echo $query;
 
-            /*Prelevo l'identificativo dell'utente */
-            $cod=$riga['identificativo'];
+            /*Prelevo l'identifier dell'utente */
+            $cod=$riga['identifier'];
             $id_evento = $riga["ID"];
 
             /* Effettuo il controllo */

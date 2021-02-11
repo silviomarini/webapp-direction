@@ -154,11 +154,11 @@ if (isset($_POST['save_event'])){
 
     $sql="
 
-    UPDATE eventi
+    UPDATE streamings
 
     SET 
 
-        identificativo='".htmlentities($_POST['event_id'])."' ,
+        identifier='".htmlentities($_POST['event_id'])."' ,
 
         nome='".htmlentities($_POST['event_name'])."' ,
 
@@ -186,7 +186,7 @@ if (isset($_POST['save_event'])){
 
 //prepare data for event
 
-if($query = mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 ")){
+if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1 ")){
 
     $event = mysqli_fetch_array($query);
 
@@ -194,13 +194,13 @@ if($query = mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "))
 
     $event_name = $event["nome"];
 
-    $event_id = $event["identificativo"];
+    $event_id = $event["identifier"];
 
     $event_date = $event["data"];
 
-    $event_start_time = $event["ora_inizio"];
+    $event_start_time = $event["start_time"];
 
-    $event_end_time = $event["ora_fine"];
+    $event_end_time = $event["end_time"];
 
     $event_type = $event["tipo"];
 
@@ -584,7 +584,7 @@ if($query = mysqli_query($con,"Select * from eventi order by ID DESC LIMIT 1 "))
 
                     if(isset($_GET["reset"])){
 
-                        $sql_sondaggi="TRUNCATE TABLE domande";
+                        $sql_sondaggi="TRUNCATE TABLE questions";
 
                         mysqli_query($con,$sql_sondaggi);
 

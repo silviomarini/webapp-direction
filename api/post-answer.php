@@ -15,8 +15,8 @@ if($azione=="risp_multipla"){
 	$risposta_dom =$_GET['risposta'];
 }
 
-$sql_insert_domanda="INSERT INTO `sondaggi_risposte`
-					(`ID`, `s_ID_partecipante`,`s_ID_sondaggio`, `s_nominativo`, `s_risposta`, `s_evento`) VALUES 
+$sql_insert_domanda="INSERT INTO `polls_answers`
+					(`ID`, `customer_id`,`polls_id`, `customer_name`, `poll_answer`, `event_id`) VALUES 
 					(NULL,'".$_COOKIE['utente_evento']."','$id_sondaggio','','$risposta_dom','$evento')";
 	
 mysqli_query($con,$sql_insert_domanda);
