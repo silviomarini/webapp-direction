@@ -151,8 +151,6 @@
         <?php
         if (isset($_POST['username'])) {
 
-            //variabili POST con anti sql Injection
-            //$username=mysqli_real_escape_string($con, $_POST['username']); //faccio l'escape dei caratteri dannosi
             $password=mysqli_real_escape_string($con, $_POST['password']);
             $errorMessage = "";
 
@@ -160,22 +158,18 @@
             $ris = mysqli_query($con, $query);
             $riga= mysqli_fetch_array($ris);   
             
-            //echo $query;
 
-            /*Prelevo l'identificativo dell'utente */
             $cod=$riga['identificativo'];
             $id_evento = $riga["ID"];
 
-            /* Effettuo il controllo */
+
             if ($cod == NULL) $trovato = 0 ;
             else $trovato = 1;  
 
-            /* Username e password corrette */
             if($trovato == 1){
 
                 $_SESSION['autorizzato_regia'] = 'autorizzato_regia' ;
 
-                /*Registro il codice dell'utente*/
                 $_SESSION['cod'] = $cod;
                 $_SESSION['id_evento'] = $id_evento;
 
