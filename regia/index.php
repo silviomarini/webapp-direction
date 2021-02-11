@@ -290,15 +290,6 @@ if(isset($_GET["filter"])){
 
 				<div class="offset-md-1 col-md-10 paddingMobile pt-5"> 
 		
-			<!-- RESET BUTTON to delete all questions -- moved to the admin panel 										
-				<div class="card mb-3">
-					<div class="card-body" style="padding: 2px;">
-						<a href="index.php?reset=all" onclick="return confirm('Are you sure? All question will be deleted');"> 
-							<div class="pools-button alert" style="padding: 3px;font-size: large;border-radius: 8px;"> Reset </div> 
-						</a>
-					</div>
-				</div> 
-			-->
 	</div>
 
 
@@ -334,9 +325,7 @@ if(isset($_GET["filter"])){
 		});	
 
 	}, 5000);
-	// 20000 -> 20 sec
-	
-	// AGGIORNO REALTIME GLI STATI DELLE questions
+
 	window.setInterval(function(){
 		var rif_evento = $('#rif_evento').val();
 		$.ajax({
@@ -345,18 +334,16 @@ if(isset($_GET["filter"])){
 			crossDomain: true,
 			data: "rif_evento=" + rif_evento,
 			success: function(data){
-				//console.log(data);
+
 				var data_split= data.split('|');
 				$("#alert-questions-attivate").html("");
 				for (var i = 0; i < data_split.length; i++) {
 					var dati_domande= data_split[i].split(',');
-					//console.log(dati_domande[0]+"**"+dati_domande[1]+",,");
+
 					
 					if(dati_domande[1]=="y"){	
 						$("#barra_stato_"+dati_domande[0]).css("background-color","#2aa900");
 							
-						//aggiungo alert domanda attivata -> funzione rimossa con revisone 2
-						//$("#alert-questions-attivate").append('<div class="submit-response success" id="alertDomanda2"><strong>Question <strong>'+dati_domande[0]+'</strong> is active!</strong></div> ');
 					}
 					if(dati_domande[1]=="n"){	
 						$("#barra_stato_"+dati_domande[0]).css("background-color","#e81f1f");
@@ -374,13 +361,9 @@ if(isset($_GET["filter"])){
 		});	
 
 	}, 5000);
-	// 20000 -> 20 sec	
-	
-	
-	// CAMBIO LO STATO DELLA DOMANDA AL CLICK
+
 	$(".statoDomanda").click(function() {
-		//change_status($(this));
-		//do nothing
+
 	});
 
 	function go_live(el){
@@ -420,7 +403,6 @@ if(isset($_GET["filter"])){
 			crossDomain: true,
 			data: 'id_domanda=' + id_domanda + '&stato_domanda='+stato_domanda + '&rif_evento='+rif_evento,
 			success: function(data){
-				//console.log(data);
 				
 				if(stato_domanda=="y"){	
 					$("#barra_stato_"+id_domanda).css("background-color","#2aa900");
@@ -434,9 +416,7 @@ if(isset($_GET["filter"])){
 				if(stato_domanda=="azzera"){	
 					$("#barra_stato_"+id_domanda).css("background-color","transparent");
 				}
-				//rimuovo la domanda se siamo in visualizzazine filtrata e lo stato è cambiato
 				if("<?php echo $_GET["filter"]; ?>" != ""){
-					//alert("removing question");
 					$("#domanda_"+id_domanda).hide(200);
 				}
 			},

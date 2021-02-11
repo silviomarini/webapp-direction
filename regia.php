@@ -1,5 +1,5 @@
 <?php
-//TODO:session handler
+
 session_start();
 
 if(isset($_GET['logout'])){
