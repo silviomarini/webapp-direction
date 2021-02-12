@@ -37,8 +37,8 @@
 
                 if($sondaggio_attivo['tipo']=="risp_multipla"){
                     for($i = 0; $i<11; $i++){
-                        if($sondaggio_attivo['risposta_'.$i]!=""){
-                            $ris.='<div class="risposta-sondaggio"><label class="big"><input type="radio" name="risposte_s" id="risposte_s" value="risposta_'.$i.'" class="trCkLarge" onclick="postClosedPoll()">'.$sondaggio_attivo["risposta_".$i].'</label></div>';
+                        if($sondaggio_attivo['answer_'.$i]!=""){
+                            $ris.='<div class="poll-answer"><label class="big"><input type="radio" name="risposte_s" id="risposte_s" value="risposta_'.$i.'" class="trCkLarge" onclick="postClosedPoll()">'.$sondaggio_attivo["answer_".$i].'</label></div>';
                         }
                     }
                 }

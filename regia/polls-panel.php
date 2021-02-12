@@ -512,7 +512,7 @@ $time_attuale= time();
 
                             <?php } else { ?>
                         
-                        <div class="offset-md-1 col-md-10 paddingMobile pt-5" >
+                        <div class="offset-md-1 col-md-10 mobile pt-5" >
 
 							<div class="card mb-3">
 								<div class="card-body" style="padding:5px;">
@@ -523,7 +523,7 @@ $time_attuale= time();
                             </div>
                         </div>
 
-                        <div class="offset-md-1 col-md-10 paddingMobile pt-5" >
+                        <div class="offset-md-1 col-md-10 mobile pt-5" >
 
 							<div class="card mb-3">
 								<div class="card-body" style="padding:20px;">

@@ -166,7 +166,7 @@ if(isset($_GET["filter"])){
 								}
 							?>
 
-							<div class="offset-md-1 col-md-10 paddingMobile pt-5"> 
+							<div class="offset-md-1 col-md-10 mobile pt-5"> 
 								<div class="card mb-3">
 									<div class="card-body <?php echo $active_type; ?> " style="padding:5px;">
 										<div class="cont_risposta">
@@ -198,7 +198,7 @@ if(isset($_GET["filter"])){
 								</div>
 							</div>
 							
-							<div class="offset-md-1 col-md-10 paddingMobile pt-5" id="contDomande">
+							<div class="offset-md-1 col-md-10 mobile pt-5" id="contDomande">
 
 								
 
@@ -288,7 +288,7 @@ if(isset($_GET["filter"])){
 			
 
 
-				<div class="offset-md-1 col-md-10 paddingMobile pt-5"> 
+				<div class="offset-md-1 col-md-10 mobile pt-5"> 
 		
 	</div>
 

@@ -45,14 +45,14 @@
                 margin-right: auto;
             }
 
-            .modifica-text {
+            .form-update {
                 float: left;
                 width: 40%;
             }
         }
 
         @media screen and (max-width: 800px) {
-            .modifica-input {
+            .form-input {
                 width: 100%;
                 margin-top: 10px;
             }
@@ -114,7 +114,7 @@
             width:142px;
         }
 
-        .modifica-input {
+        .form-input {
             padding: 10px;
         }
 
@@ -386,17 +386,17 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 <div class="form-row">
 
-                    <div class="modifica-text"> <strong >Old password:</strong> </div>
+                    <div class="form-update"> <strong >Old password:</strong> </div>
 
-                    <input type="password" class="modifica-input" name="old_pass" value="" />	
+                    <input type="password" class="form-input" name="old_pass" value="" />	
 
                 </div>
 
                 <div class="form-row">
 
-                    <div class="modifica-text"> <strong>New password:</strong></div>
+                    <div class="form-update"> <strong>New password:</strong></div>
 
-                    <input type="password" class="modifica-input" name="new_pass" value="" />
+                    <input type="password" class="form-input" name="new_pass" value="" />
 
                 </div>
 
@@ -404,9 +404,9 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 <div class="form-row">
 
-                    <div class="modifica-text"> <strong>Re-type new password:</strong></div>
+                    <div class="form-update"> <strong>Re-type new password:</strong></div>
 
-                    <input type="password" class="modifica-input" name="retyped_pass" value="" />
+                    <input type="password" class="form-input" name="retyped_pass" value="" />
 
                 </div>
 
@@ -431,11 +431,11 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 <div class="form-row">
 
-                    <div class="modifica-text"> <strong >Event name:</strong> </div>
+                    <div class="form-update"> <strong >Event name:</strong> </div>
 
                     <?php if (isset($_GET['modifica_evento']) && $success_update == 0){ 
 
-                        echo '<input type="text" class="modifica-input" name="event_name" value="'.$event_name.'" />';
+                        echo '<input type="text" class="form-input" name="event_name" value="'.$event_name.'" />';
 
                     } else { 
 
@@ -447,11 +447,11 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 <div class="form-row">
 
-                    <div class="modifica-text"> <strong>Event id:</strong></div>
+                    <div class="form-update"> <strong>Event id:</strong></div>
 
                     <?php if (isset($_GET['modifica_evento']) && $success_update == 0){ 
 
-                        echo '<input type="text" class="modifica-input" name="event_id" value="'.$event_id.'" />';
+                        echo '<input type="text" class="form-input" name="event_id" value="'.$event_id.'" />';
                         echo '<style>@media screen and (max-width: 800px) {#top1 {height: 800px;}}</style>';
                     } else { 
 
@@ -465,11 +465,11 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 <div class="form-row">
 
-                    <div class="modifica-text"> <strong>Event date:</strong></div>
+                    <div class="form-update"> <strong>Event date:</strong></div>
 
                     <?php if (isset($_GET['modifica_evento']) && $success_update == 0){ 
 
-                        echo '<input type="text" class="modifica-input" name="event_date" value="'.$event_date.'" />';
+                        echo '<input type="text" class="form-input" name="event_date" value="'.$event_date.'" />';
 
                     } else { 
 
@@ -483,11 +483,11 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 <div class="form-row">
 
-                    <div class="modifica-text"> <strong>Event type:</strong></div>
+                    <div class="form-update"> <strong>Event type:</strong></div>
 
                     <?php if (isset($_GET['modifica_evento']) && $success_update == 0){ 
 
-                        echo '<input type="text" class="modifica-input" name="event_type" value="'.$event_type.'" />';
+                        echo '<input type="text" class="form-input" name="event_type" value="'.$event_type.'" />';
 
                     } else { 
 
@@ -501,11 +501,11 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 <div class="form-row">
 
-                    <div class="modifica-text"> <strong>Event password:</strong></div>
+                    <div class="form-update"> <strong>Event password:</strong></div>
 
                     <?php if (isset($_GET['modifica_evento']) && $success_update == 0){ 
 
-                        echo '<input type="text" class="modifica-input" name="event_pass" value="'.$event_pass.'" />';
+                        echo '<input type="text" class="form-input" name="event_pass" value="'.$event_pass.'" />';
 
                     } else { 
 
@@ -519,11 +519,11 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 <div class="form-row">
 
-                    <div class="modifica-text"> <strong>Event note:</strong></div>
+                    <div class="form-update"> <strong>Event note:</strong></div>
 
                     <?php if (isset($_GET['modifica_evento']) && $success_update == 0){ 
 
-                        echo '<input type="text" class="modifica-input" name="event_note" value="'.$event_note.'" />';
+                        echo '<input type="text" class="form-input" name="event_note" value="'.$event_note.'" />';
 
                     } else { 
 
@@ -537,11 +537,11 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 <div class="form-row">
 
-                    <div class="modifica-text"> <strong>Event cover:</strong></div>
+                    <div class="form-update"> <strong>Event cover:</strong></div>
 
                     <?php if (isset($_GET['modifica_evento']) && $success_update == 0){ 
 
-                        echo '<input type="file" class="modifica-input" name="event_cover" value="'.$event_cover.'" />';
+                        echo '<input type="file" class="form-input" name="event_cover" value="'.$event_cover.'" />';
 
                     } else { 
 
@@ -576,7 +576,7 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
             <div id="top2">
             <div class="form-row">
 
-                <div class="modifica-text"> <strong>Reset all questions for this event:</strong></div>
+                <div class="form-update"> <strong>Reset all questions for this event:</strong></div>
 
             
 

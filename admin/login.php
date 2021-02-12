@@ -34,14 +34,14 @@
                 margin-right: auto;
             }
 
-            .modifica-text {
+            .form-update {
                 float: left;
                 width: 40%;
             }
         }
 
         @media screen and (max-width: 800px) {
-            .modifica-input {
+            .form-input {
                 width: 100%;
                 margin-top: 10px;
             }
@@ -103,7 +103,7 @@
             width:142px;
         }
 
-        .modifica-input {
+        .form-input {
             padding: 10px;
         }
 

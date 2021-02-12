@@ -37,13 +37,13 @@ $time_attuale= time();
 	<script src="../asset/charts/samples/utils.js"></script>
 
 	<style>
-		.meta-risposte {
+		.answers-content {
 			width: 49%;
 			float: left;
 		}
 
 		@media screen and (max-width: 992px) {
-			.meta-risposte {
+			.answers-content {
 				width: 100%;
 				float: none;
 			}
@@ -153,7 +153,7 @@ $time_attuale= time();
 						?>
 
 
-                        <div class="offset-md-1 col-md-10 paddingMobile pt-5" >
+                        <div class="offset-md-1 col-md-10 mobile pt-5" >
 
 							<div class="card mb-3">
 								<div class="card-body" style="padding:5px;">
@@ -207,14 +207,14 @@ $time_attuale= time();
                                         <?php } //fine risposta aperta ?>
                                             
                                         <?php if($polls_master['tipo']=="risp_multipla"){
-											echo '<div class="meta-risposte">';
+											echo '<div class="answers-content">';
 
                                             $risposte_multiple.= $polls_master['ID']."-";
                                             $tot_risp_multiple=mysqli_num_rows(mysqli_query($con,"select ID from polls_answers where polls_id='$polls_master[ID]'"));
                                             ?>
                                             
                                             <?php if($polls_master['answer_1']!=""){ 
-                                                $cont_risp_1=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_1'"));
+                                                $cont_risp_1=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_1'"));
                                                 $risposte_multiple.="1,"; 
                                                 if($cont_risp_1>0){
                                                     $perc_risp_1=(100*$cont_risp_1)/$tot_risp_multiple; 
@@ -231,7 +231,7 @@ $time_attuale= time();
                                                 </div>                                                
                                             <?php } ?>
                                             <?php if($polls_master['answer_2']!=""){ 
-                                                    $cont_risp_2=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_2'"));
+                                                    $cont_risp_2=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_2'"));
                                                     $risposte_multiple.="2,"; 
                                                     if($cont_risp_2>0){
                                                         $perc_risp_2=(100*$cont_risp_2)/$tot_risp_multiple; 
@@ -248,7 +248,7 @@ $time_attuale= time();
                                                     </div>                                                
                                             <?php } ?>
                                             <?php if($polls_master['answer_3']!=""){ 
-                                                $cont_risp_3=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_3'"));
+                                                $cont_risp_3=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_3'"));
                                                 $risposte_multiple.="3,";
                                                 if($cont_risp_3>0){
                                                     $perc_risp_3=(100*$cont_risp_3)/$tot_risp_multiple; 
@@ -265,7 +265,7 @@ $time_attuale= time();
                                                 </div>                                                
                                             <?php } ?>
                                             <?php if($polls_master['answer_4']!=""){
-                                                $cont_risp_4=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_4'"));
+                                                $cont_risp_4=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_4'"));
                                                 $risposte_multiple.="4,";
                                                 if($cont_risp_4>0){
                                                     $perc_risp_4=(100*$cont_risp_4)/$tot_risp_multiple; 
@@ -283,7 +283,7 @@ $time_attuale= time();
 											<?php } ?> 
 											
 											<?php if($polls_master['answer_5']!=""){
-												$cont_risp_5=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_5'"));
+												$cont_risp_5=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_5'"));
 												$risposte_multiple.="5,";
 												if($cont_risp_5>0){
 													$perc_risp_5=(100*$cont_risp_5)/$tot_risp_multiple; 
@@ -301,7 +301,7 @@ $time_attuale= time();
 											<?php } ?>
 
 											<?php if($polls_master['answer_6']!=""){
-												$cont_risp_6=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_6'"));
+												$cont_risp_6=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_6'"));
 												$risposte_multiple.="6,";
 												if($cont_risp_6>0){
 													$perc_risp_6=(100*$cont_risp_6)/$tot_risp_multiple; 
@@ -319,7 +319,7 @@ $time_attuale= time();
 											<?php } ?>
 
 											<?php if($polls_master['answer_7']!=""){
-												$cont_risp_7=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_7'"));
+												$cont_risp_7=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_7'"));
 												$risposte_multiple.="7,";
 												if($cont_risp_7>0){
 													$perc_risp_7=(100*$cont_risp_7)/$tot_risp_multiple; 
@@ -337,7 +337,7 @@ $time_attuale= time();
 											<?php } ?>
 
 											<?php if($polls_master['answer_8']!=""){
-												$cont_risp_8=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_8'"));
+												$cont_risp_8=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_8'"));
 												$risposte_multiple.="8,";
 												if($cont_risp_8>0){
 													$perc_risp_8=(100*$cont_risp_8)/$tot_risp_multiple; 
@@ -355,7 +355,7 @@ $time_attuale= time();
 											<?php } ?>
 
 											<?php if($polls_master['answer_9']!=""){
-												$cont_risp_9=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_9'"));
+												$cont_risp_9=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_9'"));
 												$risposte_multiple.="9,";
 												if($cont_risp_9>0){
 													$perc_risp_9=(100*$cont_risp_9)/$tot_risp_multiple; 
@@ -373,7 +373,7 @@ $time_attuale= time();
 											<?php } ?>
 
 											<?php if($polls_master['answer_10']!=""){
-												$cont_risp_10=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='answer_10'"));
+												$cont_risp_10=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_10'"));
 												$risposte_multiple.="10,";
 												if($cont_risp_10>0){
 													$perc_risp_10=(100*$cont_risp_10)/$tot_risp_multiple; 
@@ -403,36 +403,37 @@ $time_attuale= time();
 												WHERE polls_id= ".$id_sondaggio."
 												GROUP BY poll_answer
 											");
+											
 											while($poll_answers= mysqli_fetch_array($query)){
 												switch ($poll_answers["poll_answer"]){
-													case "answer_1" :
+													case "risposta_1" :
 														$an1 = $poll_answers["conta"];
 														break;
-													case "answer_2" :
+													case "risposta_2" :
 														$an2 = $poll_answers["conta"];
 														break;
-													case "answer_3" :
+													case "risposta_3" :
 														$an3 = $poll_answers["conta"];
 														break;
-													case "answer_4" :
+													case "risposta_4" :
 														$an4 = $poll_answers["conta"];
 														break;
-													case "answer_5" :
+													case "risposta_5" :
 														$an5 = $poll_answers["conta"];
 														break;
-													case "answer_6" :
+													case "risposta_6" :
 														$an6 = $poll_answers["conta"];
 														break;
-													case "answer_7" :
+													case "risposta_7" :
 														$an7 = $poll_answers["conta"];
 														break;
-													case "answer_8" :
+													case "risposta_8" :
 														$an8 = $poll_answers["conta"];
 														break;
-													case "answer_9" :
+													case "risposta_9" :
 														$an9 = $poll_answers["conta"];
 														break;
-													case "answer_10" :
+													case "risposta_10" :
 														$an10 = $poll_answers["conta"];
 														break;
 												}
@@ -449,8 +450,8 @@ $time_attuale= time();
 											");
 											$poll_temp = mysqli_fetch_array($query);
 											for($i=1;$i<11;$i++){
-												if($poll_temp["risposta_".$i] != ""){
-													array_push($stack, $poll_temp["risposta_".$i] );
+												if($poll_temp["answer_".$i] != ""){
+													array_push($stack, $poll_temp["answer_".$i] );
 												}
 											}
 											
@@ -458,7 +459,7 @@ $time_attuale= time();
 											
 										
 											echo '</div>';
-											echo '<div class="meta-risposte">';
+											echo '<div class="answers-content">';
 										?>		
 											<div id="canvas-holder_<?php echo $polls_master['ID'];?>" class="meta-graph" >
 												<canvas id="chart-area_<?php echo $polls_master['ID'];?>"></canvas>
