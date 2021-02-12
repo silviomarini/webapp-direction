@@ -564,6 +564,7 @@ $time_attuale= time();
                                         
                                                     
                                     <div id="contenitoreContenutiCentro">
+                                        <?php
                                                 $sql =  "SELECT * FROM polls_master order by ordine";	
                                                 $result = mysqli_query($con,$sql);
                                                 $page = @ceil(@mysqli_num_rows($result)/$ArticoliPagina);

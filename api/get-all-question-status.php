@@ -1,8 +1,6 @@
 <?php
 session_start();
-$_SESSION['lang']='it';
-require_once("admin/config.php");
-
+include('../server/db.php');
 $rif_evento= $_GET['rif_evento'];
 $tab_utenti= $_GET['tab_utenti'];
 
@@ -16,9 +14,9 @@ while($polls_master= mysqli_fetch_array($r_sondaggi)){
 	$stati_sondaggi.=$polls_master['ID'].",";
 	
 	if($polls_master['attiva']==1 && $polls_master['disactivation_date']>=$time_attuale && $polls_master['activation_date']<$time_attuale){
-		$stati_sondaggi.="<img src='./images/attiva.png' width='25px' class='vertTop'> until ".date("H:i", $polls_master['disactivation_date']);
+		$stati_sondaggi.="<img src='../asset/images/active.png' width='25px' class='vertTop'> until ".date("H:i", $polls_master['disactivation_date']);
 	}else{
-		$stati_sondaggi.="<img src='./images/non_attiva.png' width='25px' class='vertTop'>";
+		$stati_sondaggi.="<img src='../asset/images/inactive.png' width='25px' class='vertTop'>";
 	}
 	
 	$stati_sondaggi.="|";	

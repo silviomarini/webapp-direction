@@ -1,8 +1,6 @@
 <?php
 session_start();
-$_SESSION['lang']='it';
-require_once("admin/config.php");
-
+include('../server/db.php');
 $risposte_multiple= $_GET['risposte_multiple'];
 
 $sond_risp_multipla=explode("|",$risposte_multiple);

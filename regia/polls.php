@@ -582,11 +582,6 @@ $time_attuale= time();
 
 	<div id="gotoTop" class="icon-angle-up"></div>
 
-
-	<script src="<?php echo $path;?>/js/jquery.js"></script>
-	<script src="<?php echo $path;?>/js/plugins.min.js"></script>
-	<script src="<?php echo $path;?>/js/functions.js"></script>
-
     <script type="text/javascript">
 	window.setInterval(function(){
 		var rif_evento = $('#rif_evento').val();
@@ -660,7 +655,7 @@ $time_attuale= time();
 		});			
 				
 		$.ajax({
-			url: "../api/get-all-questions-status.php",
+			url: "../api/get-all-question-status.php",
 			type: "get",
 			crossDomain: true,
 			data: "&rif_evento=" + rif_evento + "&tab_utenti=" + tab_utenti,

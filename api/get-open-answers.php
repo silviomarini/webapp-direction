@@ -1,7 +1,6 @@
 <?php
 session_start();
-$_SESSION['lang']='it';
-require_once("admin/config.php");
+include('../server/db.php');
 
 function data_ora_X_DB($data){
 	$split=explode(" ", $data);

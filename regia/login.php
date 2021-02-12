@@ -159,7 +159,7 @@
             $riga= mysqli_fetch_array($ris);   
             
 
-            $cod=$riga['identificativo'];
+            $cod=$riga['identifier'];
             $id_evento = $riga["ID"];
 
 
@@ -177,11 +177,7 @@
                 echo '<script language=javascript>document.location.href="index.php"</script>'; 
 
             } else {
-                if($enabled != 1){
-                    $errorMessage = "disabled user";
-                } else {
-                    $errorMessage = "Wrong credentials";
-                }
+                $errorMessage = "Wrong credentials";
             }
         }
         ?>

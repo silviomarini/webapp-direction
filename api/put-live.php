@@ -1,6 +1,5 @@
 <?php
 session_start();
-$_SESSION['lang']='it';
 require_once("../server/db.php");
 
 $rif_evento= $_GET['rif_evento'];
