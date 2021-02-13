@@ -96,7 +96,7 @@ $time_attuale= time();
 </head>
 
 <body class="stretched">
-	<div id="wrapper" class="clearfix bgrTransparent">
+	<div id="wrapper" class=" ">
         
     <div class="header" style="z-index: -1;">
         <div class="bg"></div>

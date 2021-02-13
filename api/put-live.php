@@ -2,7 +2,7 @@
 session_start();
 require_once("../server/db.php");
 
-$rif_evento= $_GET['rif_evento'];
+$current_event_id= $_GET['current_event_id'];
 $id_domanda= $_GET['id_domanda'];
 $nuovo_valore = 1;
 

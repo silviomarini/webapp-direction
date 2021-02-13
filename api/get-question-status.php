@@ -3,7 +3,7 @@ session_start();
 require_once("../server/db.php");
 
 $azione= $_GET['azione'];
-$rif_evento= $_GET['rif_evento'];
+$current_event_id= $_GET['current_event_id'];
 $id_domanda= $_GET['id_domanda'];
 $stato_domanda= $_GET['stato_domanda'];
 

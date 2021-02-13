@@ -1,8 +1,7 @@
 <?php
 session_start();
 include('../server/db.php');
-$rif_evento= $_GET['rif_evento'];
-$tab_utenti= $_GET['tab_utenti'];
+$current_event_id= $_GET['current_event_id'];
 
 $time_attuale= time();
 $stati_sondaggi="";

@@ -287,7 +287,7 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 		?>
 
 
-	<div id="wrapper" class="clearfix bgrTransparent">
+	<div id="wrapper" class=" ">
 				
 		<div class="header">
 		<div class="bg"></div>
@@ -336,7 +336,7 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 echo '
 
-                    <div class="submit-response failure" id="alertDomanda2">
+                    <div class="submit-response failure" id="question-popup">
 
                         <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
 
@@ -350,7 +350,7 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 echo '
 
-                    <div class="submit-response failure" id="alertDomanda2">
+                    <div class="submit-response failure" id="question-popup">
 
                         <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
 
@@ -364,7 +364,7 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 echo '
 
-                    <div class="submit-response success" id="alertDomanda2">
+                    <div class="submit-response success" id="question-popup">
 
                         <a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>
 

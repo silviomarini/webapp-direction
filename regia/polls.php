@@ -65,7 +65,7 @@ $time_attuale= time();
 
 <body class="stretched">
 
-	<div id="wrapper" class="clearfix bgrTransparent">
+	<div id="wrapper" class=" ">
         
         <div class="header" style="z-index: -1;">
             <div class="bg"></div>
@@ -169,8 +169,8 @@ $time_attuale= time();
                             <?php
                             $sql_sondaggi="Select * from polls_master order by ID desc";
                             $r_sondaggi= mysqli_query($con,$sql_sondaggi);
-                            $ultimi_id_domande_aperte="";
-                            $risposte_multiple="";
+                            $question_id="";
+                            $poll_closed="";
                             while($polls_master= mysqli_fetch_array($r_sondaggi)){ ?>
                                 <div class="card mb-3">
                                     <div class="card-header" >
@@ -199,7 +199,7 @@ $time_attuale= time();
                                             if(!isset($ultimo_id_inserito)){
                                                 $ultimo_id_inserito=0;	
                                             } 
-                                            $ultimi_id_domande_aperte.= $polls_master['ID'].",".$ultimo_id_inserito."|";
+                                            $question_id.= $polls_master['ID'].",".$ultimo_id_inserito."|";
                                             ?>
                                             <div class="cont_risposta" style="border-bottom:none;"></div>
 
@@ -209,13 +209,13 @@ $time_attuale= time();
                                         <?php if($polls_master['tipo']=="risp_multipla"){
 											echo '<div class="answers-content">';
 
-                                            $risposte_multiple.= $polls_master['ID']."-";
+                                            $poll_closed.= $polls_master['ID']."-";
                                             $tot_risp_multiple=mysqli_num_rows(mysqli_query($con,"select ID from polls_answers where polls_id='$polls_master[ID]'"));
                                             ?>
                                             
                                             <?php if($polls_master['answer_1']!=""){ 
                                                 $cont_risp_1=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_1'"));
-                                                $risposte_multiple.="1,"; 
+                                                $poll_closed.="1,"; 
                                                 if($cont_risp_1>0){
                                                     $perc_risp_1=(100*$cont_risp_1)/$tot_risp_multiple; 
                                                 }else{
@@ -232,7 +232,7 @@ $time_attuale= time();
                                             <?php } ?>
                                             <?php if($polls_master['answer_2']!=""){ 
                                                     $cont_risp_2=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_2'"));
-                                                    $risposte_multiple.="2,"; 
+                                                    $poll_closed.="2,"; 
                                                     if($cont_risp_2>0){
                                                         $perc_risp_2=(100*$cont_risp_2)/$tot_risp_multiple; 
                                                     }else{
@@ -249,7 +249,7 @@ $time_attuale= time();
                                             <?php } ?>
                                             <?php if($polls_master['answer_3']!=""){ 
                                                 $cont_risp_3=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_3'"));
-                                                $risposte_multiple.="3,";
+                                                $poll_closed.="3,";
                                                 if($cont_risp_3>0){
                                                     $perc_risp_3=(100*$cont_risp_3)/$tot_risp_multiple; 
                                                 }else{
@@ -266,7 +266,7 @@ $time_attuale= time();
                                             <?php } ?>
                                             <?php if($polls_master['answer_4']!=""){
                                                 $cont_risp_4=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_4'"));
-                                                $risposte_multiple.="4,";
+                                                $poll_closed.="4,";
                                                 if($cont_risp_4>0){
                                                     $perc_risp_4=(100*$cont_risp_4)/$tot_risp_multiple; 
                                                 }else{
@@ -284,7 +284,7 @@ $time_attuale= time();
 											
 											<?php if($polls_master['answer_5']!=""){
 												$cont_risp_5=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_5'"));
-												$risposte_multiple.="5,";
+												$poll_closed.="5,";
 												if($cont_risp_5>0){
 													$perc_risp_5=(100*$cont_risp_5)/$tot_risp_multiple; 
 												}else{
@@ -302,7 +302,7 @@ $time_attuale= time();
 
 											<?php if($polls_master['answer_6']!=""){
 												$cont_risp_6=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_6'"));
-												$risposte_multiple.="6,";
+												$poll_closed.="6,";
 												if($cont_risp_6>0){
 													$perc_risp_6=(100*$cont_risp_6)/$tot_risp_multiple; 
 												}else{
@@ -320,7 +320,7 @@ $time_attuale= time();
 
 											<?php if($polls_master['answer_7']!=""){
 												$cont_risp_7=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_7'"));
-												$risposte_multiple.="7,";
+												$poll_closed.="7,";
 												if($cont_risp_7>0){
 													$perc_risp_7=(100*$cont_risp_7)/$tot_risp_multiple; 
 												}else{
@@ -338,7 +338,7 @@ $time_attuale= time();
 
 											<?php if($polls_master['answer_8']!=""){
 												$cont_risp_8=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_8'"));
-												$risposte_multiple.="8,";
+												$poll_closed.="8,";
 												if($cont_risp_8>0){
 													$perc_risp_8=(100*$cont_risp_8)/$tot_risp_multiple; 
 												}else{
@@ -356,7 +356,7 @@ $time_attuale= time();
 
 											<?php if($polls_master['answer_9']!=""){
 												$cont_risp_9=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_9'"));
-												$risposte_multiple.="9,";
+												$poll_closed.="9,";
 												if($cont_risp_9>0){
 													$perc_risp_9=(100*$cont_risp_9)/$tot_risp_multiple; 
 												}else{
@@ -374,7 +374,7 @@ $time_attuale= time();
 
 											<?php if($polls_master['answer_10']!=""){
 												$cont_risp_10=mysqli_num_rows(mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' and poll_answer='risposta_10'"));
-												$risposte_multiple.="10,";
+												$poll_closed.="10,";
 												if($cont_risp_10>0){
 													$perc_risp_10=(100*$cont_risp_10)/$tot_risp_multiple; 
 												}else{
@@ -391,8 +391,8 @@ $time_attuale= time();
 											<?php } ?>
 											                                                                                                                                                        
                                         <?php 
-                                            $risposte_multiple=substr($risposte_multiple, 0, strlen($risposte_multiple)-1);
-											$risposte_multiple.="|";
+                                            $poll_closed=substr($poll_closed, 0, strlen($poll_closed)-1);
+											$poll_closed.="|";
 											
 											//retrieve data for the pie chart
 											$id_sondaggio = $polls_master["ID"];
@@ -569,13 +569,12 @@ $time_attuale= time();
         
         
        <?php
-	   $ultimi_id_domande_aperte=substr($ultimi_id_domande_aperte, 0, strlen($ultimi_id_domande_aperte)-1);
-	   $risposte_multiple=substr($risposte_multiple, 0, strlen($risposte_multiple)-1);
+	   $question_id=substr($question_id, 0, strlen($question_id)-1);
+	   $poll_closed=substr($poll_closed, 0, strlen($poll_closed)-1);
 	   ?> 
-		<input type="hidden" name="tab_utenti" id="tab_utenti" value="<?php echo $tabella_utenti;?>">
-		<input type="hidden" name="rif_evento" id="rif_evento" value="<?php echo $ID_EVENTO;?>">
-		<input type="hidden" name="ultimi_id_domande_aperte" id="ultimi_id_domande_aperte" value="<?php echo $ultimi_id_domande_aperte;?>">                                                    
-		<input type="hidden" name="risposte_multiple" id="risposte_multiple" value="<?php echo $risposte_multiple;?>">                                                    
+		<input type="hidden" name="current_event_id" id="current_event_id" value="<?php echo $ID_EVENTO;?>">
+		<input type="hidden" name="question_id" id="question_id" value="<?php echo $question_id;?>">                                                    
+		<input type="hidden" name="poll_closed" id="poll_closed" value="<?php echo $poll_closed;?>">                                                    
      
 
 	</div>
@@ -585,16 +584,15 @@ $time_attuale= time();
 
     <script type="text/javascript">
 	window.setInterval(function(){
-		var rif_evento = $('#rif_evento').val();
-		var tab_utenti = $('#tab_utenti').val();
+		var current_event_id = $('#current_event_id').val();
 
 	
-		var ultimi_id_domande_aperte = $('#ultimi_id_domande_aperte').val();
+		var question_id = $('#question_id').val();
 		$.ajax({
 			url: "../api/get-open-answers.php",
 			type: "get",
 			crossDomain: true,
-			data: 'ultimi_id_domande_aperte='+ultimi_id_domande_aperte + "&rif_evento=" + rif_evento + "&tab_utenti=" + tab_utenti,
+			data: 'question_id='+question_id + "&current_event_id=" + current_event_id ,
 			success: function(data){
 				
 				var ultimo_ID_new="";
@@ -602,25 +600,20 @@ $time_attuale= time();
 				var polls_master= data.split('|');
 				
 				for (var i = 0; i < polls_master.length; i++) {
-					var risposte_sondaggio= polls_master[i].split('***');
-					var id_sondaggio= risposte_sondaggio[0];
-					var ultima_risposta_sondaggio= risposte_sondaggio[1];
+					var answers= polls_master[i].split('***');
+					ultimo_ID_new+=answers[0]+","+answers[1]+"|";
 					
-					ultimo_ID_new+=id_sondaggio+","+ultima_risposta_sondaggio+"|";
+					if(typeof answers[2]!=="undefined")	{			
+						var answers_poll= answers[2].split('$$$');
 					
-					
-					
-					if(typeof risposte_sondaggio[2]!=="undefined")	{			
-						var risposte= risposte_sondaggio[2].split('$$$');
-					
-						for (var j = 0; j < risposte.length; j++) {
-							$("#contDomande_"+id_sondaggio+" .cont_risposta:first").before(risposte[j]);
+						for (var j = 0; j < answers_poll.length; j++) {
+							$("#contDomande_"+answers[0]+" .cont_risposta:first").before(answers_poll[j]);
 						}
 					}
 				}
 				
 				ultimo_ID_new=ultimo_ID_new.substring(0,ultimo_ID_new.length-1);
-				$("#ultimi_id_domande_aperte").val(ultimo_ID_new);
+				$("#question_id").val(ultimo_ID_new);
 			
 			},
 			error: function () {
@@ -628,26 +621,22 @@ $time_attuale= time();
 		});	
 		
 	
-		var risposte_multiple= $('#risposte_multiple').val();
+		var poll_closed= $('#poll_closed').val();
 		$.ajax({
 			url: "../api/get-multiple-answers.php",
 			type: "get",
 			crossDomain: true,
-			data: 'risposte_multiple='+risposte_multiple + "&rif_evento=" + rif_evento + "&tab_utenti=" + tab_utenti,
+			data: 'poll_closed='+poll_closed + "&current_event_id=" + current_event_id ,
 			success: function(data){
 				var polls_master= data.split('|');
 
 				for(var a=0;a<polls_master.length;a++){
-					var array_sondaggio= polls_master[a].split('_');
-					sondaggio= array_sondaggio[0];
-					risposte= array_sondaggio[1].split(',');
-					
-				
-					
-					for(var b=0;b<risposte.length;b++){
-						var risp= risposte[b].split('-');
+					var poll_array= polls_master[a].split('_');
+					answers_stat = poll_array[1].split(',');
+					for(var b=0;b<answers_stat.length;b++){
+						var current= answers_stat[b].split('-');
 						
-						$("#cont_risposta_"+risp[0]+"_"+sondaggio).html(risp[1]);
+						$("#cont_risposta_"+current[0]+"_"+poll_array[0]).html(current[1]);
 					}
 				}
 			},
@@ -659,11 +648,11 @@ $time_attuale= time();
 			url: "../api/get-all-question-status.php",
 			type: "get",
 			crossDomain: true,
-			data: "&rif_evento=" + rif_evento + "&tab_utenti=" + tab_utenti,
+			data: "&current_event_id=" + current_event_id,
 			success: function(data){
-				var stati_sondaggi= data.split('|');
-				for (var k= 0; k < stati_sondaggi.length; k++) {
-					var stato_s= stati_sondaggi[k].split(',');
+				var question_status= data.split('|');
+				for (var k= 0; k < question_status.length; k++) {
+					var stato_s= question_status[k].split(',');
 					$("#stato_domanda_"+stato_s[0]).html(stato_s[1]);
 				}
 			},

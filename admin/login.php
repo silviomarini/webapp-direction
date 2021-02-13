@@ -121,7 +121,7 @@
 
     </style>
 
-    <div id="wrapper" class="clearfix bgrTransparent">
+    <div id="wrapper" class=" ">
                     
         <div class="header">
         <div class="bg"></div>

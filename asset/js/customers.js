@@ -58,7 +58,7 @@ function getPolls(){
         var risposta_aperta = $('#risposta_aperta').val();
         risposta_aperta = encodeURIComponent(risposta_aperta);
 
-        var rif_evento = $('#rif_evento').val();
+        var current_event_id = $('#current_event_id').val();
         var ultimo_ID = $("#ultimo_ID").val();
         var id_sondaggio = $('#id_sondaggio').val();
 
@@ -67,7 +67,7 @@ function getPolls(){
                 url: "api/post-answer.php",
                 type: "get",
                 crossDomain: true,
-                data: 'azione=risp_aperta&risposta_aperta=' + risposta_aperta + '&ultimo_ID='+ultimo_ID+ '&rif_evento='+rif_evento+ '&id_sondaggio='+id_sondaggio,
+                data: 'azione=risp_aperta&risposta_aperta=' + risposta_aperta + '&ultimo_ID='+ultimo_ID+ '&current_event_id='+current_event_id+ '&id_sondaggio='+id_sondaggio,
                 success: function(data){
                     //console.log(data);
                     $("#alertDomanda").show();
@@ -90,13 +90,13 @@ function getPolls(){
         var radioValue = $("input[name='risposte_s']:checked").val();
         var id_sondaggio= $("#id_sondaggio").val();
             var ultimo_ID = $("#ultimo_ID").val();
-        var rif_evento = $('#rif_evento').val();
+        var current_event_id = $('#current_event_id').val();
 
             $.ajax({
                 url: "api/post-answer.php",
                 type: "get",
                 crossDomain: true,
-                data: 'azione=risp_multipla&risposta=' + radioValue + '&ultimo_ID='+ultimo_ID+ '&rif_evento='+rif_evento+ '&id_sondaggio='+id_sondaggio,
+                data: 'azione=risp_multipla&risposta=' + radioValue + '&ultimo_ID='+ultimo_ID+ '&current_event_id='+current_event_id+ '&id_sondaggio='+id_sondaggio,
                 success: function(data){
                     console.log(data);
                     $("#alertDomanda").show();

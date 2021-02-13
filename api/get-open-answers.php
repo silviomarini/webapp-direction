@@ -17,14 +17,13 @@ function ora_X_DB($data){
 	return $data_visualizzata;
 }
 
-$ultimi_id_domande_aperte= $_GET['ultimi_id_domande_aperte'];
-$rif_evento= $_GET['rif_evento'];
-$tab_utenti= $_GET['tab_utenti'];
+$question_id= $_GET['question_id'];
+$current_event_id= $_GET['current_event_id'];
 
 
-$array_ultime_risposte=explode("|",$ultimi_id_domande_aperte);
+$array_ultime_risposte=explode("|",$question_id);
 
-$ultimi_id_domande_aperte_new="";
+$question_id_new="";
 $ultime_risposte="";
 
 for($i=0;$i<count($array_ultime_risposte);$i++){
@@ -36,29 +35,29 @@ for($i=0;$i<count($array_ultime_risposte);$i++){
 	if(!isset($ultimo_id_inserito)){
 		$ultimo_id_inserito=0;	
 	}
-	$ultimi_id_domande_aperte_new.= $dati_sondaggio[0]."***".$ultimo_id_inserito."***";
+	$question_id_new.= $dati_sondaggio[0]."***".$ultimo_id_inserito."***";
 	
   	$sql_risposte="Select poll_answer,answer_datetime from polls_answers where polls_id='$dati_sondaggio[0]' and ID>'$dati_sondaggio[1]' order by answer_datetime desc";
 	$r_risposte= mysqli_query($con,$sql_risposte);
 	
 	while($risposte= mysqli_fetch_array($r_risposte)){
 		
-		$ultimi_id_domande_aperte_new.="
+		$question_id_new.="
 			<div class='cont_risposta'>
 				<div class='fontWeight700'><strong>".data_ora_X_DB($risposte['answer_datetime'])."</strong></div>
 				". nl2br($risposte['poll_answer'])."
 			</div>		
 		";
 		
-		$ultimi_id_domande_aperte_new.="$$$";	
+		$question_id_new.="$$$";	
 	}
-	$ultimi_id_domande_aperte_new=substr($ultimi_id_domande_aperte_new, 0, strlen($ultimi_id_domande_aperte_new)-3);
-	$ultimi_id_domande_aperte_new.="|";
+	$question_id_new=substr($question_id_new, 0, strlen($question_id_new)-3);
+	$question_id_new.="|";
 	
 }
 
-$ultimi_id_domande_aperte_new=substr($ultimi_id_domande_aperte_new, 0, strlen($ultimi_id_domande_aperte_new)-1);
+$question_id_new=substr($question_id_new, 0, strlen($question_id_new)-1);
 
-echo $ultimi_id_domande_aperte_new;
+echo $question_id_new;
 ?>
 

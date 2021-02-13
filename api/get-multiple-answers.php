@@ -1,9 +1,9 @@
 <?php
 session_start();
 include('../server/db.php');
-$risposte_multiple= $_GET['risposte_multiple'];
+$poll_closed= $_GET['poll_closed'];
 
-$sond_risp_multipla=explode("|",$risposte_multiple);
+$sond_risp_multipla=explode("|",$poll_closed);
 
 
 $contatori_risposte="";

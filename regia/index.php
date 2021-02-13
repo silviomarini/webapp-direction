@@ -69,7 +69,7 @@ if(isset($_GET["filter"])){
 </head>
 
 <body class="stretched">
-	<div id="wrapper" class="regia clearfix bgrTransparent">
+	<div id="wrapper" class="regia  ">
                 
     <div class="header" style="z-index: -1;">
         <div class="bg"></div>
@@ -296,22 +296,20 @@ if(isset($_GET["filter"])){
             </div>
         </div>
 		<input type="hidden" name="ultimo_ID" id="ultimo_ID" value="<?php echo $ultimo_id_inserito;?>">
-		<input type="hidden" name="tab_utenti" id="tab_utenti" value="<?php echo $tabella_utenti;?>">
-		<input type="hidden" name="rif_evento" id="rif_evento" value="<?php echo $ID_EVENTO;?>">
+		<input type="hidden" name="current_event_id" id="current_event_id" value="<?php echo $ID_EVENTO;?>">
 	</div>
 
     <script type="text/javascript">
 	// AGGIORNO REALTIME LE questions
 	window.setInterval(function(){
 		var ultimo_ID = $('#ultimo_ID').val();
-		var rif_evento = $('#rif_evento').val();
-		var tab_utenti = $('#tab_utenti').val();
+		var current_event_id = $('#current_event_id').val();
 
 		$.ajax({
 			url: "../api/get-questions.php<?php echo "?filter=".$_GET["filter"]; ?>",
 			type: "get",
 			crossDomain: true,
-			data: 'ultimo_ID='+ultimo_ID + "&rif_evento=" + rif_evento + "&tab_utenti=" + tab_utenti,
+			data: 'ultimo_ID='+ultimo_ID + "&current_event_id=" + current_event_id ,
 			success: function(data){
 				var data_split= data.split('|||');
 				var dataDomande= data_split[0];
@@ -327,12 +325,12 @@ if(isset($_GET["filter"])){
 	}, 5000);
 
 	window.setInterval(function(){
-		var rif_evento = $('#rif_evento').val();
+		var current_event_id = $('#current_event_id').val();
 		$.ajax({
 			url: "../api/put-question-status.php",
 			type: "get",
 			crossDomain: true,
-			data: "rif_evento=" + rif_evento,
+			data: "current_event_id=" + current_event_id,
 			success: function(data){
 
 				var data_split= data.split('|');
@@ -367,7 +365,7 @@ if(isset($_GET["filter"])){
 	});
 
 	function go_live(el){
-		var rif_evento = $('#rif_evento').val();
+		var current_event_id = $('#current_event_id').val();
 		var id_domanda= el.id;
 		var classname = "domanda-attiva";
 
@@ -375,7 +373,7 @@ if(isset($_GET["filter"])){
 			url: "../api/put-live.php",
 			type: "get",
 			crossDomain: true,
-			data: 'id_domanda=' + id_domanda + '&rif_evento='+rif_evento,
+			data: 'id_domanda=' + id_domanda + '&current_event_id='+current_event_id,
 			success: function(data){
 		
 				if($("#domanda_"+id_domanda).hasClass(classname)){
@@ -393,7 +391,7 @@ if(isset($_GET["filter"])){
 	}
 
 	function change_status(el){
-		var rif_evento = $('#rif_evento').val();
+		var current_event_id = $('#current_event_id').val();
 		var id_domanda= el.id;
 		var stato_domanda= el.getAttribute("valore");
 		
@@ -401,7 +399,7 @@ if(isset($_GET["filter"])){
 			url: "../api/get-question-status.php",
 			type: "get",
 			crossDomain: true,
-			data: 'id_domanda=' + id_domanda + '&stato_domanda='+stato_domanda + '&rif_evento='+rif_evento,
+			data: 'id_domanda=' + id_domanda + '&stato_domanda='+stato_domanda + '&current_event_id='+current_event_id,
 			success: function(data){
 				
 				if(stato_domanda=="y"){	

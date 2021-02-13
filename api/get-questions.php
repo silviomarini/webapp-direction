@@ -11,8 +11,7 @@
     }
     
     $ultimo_ID= $_GET['ultimo_ID'];
-    $rif_evento= $_GET['rif_evento'];
-    $tab_utenti= $_GET['tab_utenti'];
+    $current_event_id= $_GET['current_event_id'];
     $supp_condition = "";
     $active_type = "";
     switch ($_GET["filter"]) {
@@ -39,13 +38,13 @@
     }
     
     
-    $sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select ID from questions where event_id='".$rif_evento."' order by question_timestamp desc LIMIT 1"));
+    $sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select ID from questions where event_id='".$current_event_id."' order by question_timestamp desc LIMIT 1"));
     $ultimo_id_inserito= $sql_ultimo_id_inserito['ID'];
     if(!isset($ultimo_id_inserito)){
         $ultimo_id_inserito=0;	
     }
     
-    $sql_domande="Select ID,question,question_timestamp from questions where event_id='".$rif_evento."' and ID>'$ultimo_ID' and hidden_question='0' ".$supp_condition." order by question_timestamp desc";
+    $sql_domande="Select ID,question,question_timestamp from questions where event_id='".$current_event_id."' and ID>'$ultimo_ID' and hidden_question='0' ".$supp_condition." order by question_timestamp desc";
     $r_domande= mysqli_query($con,$sql_domande);
     $ris="";
     while($questions= mysqli_fetch_array($r_domande)){
@@ -108,7 +107,7 @@
         <script type="text/javascript"> 
         // CAMBIO LO STATO DELLA DOMANDA AL CLICK
         $(".statoDomanda_'.$questions['ID'].'").click(function() {
-            var rif_evento = $(\'#rif_evento\').val();
+            var current_event_id = $(\'#current_event_id\').val();
             var id_domanda= $(this).attr("id");
             var stato_domanda= $(this).attr("valore");
                     
@@ -116,7 +115,7 @@
                 url: "get-question-status.php",
                 type: "get",
                 crossDomain: true,
-                data: \'id_domanda=\' + id_domanda + \'&stato_domanda=\'+stato_domanda + \'&rif_evento=\'+rif_evento,
+                data: \'id_domanda=\' + id_domanda + \'&stato_domanda=\'+stato_domanda + \'&current_event_id=\'+current_event_id,
                 success: function(data){
                     //console.log(data);
                     
