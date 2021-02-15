@@ -133,13 +133,13 @@ if (isset($_POST['save_event'])){
 
         $info = pathinfo($_FILES['event_cover']['name']);
 
-        $ext = $info['extension']; /
+        $ext = $info['extension'];
 
         $coverImage = "cover".time().".".$ext; 
 
 
 
-        $target = 'event-covers/'.$coverImage;
+        $target = '../asset/event-covers/'.$coverImage;
 
         move_uploaded_file( $_FILES['event_cover']['tmp_name'], $target);
 
