@@ -5,7 +5,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="author" content="creativetown.it" />
+
 	
 	<script src="../asset/js/jquery.js"></script>
 
@@ -121,7 +121,7 @@
 
     </style>
 
-    <div id="wrapper" class=" ">
+    <div id="wrapper">
                     
         <div class="header">
         <div class="bg"></div>

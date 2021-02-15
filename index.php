@@ -5,7 +5,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="author" content="creativetown.it" />
+
 	
 	<script src="asset/js/jquery.js"></script>
 
@@ -17,7 +17,7 @@
 
 
 <body>
-	<div id="wrapper" class=" ">
+	<div id="wrapper">
 				
 		<div class="header">
 		<div class="bg"></div>
@@ -49,7 +49,6 @@
 		<?php 
 			if($cover == "") { $cover = "cover1608542135.jpeg"; } 
 			else {
-				//check if the cover value is a valid image
 				if (!file_exists("asset/event-covers/".$cover)) {
 					$cover = "cover1608542135.jpeg";
 				}

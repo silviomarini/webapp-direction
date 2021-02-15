@@ -16,7 +16,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="author" content="creativetown.it" />
+
 	
 	<script src="../asset/js/jquery.js"></script>
 
@@ -126,7 +126,6 @@ $success_update = 0;
 
 if (isset($_POST['save_event'])){ 
 
-    //save new cover to the server
 
     $coverImage = "";
 
@@ -134,7 +133,7 @@ if (isset($_POST['save_event'])){
 
         $info = pathinfo($_FILES['event_cover']['name']);
 
-        $ext = $info['extension']; // get the extension of the file
+        $ext = $info['extension']; /
 
         $coverImage = "cover".time().".".$ext; 
 
@@ -147,10 +146,6 @@ if (isset($_POST['save_event'])){
     }
 
 
-
-
-
-    //save event to DB
 
     $sql="
 
@@ -174,7 +169,7 @@ if (isset($_POST['save_event'])){
 
     WHERE ID = ".$_POST['db_id']."";
 
-    //echo $sql;
+
 
     mysqli_query($con,$sql) or die (mysqli_error($con));
 
@@ -183,8 +178,6 @@ if (isset($_POST['save_event'])){
 }
 
 
-
-//prepare data for event
 
 if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1 ")){
 
@@ -215,12 +208,9 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
 ?>
 
-<!-- cambio password -->
 
 <?php
 
-
-            //update event on save
 
             $active_tab="event";
 
@@ -234,9 +224,6 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 $new_pass = $_POST["new_pass"];
 
-                
-
-                //check old password
 
                 if($query = mysqli_query($con,"Select password from admin WHERE ID = ".$_SESSION["ID_operatore"]." ")){
 
@@ -256,7 +243,6 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                     if($new_pass != "" && $new_pass == $_POST["retyped_pass"]) {
 
-                    //update with the new one if ok
 
                     $sql="
 
@@ -268,7 +254,6 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                     WHERE ID = ".$_SESSION["ID_operatore"]."";
 
-                    //echo $sql;
 
                     mysqli_query($con,$sql) or die (mysqli_error($con));
 
@@ -287,7 +272,7 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 		?>
 
 
-	<div id="wrapper" class=" ">
+	<div id="wrapper">
 				
 		<div class="header">
 		<div class="bg"></div>

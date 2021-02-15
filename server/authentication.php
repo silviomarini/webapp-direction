@@ -18,10 +18,7 @@
         echo '<script language=javascript>document.location.href="login.php"</script>'; 
     }
 
-    /*retrieve current user data
-        USER: nome, cognome, username, level
-        AZIENDA: id, nome, dati vari
-    */
+
 
     $query = "SELECT u.id as idUtente, id_azienda, firstname, lastname, username, a.nome as nomeAzienda, a.tipo as tipoAzienda, level, 
                     piva, indirizzo, ta.nome as tipo_att, ta.id as id_tipo_att, tipologia_servizio 

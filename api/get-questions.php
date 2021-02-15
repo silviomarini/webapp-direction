@@ -45,9 +45,9 @@
     }
     
     $sql_domande="Select ID,question,question_timestamp from questions where event_id='".$current_event_id."' and ID>'$ultimo_ID' and hidden_question='0' ".$supp_condition." order by question_timestamp desc";
-    $r_domande= mysqli_query($con,$sql_domande);
+    $and_questions= mysqli_query($con,$sql_domande);
     $ris="";
-    while($questions= mysqli_fetch_array($r_domande)){
+    while($questions= mysqli_fetch_array($and_questions)){
         $ris.='
         
         <div class="card mb-3" id="domanda_'.$questions['ID'].'">

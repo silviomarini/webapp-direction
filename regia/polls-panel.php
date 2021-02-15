@@ -35,7 +35,7 @@ $time_attuale= time();
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="author" content="creativetown.it" />
+
 	
 	<script src="../asset/js/jquery.js"></script>
 
@@ -95,8 +95,8 @@ $time_attuale= time();
     </STYLE>
 </head>
 
-<body class="stretched">
-	<div id="wrapper" class=" ">
+<body>
+	<div id="wrapper">
         
     <div class="header" style="z-index: -1;">
         <div class="bg"></div>
@@ -494,7 +494,7 @@ $time_attuale= time();
                                                 
                                                 <br />
                                                 
-                                                <div class="col-md-12 txtAlignDestra">
+                                                <div class="col-md-12">
                                                     <button type="submit" class="mb-xs mt-xs mr-xs btn btn-success" style="font-size: large;margin: 5px;color: #ffffff; border-color: #51b451 !important;background-color: #51b451;"><i class="fa fa-save"></i> Save</button>
                                                     <?php 
                                                         if($_REQUEST['cke'] != ''){$url=$file_script;}
@@ -516,7 +516,7 @@ $time_attuale= time();
 
 							<div class="card mb-3">
 								<div class="card-body" style="padding:5px;">
-									<div class="cont_risposta">
+									<div >
 										<a href="polls.php"> <div class="pools-button" style="float:left;"> <i class="fa fa-arrow-circle-left"></i> Back to polls </div> </a>
 									</div>
 								</div>
@@ -527,7 +527,7 @@ $time_attuale= time();
 
 							<div class="card mb-3">
 								<div class="card-body" style="padding:20px;">
-									<div class="cont_risposta">
+									<div >
                                     <div class="row">
                                     <div class="col-md-12">
                                         <?php if(isset($_GET['noitem'])){ ?>
@@ -602,11 +602,11 @@ $time_attuale= time();
                                                 <table class="table mb-none" width="100%">
                                                         <thead>
                                                             <tr class="info" style="background-color:beige;">
-                                                                <td width="5%" class="testo12" ><strong>Active</strong></td>
+                                                                <td width="5%"  ><strong>Active</strong></td>
                                                                 <td width="5%">-</td>
-                                                                <td width="36%" height="26" class="testo12" ><strong>&nbsp;&nbsp;Question</strong></td>
-                                                                <td class="testo12" ><strong>Type</strong></td>
-                                                                <td colspan="2" class="testo12"><strong>Actions</strong></td>
+                                                                <td width="36%" height="26"  ><strong>&nbsp;&nbsp;Question</strong></td>
+                                                                <td  ><strong>Type</strong></td>
+                                                                <td colspan="2" ><strong>Actions</strong></td>
                                                             </tr> 
                                                         </thead>
                                                         <tbody>
@@ -628,7 +628,7 @@ $time_attuale= time();
                                                                     <td> 
                                                                         <?php if($N>1){?>
                                                                             <form name="form" id="form">
-                                                                            <select name="jumpMenu" id="jumpMenu" onChange="menu_update('parent',this,0)" class="selectForm testo11" style="padding:0px;">
+                                                                            <select name="jumpMenu" id="jumpMenu" onChange="menu_update('parent',this,0)" class="selectForm" style="padding:0px;">
                                                                                 <?php for($i=1; $i<=$N; $i++ ){
                                                                                         if($i==$row['ordine']){$sel='selected'; }else{$sel=NULL;}?>
                                                                                 <option value="<?php echo $_SERVER['PHP_SELF'].'?ID_documento='.$row['ID'].'&ordine='.$row['ordine'].'&nuovo='.$i.'&cke=&azione=ordina&sheet='.@$_GET['sheet']; ?>" <?php echo $sel; ?>><?php echo $i ?></option>
@@ -657,17 +657,17 @@ $time_attuale= time();
                                                                 
                                                                 <td align="center"><a href="<?php echo "$_SERVER[PHP_SELF]?cke=1&ID=$row[ID]&azione=aggiorna"; ?>" ><i class="fa fa-pencil testo18 azzurro"></i></a></td>
                                                                 <td align="center">
-                                                                    <a href="<?php echo "$_SERVER[PHP_SELF]?cke=&ID=$row[ID]&azione=del"; ?>" class="testo12neroBold" onClick="return confirm('Question: <?php echo $row['domanda'] ?> \n Confirm deletion? \n ATTENTION! IRREVERSIBLE ACTION');"><i class="fa fa-trash-o testo18 rosso"></i></a>
+                                                                    <a href="<?php echo "$_SERVER[PHP_SELF]?cke=&ID=$row[ID]&azione=del"; ?>"  onClick="return confirm('Question: <?php echo $row['domanda'] ?> \n Confirm deletion? \n ATTENTION! IRREVERSIBLE ACTION');"><i class="fa fa-trash-o testo18 rosso"></i></a>
                                                                         
                                                                     <?php if (isset($_SESSION['sessione_mastercontol'])) { ?>
-                                                                        <a href="<?php echo "$_SERVER[PHP_SELF]?cke=&ID=$row[ID]&azione=delRisposte"; ?>" title="ELIMINA RISPOSTE" class="testo12neroBold" style="margin-left:10px;" onClick="return confirm('Vuoi eliminare le risposte di questa domanda? \n \n ** <?php echo $row['domanda'] ?> ** \n \n ATTENTION! IRREVERSIBLE ACTION!');"><i class="fa fa-eraser testo18 rosso"></i></a>
+                                                                        <a href="<?php echo "$_SERVER[PHP_SELF]?cke=&ID=$row[ID]&azione=delRisposte"; ?>" title="ELIMINA RISPOSTE"  style="margin-left:10px;" onClick="return confirm('Vuoi eliminare le risposte di questa domanda? \n \n ** <?php echo $row['domanda'] ?> ** \n \n ATTENTION! IRREVERSIBLE ACTION!');"><i class="fa fa-eraser testo18 rosso"></i></a>
                                                                     <?php } ?>
                                                                 </td>
                                                             </tr>
                                                             <?php }	?>
                                                         </tbody>
                                                     </table>
-                                                <span class="testo12"><?php echo $row['provenienza_gilead']?></span> </div>
+                                                <span ><?php echo $row['provenienza_gilead']?></span> </div>
                                             </div>
                                         </div>
                                     </div>

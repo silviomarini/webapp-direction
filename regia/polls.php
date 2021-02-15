@@ -23,7 +23,7 @@ $time_attuale= time();
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="author" content="creativetown.it" />
+
 	
 	<script src="../asset/js/jquery.js"></script>
 
@@ -63,9 +63,9 @@ $time_attuale= time();
 
 </head>
 
-<body class="stretched">
+<body>
 
-	<div id="wrapper" class=" ">
+	<div id="wrapper">
         
         <div class="header" style="z-index: -1;">
             <div class="bg"></div>
@@ -134,9 +134,9 @@ $time_attuale= time();
 							$fp = fopen('export.csv', 'w');
 
 							$sql_sondaggi="Select * from polls_master";
-							$r_sondaggi= mysqli_query($con,$sql_sondaggi);
+							$polls_ans= mysqli_query($con,$sql_sondaggi);
 							
-							while($polls_master= mysqli_fetch_array($r_sondaggi)){ 
+							while($polls_master= mysqli_fetch_array($polls_ans)){ 
 								fputcsv($fp, $polls_master);
 							}
 							
@@ -153,11 +153,11 @@ $time_attuale= time();
 						?>
 
 
-                        <div class="offset-md-1 col-md-10 mobile pt-5" >
+                        <div>
 
-							<div class="card mb-3">
+							<div class="card">
 								<div class="card-body" style="padding:5px;">
-									<div class="cont_risposta">
+									<div>
 										<a href="polls-panel.php"> <div class="pools-button" style="float:left;"> Pools panel </div> </a>
 										<a href="export.csv"> <div class="pools-button" style=""> Export </div> </a>
 										<a href="regia_sondaggi.php?reset=all" onclick="return confirm('Are you sure? All polls will be deleted');"> <div class="pools-button alert" style=""> Reset </div> </a>
@@ -168,18 +168,18 @@ $time_attuale= time();
 
                             <?php
                             $sql_sondaggi="Select * from polls_master order by ID desc";
-                            $r_sondaggi= mysqli_query($con,$sql_sondaggi);
+                            $polls_ans= mysqli_query($con,$sql_sondaggi);
                             $question_id="";
                             $poll_closed="";
-                            while($polls_master= mysqli_fetch_array($r_sondaggi)){ ?>
+                            while($polls_master= mysqli_fetch_array($polls_ans)){ ?>
                                 <div class="card mb-3">
                                     <div class="card-header" >
                                         <strong><?php echo $polls_master['domanda'];?></strong>
                                         <div class="float-right" id="stato_domanda_<?php echo $polls_master['ID'];?>">
                                                     <?php if($polls_master['attiva']==1 && $polls_master['disactivation_date']>=$time_attuale && $polls_master['activation_date']<$time_attuale){ ?>
-                                                <img src="<?php echo $path;?>../asset/images/active.png" width="25px" class="vertTop"> until <?php echo date("H:i", $polls_master['disactivation_date']);?>
+                                                <img src="<?php echo $path;?>../asset/images/active.png" width="25px" > until <?php echo date("H:i", $polls_master['disactivation_date']);?>
                                             <?php }else{ ?>
-                                                <img src="<?php echo $path;?>../asset/images/inactive.png" width="25px" class="vertTop">
+                                                <img src="<?php echo $path;?>../asset/images/inactive.png" width="25px" >
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -187,8 +187,8 @@ $time_attuale= time();
                                         <?php if($polls_master['tipo']=="risp_aperta"){ 
                                             $sql_risp_aperte=mysqli_query($con,"Select * from polls_answers where polls_id='$polls_master[ID]' order by answer_datetime DESC");
                                             while($risp_aperte=mysqli_fetch_array($sql_risp_aperte)){ ?>
-                                                <div class="cont_risposta">
-                                                    <div class="fontWeight700"><strong><?php echo formatDateAndTime($risp_aperte['answer_datetime']);?></strong></div>
+                                                <div >
+                                                    <div ><strong><?php echo formatDateAndTime($risp_aperte['answer_datetime']);?></strong></div>
                                                     <?php echo nl2br($risp_aperte['poll_answer']);?>
                                                 </div>
                                             <?php } 
@@ -201,7 +201,7 @@ $time_attuale= time();
                                             } 
                                             $question_id.= $polls_master['ID'].",".$ultimo_id_inserito."|";
                                             ?>
-                                            <div class="cont_risposta" style="border-bottom:none;"></div>
+                                            <div  style="border-bottom:none;"></div>
 
                                         
                                         <?php } //fine risposta aperta ?>
@@ -223,10 +223,10 @@ $time_attuale= time();
                                                 }
                                                 $perc_risp_1= number_format($perc_risp_1,2,'.','');
                                                 ?>
-                                                <div class="cont_risposta_multipla" >
+                                                <div>
                                                     <div>
                                                         <?php echo $polls_master['answer_1'];?>:
-                                                        <span id="cont_risposta_1_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_1;?> (<?php echo $perc_risp_1;?>%)</span>
+                                                        <span id="cont_risposta_1_<?php echo $polls_master['ID'];?>" ><?php echo $cont_risp_1;?> (<?php echo $perc_risp_1;?>%)</span>
                                                     </div>
                                                 </div>                                                
                                             <?php } ?>
@@ -240,10 +240,10 @@ $time_attuale= time();
                                                     }
                                                     $perc_risp_2= number_format($perc_risp_2,2,'.','');																	
                                                     ?>
-                                                    <div class="cont_risposta_multipla">
+                                                    <div>
                                                         <div>
                                                             <?php echo $polls_master['answer_2'];?>:
-                                                            <span id="cont_risposta_2_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_2;?> (<?php echo $perc_risp_2;?>%)</span>
+                                                            <span id="cont_risposta_2_<?php echo $polls_master['ID'];?>" ><?php echo $cont_risp_2;?> (<?php echo $perc_risp_2;?>%)</span>
                                                         </div>
                                                     </div>                                                
                                             <?php } ?>
@@ -257,10 +257,10 @@ $time_attuale= time();
                                                 }
                                                 $perc_risp_3= number_format($perc_risp_3,2,'.','');																	
                                                 ?>
-                                                <div class="cont_risposta_multipla">
+                                                <div >
                                                     <div>
                                                         <?php echo $polls_master['answer_3'];?>:
-                                                        <span id="cont_risposta_3_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_3;?> (<?php echo $perc_risp_3;?>%)</span>
+                                                        <span id="cont_risposta_3_<?php echo $polls_master['ID'];?>" ><?php echo $cont_risp_3;?> (<?php echo $perc_risp_3;?>%)</span>
                                                     </div>
                                                 </div>                                                
                                             <?php } ?>
@@ -274,10 +274,10 @@ $time_attuale= time();
                                                 }
                                                 $perc_risp_4= number_format($perc_risp_4,2,'.','');																	
                                                 ?>
-                                                <div class="cont_risposta_multipla">
+                                                <div >
                                                     <div>
                                                         <?php echo $polls_master['answer_4'];?>:
-                                                        <span id="cont_risposta_4_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_4;?> (<?php echo $perc_risp_4;?>%)</span>
+                                                        <span id="cont_risposta_4_<?php echo $polls_master['ID'];?>" ><?php echo $cont_risp_4;?> (<?php echo $perc_risp_4;?>%)</span>
                                                     </div>
                                                 </div>                                                
 											<?php } ?> 
@@ -292,10 +292,10 @@ $time_attuale= time();
 												}
 												$perc_risp_5= number_format($perc_risp_5,2,'.','');																	
 												?>
-												<div class="cont_risposta_multipla">
+												<div >
 													<div>
 														<?php echo $polls_master['answer_5'];?>:
-														<span id="cont_risposta_5_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_5;?> (<?php echo $perc_risp_5;?>%)</span>
+														<span id="cont_risposta_5_<?php echo $polls_master['ID'];?>" ><?php echo $cont_risp_5;?> (<?php echo $perc_risp_5;?>%)</span>
 													</div>
 												</div>                                                
 											<?php } ?>
@@ -310,10 +310,10 @@ $time_attuale= time();
 												}
 												$perc_risp_6= number_format($perc_risp_6,2,'.','');																	
 												?>
-												<div class="cont_risposta_multipla">
+												<div >
 													<div>
 														<?php echo $polls_master['answer_6'];?>:
-														<span id="cont_risposta_6_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_6;?> (<?php echo $perc_risp_6;?>%)</span>
+														<span id="cont_risposta_6_<?php echo $polls_master['ID'];?>" ><?php echo $cont_risp_6;?> (<?php echo $perc_risp_6;?>%)</span>
 													</div>
 												</div>                                                
 											<?php } ?>
@@ -328,10 +328,10 @@ $time_attuale= time();
 												}
 												$perc_risp_7= number_format($perc_risp_7,2,'.','');																	
 												?>
-												<div class="cont_risposta_multipla">
+												<div >
 													<div>
 														<?php echo $polls_master['answer_7'];?>:
-														<span id="cont_risposta_7_<?php echo $polls_master['ID'];?>" class="fontWeight700"><?php echo $cont_risp_7;?> (<?php echo $perc_risp_7;?>%)</span>
+														<span id="cont_risposta_7_<?php echo $polls_master['ID'];?>" ><?php echo $cont_risp_7;?> (<?php echo $perc_risp_7;?>%)</span>
 													</div>
 												</div>                                                
 											<?php } ?>
@@ -346,10 +346,10 @@ $time_attuale= time();
 												}
 												$perc_risp_8= number_format($perc_risp_8,2,'.','');																	
 												?>
-												<div class="cont_risposta_multipla">
+												<div >
 													<div>
 														<?php echo $polls_master['answer_8'];?>:
-														<span id="cont_risposta_8_<?php echo $polls_master['ID'];?>" class="fontWeight800"><?php echo $cont_risp_8;?> (<?php echo $perc_risp_8;?>%)</span>
+														<span id="cont_risposta_8_<?php echo $polls_master['ID'];?>"><?php echo $cont_risp_8;?> (<?php echo $perc_risp_8;?>%)</span>
 													</div>
 												</div>                                                
 											<?php } ?>
@@ -364,10 +364,10 @@ $time_attuale= time();
 												}
 												$perc_risp_9= number_format($perc_risp_9,2,'.','');																	
 												?>
-												<div class="cont_risposta_multipla">
+												<div >
 													<div>
 														<?php echo $polls_master['answer_9'];?>:
-														<span id="cont_risposta_9_<?php echo $polls_master['ID'];?>" class="fontWeight900"><?php echo $cont_risp_9;?> (<?php echo $perc_risp_9;?>%)</span>
+														<span id="cont_risposta_9_<?php echo $polls_master['ID'];?>"><?php echo $cont_risp_9;?> (<?php echo $perc_risp_9;?>%)</span>
 													</div>
 												</div>                                                
 											<?php } ?>
@@ -382,10 +382,10 @@ $time_attuale= time();
 												}
 												$perc_risp_10= number_format($perc_risp_10,2,'.','');																	
 												?>
-												<div class="cont_risposta_multipla">
+												<div >
 													<div>
 														<?php echo $polls_master['answer_10'];?>:
-														<span id="cont_risposta_10_<?php echo $polls_master['ID'];?>" class="fontWeight1000"><?php echo $cont_risp_10;?> (<?php echo $perc_risp_10;?>%)</span>
+														<span id="cont_risposta_10_<?php echo $polls_master['ID'];?>"><?php echo $cont_risp_10;?> (<?php echo $perc_risp_10;?>%)</span>
 													</div>
 												</div>                                                
 											<?php } ?>

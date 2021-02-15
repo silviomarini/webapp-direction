@@ -28,19 +28,19 @@ $ultime_risposte="";
 
 for($i=0;$i<count($array_ultime_risposte);$i++){
 	
-	$dati_sondaggio=explode(",",$array_ultime_risposte[$i]);
+	$polls_data=explode(",",$array_ultime_risposte[$i]);
 
-	$sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select ID from polls_answers where polls_id='$dati_sondaggio[0]' order by answer_datetime desc LIMIT 1"));
+	$sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select ID from polls_answers where polls_id='$polls_data[0]' order by answer_datetime desc LIMIT 1"));
 	$ultimo_id_inserito= $sql_ultimo_id_inserito['ID'];
 	if(!isset($ultimo_id_inserito)){
 		$ultimo_id_inserito=0;	
 	}
-	$question_id_new.= $dati_sondaggio[0]."***".$ultimo_id_inserito."***";
+	$question_id_new.= $polls_data[0]."***".$ultimo_id_inserito."***";
 	
-  	$sql_risposte="Select poll_answer,answer_datetime from polls_answers where polls_id='$dati_sondaggio[0]' and ID>'$dati_sondaggio[1]' order by answer_datetime desc";
-	$r_risposte= mysqli_query($con,$sql_risposte);
+  	$sql_risposte="Select poll_answer,answer_datetime from polls_answers where polls_id='$polls_data[0]' and ID>'$polls_data[1]' order by answer_datetime desc";
+	$answers_res= mysqli_query($con,$sql_risposte);
 	
-	while($risposte= mysqli_fetch_array($r_risposte)){
+	while($risposte= mysqli_fetch_array($answers_res)){
 		
 		$question_id_new.="
 			<div class='cont_risposta'>

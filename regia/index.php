@@ -58,7 +58,7 @@ if(isset($_GET["filter"])){
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta name="author" content="creativetown.it" />
+
 	
 	<script src="../asset/js/jquery.js"></script>
 
@@ -68,8 +68,8 @@ if(isset($_GET["filter"])){
 	<title>Privilege Web App</title>
 </head>
 
-<body class="stretched">
-	<div id="wrapper" class="regia  ">
+<body>
+	<div id="wrapper">
                 
     <div class="header" style="z-index: -1;">
         <div class="bg"></div>
@@ -150,9 +150,9 @@ if(isset($_GET["filter"])){
 								$fp = fopen('export.csv', 'w');
 
 								$sql_sondaggi="Select * from questions";
-								$r_sondaggi= mysqli_query($con,$sql_sondaggi);
+								$polls_ans= mysqli_query($con,$sql_sondaggi);
 								
-								while($polls_master= mysqli_fetch_array($r_sondaggi)){ 
+								while($polls_master= mysqli_fetch_array($polls_ans)){ 
 									fputcsv($fp, $polls_master);
 								}
 								
@@ -169,12 +169,12 @@ if(isset($_GET["filter"])){
 							<div class="offset-md-1 col-md-10 mobile pt-5"> 
 								<div class="card mb-3">
 									<div class="card-body <?php echo $active_type; ?> " style="padding:5px;">
-										<div class="cont_risposta">
+										<div >
 											<?php if($active_type == "ALL" || $active_type == "") { ?> 
 												<a href="export.csv"> <div class="pools-button" style=""> Export </div> </a>
 											<?php } ?>
 										</div>
-										<div class="cont_risposta" style="float:left;">
+										<div  style="float:left;">
 											<div class="active-status" style=""> <?php echo $active_title; ?> </div>
 											<?php if($active_type != "DONE") { ?> 
 												<a href="index.php?filter=done"> <div class="pools-button small done" style=""> PROCESSED <BR/> QUESTIONS </div> </a>
@@ -205,9 +205,9 @@ if(isset($_GET["filter"])){
 
 									<?php
 									$sql_domande="Select * from questions where event_id='".$ID_EVENTO."' ".$supp_condition." order by question_timestamp desc";
-									$r_domande= mysqli_query($con,$sql_domande);
+									$and_questions= mysqli_query($con,$sql_domande);
 									
-									while($questions= mysqli_fetch_array($r_domande)){
+									while($questions= mysqli_fetch_array($and_questions)){
 									if($questions['hidden_question']=="0"){ 
 											if($questions['question_status']=="y"){$col_bg="#2aa900";}
 											if($questions['question_status']=="n"){$col_bg="#e81f1f";}
