@@ -224,8 +224,9 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                 $new_pass = $_POST["new_pass"];
 
-
-                if($query = mysqli_query($con,"Select password from admin WHERE ID = ".$_SESSION["ID_operatore"]." ")){
+                $q = "Select password from admin WHERE username = '".$_SESSION["cod"]."' ";
+                //echo $q;
+                if($query = mysqli_query($con,$q)){
 
                     $user = mysqli_fetch_array($query);
 
@@ -252,7 +253,7 @@ if($query = mysqli_query($con,"Select * from streamings order by ID DESC LIMIT 1
 
                         password='".md5($new_pass)."' 
 
-                    WHERE ID = ".$_SESSION["ID_operatore"]."";
+                    WHERE username = '".$_SESSION["cod"]."'";
 
 
                     mysqli_query($con,$sql) or die (mysqli_error($con));

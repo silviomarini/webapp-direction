@@ -12,6 +12,9 @@ function submitQuestion(){
             console.log(response);
             document.getElementById('question').value = "";
             document.getElementById('alertQuestion').style.display="block";
+            setTimeout(function() {
+                $("#alertQuestion").hide();
+            }, 3000);
         })
         .catch(err => {
             console.log(err)
