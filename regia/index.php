@@ -132,7 +132,7 @@ if(isset($_GET["filter"])){
 				<?php 
 				if($autorizzato){ 
 					
-					$sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select * from questions where event_id='".$ID_EVENTO."' order by question_timestamp desc LIMIT 1"));
+					$sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select * from questions where event_id='".$ID_EVENTO."' order by ID desc LIMIT 1"));
 					$ultimo_id_inserito= $sql_ultimo_id_inserito['ID'];
 
 					if(!isset($ultimo_id_inserito)){
@@ -200,11 +200,8 @@ if(isset($_GET["filter"])){
 							
 							<div class="offset-md-1 col-md-10 mobile pt-5" id="contDomande">
 
-								
-
-
 									<?php
-									$sql_domande="Select * from questions where event_id='".$ID_EVENTO."' ".$supp_condition." order by question_timestamp desc";
+									$sql_domande="Select * from questions where event_id='".$ID_EVENTO."' ".$supp_condition." order by ID desc";
 									$and_questions= mysqli_query($con,$sql_domande);
 									
 									while($questions= mysqli_fetch_array($and_questions)){
@@ -300,7 +297,6 @@ if(isset($_GET["filter"])){
 	</div>
 
     <script type="text/javascript">
-	// AGGIORNO REALTIME LE questions
 	window.setInterval(function(){
 		var ultimo_ID = $('#ultimo_ID').val();
 		var current_event_id = $('#current_event_id').val();

@@ -38,7 +38,7 @@
     }
     
     
-    $sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select ID from questions where event_id='".$current_event_id."' order by question_timestamp desc LIMIT 1"));
+    $sql_ultimo_id_inserito= mysqli_fetch_array(mysqli_query($con,"Select ID from questions where event_id='".$current_event_id."' order by ID desc LIMIT 1"));
     $ultimo_id_inserito= $sql_ultimo_id_inserito['ID'];
     if(!isset($ultimo_id_inserito)){
         $ultimo_id_inserito=0;	
