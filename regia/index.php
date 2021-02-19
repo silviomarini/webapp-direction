@@ -66,6 +66,26 @@ if(isset($_GET["filter"])){
     <link rel="stylesheet" href="../asset/css/font-awesome.css" />
 	
 	<title>Privilege Web App</title>
+
+	<style>
+		.yes {
+			background-color: #2aa900;
+		}
+
+		.no {
+			background-color: #e81f1f;
+		}
+
+		.done {
+			background-color: #fbfb00;
+		}
+
+		.reset {
+			background-color: transparent;
+		}
+
+		
+	</style>
 </head>
 
 <body>
@@ -206,10 +226,10 @@ if(isset($_GET["filter"])){
 									
 									while($questions= mysqli_fetch_array($and_questions)){
 									if($questions['hidden_question']=="0"){ 
-											if($questions['question_status']=="y"){$col_bg="#2aa900";}
-											if($questions['question_status']=="n"){$col_bg="#e81f1f";}
-											if($questions['question_status']=="d"){$col_bg="#fbfb00";}
-											if($questions['question_status']==""){$col_bg="transparent";}
+											if($questions['question_status']=="y"){$col_bg="#2aa900";$statusClass="yes";}
+											if($questions['question_status']=="n"){$col_bg="#e81f1f";$statusClass="no";}
+											if($questions['question_status']=="d"){$col_bg="#fbfb00";$statusClass="done";}
+											if($questions['question_status']==""){$col_bg="transparent";$statusClass="reset";}
 											?>
 											<div class="card mb-3 <?php if($questions['attiva']){echo "domanda-attiva";} ?>" id="domanda_<?php echo $questions['ID'];?>">
 												<div class="card-header">
@@ -256,8 +276,8 @@ if(isset($_GET["filter"])){
 																	<?php } ?>
 																</div>
 
-																<span> Status: </span>
-																<span class="barraStato" id="barra_stato_<?php echo $questions['ID'];?>" style="background-color: <?php echo $col_bg;?>;"></span>
+																<span style="display:none"> Status: </span>
+																<span style="display:none" class="barraStato <?php echo $statusClass; ?>" id="barra_stato_<?php echo $questions['ID'];?>"></span>
 
 															</div>
 														</div>
@@ -322,6 +342,8 @@ if(isset($_GET["filter"])){
 
 	window.setInterval(function(){
 		var current_event_id = $('#current_event_id').val();
+		var activeFilter = "<?php echo $_GET["filter"]; ?>";
+
 		$.ajax({
 			url: "../api/put-question-status.php",
 			type: "get",
@@ -332,23 +354,89 @@ if(isset($_GET["filter"])){
 				var data_split= data.split('|');
 				$("#alert-questions-attivate").html("");
 				for (var i = 0; i < data_split.length; i++) {
-					var dati_domande= data_split[i].split(',');
+				
+					var questionsUpdates = data_split[i].split(',');
+					var currentObj = "#barra_stato_"+questionsUpdates[0];
+					var currentStatus = "";
 
-					
-					if(dati_domande[1]=="y"){	
-						$("#barra_stato_"+dati_domande[0]).css("background-color","#2aa900");
-							
+					if(activeFilter ==  "selected" && questionsUpdates[1] == "y" ||
+						activeFilter ==  "done" && questionsUpdates[1] == "d" ||
+						activeFilter ==  "deleted" && questionsUpdates[1] == "n" ||
+						activeFilter ==  "all" && questionsUpdates[1] == "" 
+					){
+						if($(currentObj).length == 0){
+							//alert("creo la domanda "+questionsUpdates[0]);
+							addQuestion(questionsUpdates[0]);
+						} else {
+							$("#domanda_"+questionsUpdates[0]).show(200);
+							switch(questionsUpdates[1]){
+							case "y":
+								$(currentObj).addClass("yes");
+								break;
+							case "n":
+								$(currentObj).addClass("no");
+								break;
+							case "d":
+								$(currentObj).addClass("done");
+								break;
+							case "":
+								$(currentObj).addClass("reset");
+								break;
+						}
+						}
+					} else {
+						
+						if($(currentObj).hasClass("yes")){
+							currentStatus = "yes";
+							$(currentObj).removeClass("yes");
+						}
+						if($(currentObj).hasClass("no")){
+							currentStatus = "no";
+							$(currentObj).removeClass("no");
+						}
+
+						if($(currentObj).hasClass("done")){
+							currentStatus = "done";
+							$(currentObj).removeClass("done");
+						}
+
+						if($(currentObj).hasClass("reset")){
+							currentStatus = "reset";
+							$(currentObj).removeClass("reset");
+						}
+						
+						switch(questionsUpdates[1]){
+							case "y":
+								if(activeFilter != "" && currentStatus != "yes"){
+									$("#domanda_"+questionsUpdates[0]).hide(200);
+								} else {
+									$(currentObj).addClass("yes");
+								}
+								break;
+							case "n":
+								if(activeFilter != "" && currentStatus != "no"){
+									$("#domanda_"+questionsUpdates[0]).hide(200);
+								} else {
+									$(currentObj).addClass("no");
+								}
+								break;
+							case "d":
+								if(activeFilter != "" && currentStatus != "done"){
+									$("#domanda_"+questionsUpdates[0]).hide(200);
+								} else {
+									$(currentObj).addClass("done");
+								}
+								break;
+							case "":
+								if(activeFilter  != "" && currentStatus != "reset"){
+									$("#domanda_"+questionsUpdates[0]).hide(200);
+								} else {
+									$(currentObj).addClass("reset");
+								}
+								break;
+						}
 					}
-					if(dati_domande[1]=="n"){	
-						$("#barra_stato_"+dati_domande[0]).css("background-color","#e81f1f");
-					}
-					if(dati_domande[1]=="d"){	
-						$("#barra_stato_"+dati_domande[0]).css("background-color","#fbfb00");
-					}	
-					if(dati_domande[1]==""){	
-						$("#barra_stato_"+dati_domande[0]).css("background-color","transparent");
-					}										
-				}
+				} 
 			},
 			error: function () {
 			}
@@ -356,9 +444,22 @@ if(isset($_GET["filter"])){
 
 	}, 5000);
 
-	$(".statoDomanda").click(function() {
-
-	});
+	function addQuestion(id){
+		var result = "";
+		$.ajax({
+			url: "../api/get-question.php<?php echo "?filter=".$_GET["filter"]; ?>",
+			type: "get",
+			crossDomain: true,
+			data: 'id=' + id + '&current_event_id='+current_event_id,
+			success: function(data){
+				$("#contDomande .card:first").before(data);
+				$("#domanda_"+id).show(200);
+			},
+			error: function () {
+				alert('Errore caricamento nuova domanda, per favore ricarica la pagina!');
+			}
+		});
+	}
 
 	function go_live(el){
 		var current_event_id = $('#current_event_id').val();
@@ -389,30 +490,41 @@ if(isset($_GET["filter"])){
 	function change_status(el){
 		var current_event_id = $('#current_event_id').val();
 		var id_domanda= el.id;
-		var stato_domanda= el.getAttribute("valore");
+		var curStatus= el.getAttribute("valore");
 		
 		$.ajax({
 			url: "../api/get-question-status.php",
 			type: "get",
 			crossDomain: true,
-			data: 'id_domanda=' + id_domanda + '&stato_domanda='+stato_domanda + '&current_event_id='+current_event_id,
-			success: function(data){
+			data: 'id_domanda=' + id_domanda + '&stato_domanda='+curStatus + '&current_event_id='+current_event_id,
+			success: function(data){				
+
+				var currentObj = "#barra_stato_"+id_domanda;
 				
-				if(stato_domanda=="y"){	
-					$("#barra_stato_"+id_domanda).css("background-color","#2aa900");
-				}
-				if(stato_domanda=="n"){	
-					$("#barra_stato_"+id_domanda).css("background-color","#e81f1f");
-				}
-				if(stato_domanda=="d"){	
-					$("#barra_stato_"+id_domanda).css("background-color","#fbfb00");
-				}	
-				if(stato_domanda=="azzera"){	
-					$("#barra_stato_"+id_domanda).css("background-color","transparent");
+				$(currentObj).removeClass("yes");
+				$(currentObj).removeClass("no");
+				$(currentObj).removeClass("done");
+				$(currentObj).removeClass("reset");
+					
+				switch(curStatus){
+					case "y":
+						$(currentObj).addClass("yes");
+						break;
+					case "n":
+						$(currentObj).addClass("no");
+						break;
+					case "d":
+						$(currentObj).addClass("done");
+						break;
+					case "":
+						$(currentObj).addClass("reset");
+						break;
 				}
 				if("<?php echo $_GET["filter"]; ?>" != ""){
 					$("#domanda_"+id_domanda).hide(200);
 				}
+
+
 			},
 			error: function () {
 				alert('Errore AJAX');

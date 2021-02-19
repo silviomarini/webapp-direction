@@ -174,7 +174,7 @@
                 $_SESSION['id_evento'] = $id_evento;
 
                 $session_id = rand(100000,999999);
-                echo '<script language=javascript>document.location.href="index.php"</script>'; 
+                echo '<script language=javascript>document.location.href="index.php?filter=all"</script>'; 
 
             } else {
                 $errorMessage = "Wrong credentials";

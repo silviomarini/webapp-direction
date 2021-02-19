@@ -2,12 +2,12 @@
     session_start();
     include('../server/db.php');
 
-    function ora_X_DB($data){
+    function formatDate($data){
         $split=explode(" ", $data);
         $split1=explode("-", $split[0]);
         $split2=explode(":", $split[1]);
-        $data_visualizzata= $split2[0].':'.$split2[1];
-        return $data_visualizzata;
+        $formattedDate= $split2[0].':'.$split2[1];
+        return $formattedDate;
     }
     
     $ultimo_ID= $_GET['ultimo_ID'];
@@ -44,7 +44,7 @@
         $ultimo_id_inserito=0;	
     }
     
-    $sql_domande="Select ID,question,question_timestamp from questions where event_id='".$current_event_id."' and ID>'$ultimo_ID' and hidden_question='0' ".$supp_condition." order by question_timestamp desc";
+    $sql_domande="Select ID,question,question_timestamp from questions where event_id='".$current_event_id."' and ID>'$ultimo_ID' and hidden_question='0' ".$supp_condition." order by ID desc";
     $and_questions= mysqli_query($con,$sql_domande);
     $ris="";
     while($questions= mysqli_fetch_array($and_questions)){
@@ -53,7 +53,7 @@
         <div class="card mb-3" id="domanda_'.$questions['ID'].'">
           <div class="card-header">
               <div class="row">
-                  <div class="header-info sx"><strong>'.$questions['ID'].')</strong> h <strong>'.ora_X_DB($questions['question_timestamp']).'</strong></div>
+                  <div class="header-info sx"><strong>'.$questions['ID'].')</strong> h <strong>'.formatDate($questions['question_timestamp']).'</strong></div>
                 <div class="header-info center">
                     <div class="float-right">';
     
@@ -94,49 +94,15 @@
                     }
     
     
-        $ris.=' <span> Status: </span>
-                    <span class="barraStato" id="barra_stato_'.$questions['ID'].'"></span>
+        $ris.=' <span style="display:none"> Status: </span>
+                    <span style="display:none" class="barraStato" id="barra_stato_'.$questions['ID'].'"></span>
                 </div>		
               </div>
           </div>
             <div class="card-body">
                 <p class="card-text">'.nl2br($questions['question']).'</p>
             </div>
-        </div>
-        
-        <script type="text/javascript"> 
-        // CAMBIO LO STATO DELLA DOMANDA AL CLICK
-        $(".statoDomanda_'.$questions['ID'].'").click(function() {
-            var current_event_id = $(\'#current_event_id\').val();
-            var id_domanda= $(this).attr("id");
-            var stato_domanda= $(this).attr("valore");
-                    
-            $.ajax({
-                url: "get-question-status.php",
-                type: "get",
-                crossDomain: true,
-                data: \'id_domanda=\' + id_domanda + \'&stato_domanda=\'+stato_domanda + \'&current_event_id=\'+current_event_id,
-                success: function(data){
-                    //console.log(data);
-                    
-                    if(stato_domanda=="y"){	
-                        $("#barra_stato_"+id_domanda).css("background-color","#2aa900");
-                    }
-                    if(stato_domanda=="n"){	
-                        $("#barra_stato_"+id_domanda).css("background-color","#e81f1f");
-                    }
-                    if(stato_domanda=="azzera"){	
-                        $("#barra_stato_"+id_domanda).css("background-color","transparent");
-                    }								
-                },
-                error: function () {
-                    alert(\'Errore AJAX\');
-                }
-            });			
-    
-        });	
-        
-        </script> 	
+        </div>	
         ';                                 
     
     }

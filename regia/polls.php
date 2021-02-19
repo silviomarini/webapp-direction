@@ -160,7 +160,7 @@ $time_attuale= time();
 									<div>
 										<a href="polls-panel.php"> <div class="pools-button" style="float:left;"> Pools panel </div> </a>
 										<a href="export.csv"> <div class="pools-button" style=""> Export </div> </a>
-										<a href="regia_sondaggi.php?reset=all" onclick="return confirm('Are you sure? All polls will be deleted');"> <div class="pools-button alert" style=""> Reset </div> </a>
+										<a href="polls.php?reset=all" onclick="return confirm('Are you sure? All polls will be deleted');"> <div class="pools-button alert" style=""> Reset </div> </a>
 									</div>
 								</div>
 							</div>					

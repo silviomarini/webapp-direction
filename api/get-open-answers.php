@@ -2,14 +2,14 @@
 session_start();
 include('../server/db.php');
 
-function data_ora_X_DB($data){
+function data_formatDate($data){
 	$split=explode(" ", $data);
 	$split1=explode("-", $split[0]);
 	$split2=explode(":", $split[1]);
 	$data_visualizzata=$split1[2].'-'.$split1[1].'-'.$split1[0].' '.$split2[0].':'.$split2[1];
 	return $data_visualizzata;
 }
-function ora_X_DB($data){
+function formatDate($data){
 	$split=explode(" ", $data);
 	$split1=explode("-", $split[0]);
 	$split2=explode(":", $split[1]);
@@ -44,7 +44,7 @@ for($i=0;$i<count($array_ultime_risposte);$i++){
 		
 		$question_id_new.="
 			<div class='cont_risposta'>
-				<div class='fontWeight700'><strong>".data_ora_X_DB($risposte['answer_datetime'])."</strong></div>
+				<div class='fontWeight700'><strong>".data_formatDate($risposte['answer_datetime'])."</strong></div>
 				". nl2br($risposte['poll_answer'])."
 			</div>		
 		";
