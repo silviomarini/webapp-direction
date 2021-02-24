@@ -1,3 +1,6 @@
+setInterval(getPolls(), 3000);
+
+
 function submitQuestion(){
     question = document.getElementById('question').value;
     if(question != ''){
@@ -40,19 +43,21 @@ function switchTab(tab){
 }
 
 function getPolls(){
-    fetch('api/get-polls.php')
-    .then(function (response) {
-        // The API call was successful!
-        return response.text();
-    }).then(function (html) {
-        // This is the HTML from our response as a text string
-        console.log(html);
-        document.getElementById('currentPoll').innerHTML = html;
-    }).catch(function (err) {
-        // There was an error
-        console.warn('Something went wrong.', err);
-        document.getElementById('currentPoll').innerHTML = "<div class='text-center fontWeight700 pb-1 pt-1'> Wait the next poll... </div>";
-    });
+    setInterval(function(){ 
+        fetch('api/get-polls.php')
+        .then(function (response) {
+            // The API call was successful!
+            return response.text();
+        }).then(function (html) {
+            // This is the HTML from our response as a text string
+            console.log(html);
+            document.getElementById('currentPoll').innerHTML = html;
+        }).catch(function (err) {
+            // There was an error
+            console.warn('Something went wrong.', err);
+            document.getElementById('currentPoll').innerHTML = "<div class='text-center fontWeight700 pb-1 pt-1'> Wait the next poll... </div>";
+        });
+    }, 5000);
 }
 
  
