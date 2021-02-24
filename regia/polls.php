@@ -118,7 +118,7 @@ $time_attuale= time();
 
 		<div class="about">
             <div class="menu" >
-				 <span class="menu "> <a href="index.php"> Questions </a> </span> 
+				 <span class="menu "> <a href="index.php?filter=all"> Questions </a> </span> 
 				 <span class="menu active"> <a href="polls.php"> Polls </a> </span> 
             </div>
             <div class="body" style="min-height:165px">
