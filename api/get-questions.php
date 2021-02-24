@@ -28,7 +28,7 @@
             $active_type = "DONE";
             break;
         case 'all':
-            $supp_condition = " AND question_status='' ";
+            $supp_condition = " AND (question_status='' OR question_status IS NULL) ";
             $active_type = "ALL";
             break;
             

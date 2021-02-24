@@ -42,7 +42,7 @@ if(isset($_GET["filter"])){
 			$active_type = "DONE";
 			break;
 		case 'all':
-			$supp_condition = " AND question_status='' ";
+			$supp_condition = " AND (question_status='' OR question_status IS NULL) ";
 			$active_title = "LIVE QUESTIONS";
 			$active_type = "ALL";
 			break;
@@ -220,7 +220,7 @@ if(isset($_GET["filter"])){
 							
 							<div class="offset-md-1 col-md-10 mobile pt-5" id="contDomande">
 
-									<?php
+									<?php 
 									$sql_domande="Select * from questions where event_id='".$ID_EVENTO."' ".$supp_condition." order by ID desc";
 									$and_questions= mysqli_query($con,$sql_domande);
 									
