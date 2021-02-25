@@ -50,7 +50,7 @@ function getPolls(){
             return response.text();
         }).then(function (html) {
             // This is the HTML from our response as a text string
-            console.log(html);
+            //console.log(html);
             document.getElementById('currentPoll').innerHTML = html;
         }).catch(function (err) {
             // There was an error
@@ -110,7 +110,11 @@ function getPolls(){
                     $("#alertDomanda").show();
                     $("#contDomande").hide();
                     //$("#risposta_aperta").val('');
+                    document.getElementById('currentPoll').innerHTML = "";
                     getPolls();
+                    setTimeout(function() {
+                        $("#alertDomanda").hide();
+                    }, 2000);
                 },
                 error: function () {
                     //alert('Errore AJAX');
