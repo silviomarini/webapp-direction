@@ -358,6 +358,19 @@ if(isset($_GET["filter"])){
 					var questionsUpdates = data_split[i].split(',');
 					var currentObj = "#barra_stato_"+questionsUpdates[0];
 					var currentStatus = "";
+					var classname = "domanda-attiva";
+					var id_domanda = questionsUpdates[0];
+
+					if(questionsUpdates[2] == 1){
+						if($("#domanda_"+id_domanda).hasClass(classname)){
+							//do nothing
+						} else {
+							$("div").removeClass( classname );
+							$("#domanda_"+id_domanda).addClass( classname);
+						}
+					} else {
+						$("#domanda_"+id_domanda).removeClass( classname);
+					}
 
 					if(activeFilter ==  "selected" && questionsUpdates[1] == "y" ||
 						activeFilter ==  "done" && questionsUpdates[1] == "d" ||
