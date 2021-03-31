@@ -47,10 +47,10 @@
             $ris.='</div>';
             $ris.='<input type="hidden" name="id_sondaggio" id="id_sondaggio" value="'.$active_poll["ID"].'">';
         } else {
-            $ris = "<div class='text-center fontWeight700 pb-1 pt-1'> Wait the next poll... </div>";
+            $ris = "<div id='waiting-for' class='text-center fontWeight700 pb-1 pt-1'> Wait the next poll... </div>";
         }
     } else {
-        $ris = "<div class='text-center fontWeight700 pb-1 pt-1'> Wait the next poll... </div>";
+        $ris = "<div id='waiting-for'- class='text-center fontWeight700 pb-1 pt-1'> Wait the next poll... </div>";
     }
     
     

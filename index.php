@@ -76,7 +76,7 @@
 
 		<div id="polls" style="display:none;">
 			<div id="currentPoll" style="text-align:center;">
-				
+				<div id='waiting-for' class='text-center fontWeight700 pb-1 pt-1'> Wait the next poll... </div>
 			</div>
 			<div class="submit-response success" style="display:none;" id="alertDomanda">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close" title="close">×</a>

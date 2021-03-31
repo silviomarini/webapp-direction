@@ -50,8 +50,16 @@ function getPolls(){
             return response.text();
         }).then(function (html) {
             // This is the HTML from our response as a text string
+
+            //fix to avoid reload while writing
+            var myEle = document.getElementById("waiting-for");
+            if(myEle){
+                document.getElementById('currentPoll').innerHTML = html;
+            } else {
+                //do nothing
+            }
             //console.log(html);
-            document.getElementById('currentPoll').innerHTML = html;
+            //document.getElementById('currentPoll').innerHTML = html;
         }).catch(function (err) {
             // There was an error
             console.warn('Something went wrong.', err);
@@ -81,7 +89,11 @@ function getPolls(){
                     $("#alertDomanda").show();
                     $("#contDomande").hide();
                     $("#risposta_aperta").val('');
+                    document.getElementById('currentPoll').innerHTML = "<div id='waiting-for' class='text-center fontWeight700 pb-1 pt-1'> Wait the next poll... </div>";
                     getPolls();
+                    setTimeout(function() {
+                        $("#alertDomanda").hide();
+                    }, 2000);
                 },
                 error: function () {
                     alert('Impossible to send the answer, please retry later.');
@@ -110,7 +122,7 @@ function getPolls(){
                     $("#alertDomanda").show();
                     $("#contDomande").hide();
                     //$("#risposta_aperta").val('');
-                    document.getElementById('currentPoll').innerHTML = "";
+                    document.getElementById('currentPoll').innerHTML = "<div id='waiting-for' class='text-center fontWeight700 pb-1 pt-1'> Wait the next poll... </div>";
                     getPolls();
                     setTimeout(function() {
                         $("#alertDomanda").hide();
